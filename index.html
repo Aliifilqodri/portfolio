@@ -1345,6 +1345,128 @@
           visibility: hidden;
         }
       }
+      .sg {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 38px 30px;
+      }
+      .sg > .cw:nth-child(odd) .sc {
+        transform: rotate(-1.4deg);
+      }
+      .sg > .cw:nth-child(even) .sc {
+        transform: rotate(1.1deg);
+      }
+      .sc {
+        position: relative;
+        display: block;
+        width: 100%;
+        text-align: center;
+        font: inherit;
+        color: inherit;
+        background: var(--ye);
+        border: 5px solid var(--ink);
+        box-shadow: 9px 9px 0 var(--rd);
+        padding: 10px 10px 0;
+        cursor: pointer;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+      }
+      .sg > .cw .sc:hover {
+        transform: rotate(0) translate(-4px, -4px);
+        box-shadow: 13px 13px 0 var(--bl);
+      }
+      .sn {
+        position: absolute;
+        left: -16px;
+        top: -16px;
+        z-index: 3;
+        background: var(--rd);
+        color: #fff;
+        border: 4px solid var(--ink);
+        font: 400 24px var(--d);
+        letter-spacing: 1px;
+        padding: 0 12px;
+        transform: rotate(-7deg);
+      }
+      .stg {
+        position: absolute;
+        right: -10px;
+        top: 14px;
+        z-index: 3;
+        background: var(--ink);
+        color: var(--ye);
+        border: 3px solid var(--ye);
+        font: 400 15px var(--d);
+        letter-spacing: 2px;
+        padding: 0 10px;
+        transform: rotate(4deg);
+      }
+      .sph {
+        position: relative;
+        aspect-ratio: 4/5;
+        border: 4px solid var(--ink);
+        background:
+          radial-gradient(rgba(255, 255, 255, 0.22) 2px, transparent 2.3px) 0
+            0/10px 10px,
+          var(--bl);
+        display: grid;
+        place-items: center;
+        font: 400 96px var(--d);
+        color: var(--ye);
+        overflow: hidden;
+      }
+      .sph img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .sph::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          155deg,
+          transparent 55%,
+          rgba(236, 29, 36, 0.45)
+        );
+        pointer-events: none;
+      }
+      .sbd {
+        position: relative;
+        z-index: 2;
+        margin: -30px -10px 0;
+        background: var(--ink);
+        color: #fff;
+        padding: 32px 14px 16px;
+        clip-path: polygon(0 22px, 100% 0, 100% 100%, 0 100%);
+      }
+      .sbd h3 {
+        font: 400 30px/1 var(--d);
+        letter-spacing: 1px;
+        margin: 0 0 8px;
+        color: var(--ye);
+      }
+      .sig {
+        display: inline-block;
+        background: #fff;
+        color: var(--ink);
+        border: 3px solid var(--rd);
+        font: 700 14px var(--b);
+        padding: 0 12px;
+        border-radius: 99px;
+      }
+      .sbd p {
+        margin: 10px 0 0;
+        font-size: 14px;
+        line-height: 1.35;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
       @media (prefers-reduced-motion: reduce) {
         .tape div {
           animation: none;
@@ -1376,7 +1498,7 @@
         Pencapaian: ["Achievements", "成就"],
         "Post-credit": ["Extras", "彩蛋"],
         Pengalaman: ["Experience", "经历"],
-        Kontributor: ["Contributors", "贡献者"],
+        Support: ["Support", "后盾"],
         CV: ["CV", "简历"],
         Testimoni: ["Testimonials", "评价"],
         Kontak: ["Contact", "联系"],
@@ -1389,16 +1511,13 @@
         Misi: ["Missions", "任务"],
         "Fase karier": ["Career phases", "职业阶段"],
         "Post-credit scene": ["Post-credit scene", "片尾彩蛋"],
-        "Kontributor di hidupku": [
-          "Contributors in my life",
-          "我生命中的贡献者",
-        ],
+        "Support system-ku": ["My support system", "我的后盾"],
         "Berkas misi": ["Mission file", "任务档案"],
         "Kata mereka": ["What they say", "他们的评价"],
         "Ayo assemble!": ["Let's assemble!", "一起集结吧！"],
         MISI: ["MISSION", "任务"],
         Prestasi: ["Achievement", "成就"],
-        KONTRIBUTOR: ["CONTRIBUTOR", "贡献者"],
+        SUPPORT: ["SUPPORT", "后盾"],
         "Dipakai di:": ["Used in:", "用于："],
         Semua: ["All", "全部"],
         "Buka proyek": ["Open project", "打开项目"],
@@ -1675,7 +1794,7 @@
           ],
           orang: [
             [
-              "+ Kontributor",
+              "+ Support",
               function () {
                 EDIT.add("orang");
               },
@@ -1793,6 +1912,25 @@
             ]),
           ]);
           b.dataset.k = it.kategori || "";
+          return b;
+        }
+        function sCard(it, i) {
+          var b = h("button", { c: "sc", type: "button" }, [
+            h("span", { c: "sn" }, ["#" + (i < 9 ? "0" : "") + (i + 1)]),
+            h("span", { c: "stg" }, ["SUPPORT"]),
+            h("div", { c: "sph" }, [
+              ini(it.judul),
+              img(it.gambar || it.gif, it.judul),
+            ]),
+            h("div", { c: "sbd" }, [
+              h("h3", {}, [it.judul]),
+              it.ringkas ? h("span", { c: "sig" }, [it.ringkas]) : null,
+              it.deskripsi ? h("p", {}, [it.deskripsi]) : null,
+            ]),
+          ]);
+          b.onclick = function () {
+            openM(it, "Buka Instagram");
+          };
           return b;
         }
         function pgr(n, per, pg, go) {
@@ -1929,7 +2067,7 @@
           ["pencapaian", "Pencapaian", ar(D.pencapaian).length],
           ["konten", "Post-credit", ar(D.konten).length],
           ["pengalaman", "Pengalaman", ar(D.pengalaman).length],
-          ["orang", "Kontributor", ar(D.orang).length],
+          ["orang", "Support", ar(D.orang).length],
           ["cv", "CV", D.cv && D.cv.file ? 1 : 0],
           ["testimoni", "Testimoni", ar(D.testimoni).length],
           ["kontak", "Kontak", 1],
@@ -2236,27 +2374,29 @@
         if (ADM || ar(D.orang).length)
           sec(
             "orang",
-            "Kontributor di hidupku",
-            grid(
-              ar(D.orang).map(function (x) {
+            "Support system-ku",
+            paged(
+              ar(D.orang).map(function (x, i) {
                 var raw = String(x.instagram || "").trim(),
                   m = raw.match(/instagram\.com\/([^\/?#]+)/i),
                   user = m ? m[1] : raw.replace(/^@/, "").split(/[\/?#\s]/)[0];
-                return {
-                  judul: x.nama,
-                  ringkas: user ? "@" + user : x.hubungan || "",
-                  deskripsi: x.deskripsi || x.kontribusi || "",
-                  gambar: x.foto,
-                  gif: x.gif,
-                  link: user ? "https://instagram.com/" + user : "",
-                };
+                return h("div", { c: "cw" }, [
+                  sCard(
+                    {
+                      judul: x.nama,
+                      ringkas: user ? "@" + user : x.hubungan || "",
+                      deskripsi: x.deskripsi || x.kontribusi || "",
+                      gambar: x.foto,
+                      gif: x.gif,
+                      link: user ? "https://instagram.com/" + user : "",
+                    },
+                    i,
+                  ),
+                  ctl("orang", i),
+                ]);
               }),
-              "",
-              function () {
-                return "KONTRIBUTOR";
-              },
-              "Buka Instagram",
-              "orang",
+              6,
+              "sg",
             ),
           );
 
@@ -2704,7 +2844,7 @@
           );
           document
             .querySelectorAll(
-              ".pc,.kn>div,.nr,.st div,.gg,.ex>div,blockquote,.ct,.pvh,.fm",
+              ".pc,.sc,.kn>div,.nr,.st div,.gg,.ex>div,blockquote,.ct,.pvh,.fm",
             )
             .forEach(function (el) {
               el.classList.add("rv");
