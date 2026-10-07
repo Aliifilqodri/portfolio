@@ -1857,36 +1857,24 @@
           sec(
             "pengalaman",
             "Sementara itu...",
-            paged(
-              ar(D.pengalaman).map(function (x, i) {
-                var im = img(x.foto, x.posisi),
-                  g = img(x.gif, x.posisi);
-                if (im) {
-                  im.className = "xi";
-                  im.title = "Klik untuk memperbesar";
-                  im.onclick = function () {
-                    zoomImg(x.foto, x.posisi);
-                  };
-                }
-                if (g) {
-                  g.className = "xg";
-                  g.title = "Klik untuk memperbesar";
-                  g.onclick = function () {
-                    zoomImg(x.gif, x.posisi);
-                  };
-                }
-                return h("div", {}, [
-                  im,
-                  h("time", {}, [x.tahun]),
-                  h("h3", {}, [x.posisi]),
-                  h("small", {}, [x.tempat]),
-                  h("p", {}, [x.deskripsi]),
-                  g,
-                  ctl("pengalaman", i),
-                ]);
+            grid(
+              ar(D.pengalaman).map(function (x) {
+                return {
+                  judul: x.posisi,
+                  ringkas: x.tempat,
+                  deskripsi: x.deskripsi,
+                  tahun: x.tahun,
+                  penerbit: x.tempat,
+                  gambar: x.foto,
+                  gif: x.gif,
+                };
               }),
-              6,
-              "ex",
+              "",
+              function (p) {
+                return p.tahun || "Pengalaman";
+              },
+              "",
+              "pengalaman",
             ),
           );
 
