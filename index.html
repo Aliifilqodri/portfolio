@@ -1084,13 +1084,21 @@
         background: var(--rd);
         color: #fff;
       }
+      .ex {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
       .xi {
         display: block;
         width: 100%;
-        aspect-ratio: 16/9;
+        height: 140px;
         object-fit: cover;
+        object-position: top;
         border-bottom: 4px solid var(--ink);
         margin-bottom: 10px;
+        cursor: zoom-in;
+      }
+      .xg {
+        cursor: zoom-in;
       }
       .xg {
         display: block;
@@ -1388,6 +1396,15 @@
           if (e.target === dlg) dlg.close();
         };
 
+        function zoomImg(src, alt) {
+          dlg.innerHTML = "";
+          var x = h("button", { c: "mx", "aria-label": "Tutup" }, ["X"]);
+          x.onclick = function () {
+            dlg.close();
+          };
+          dlg.append(x, h("div", { c: "mm" }, [img(src, alt)]));
+          dlg.showModal();
+        }
         function openM(it, sub) {
           dlg.innerHTML = "";
           var x = h("button", { c: "mx", "aria-label": "Tutup" }, ["X"]);
@@ -1844,8 +1861,20 @@
               ar(D.pengalaman).map(function (x, i) {
                 var im = img(x.foto, x.posisi),
                   g = img(x.gif, x.posisi);
-                if (im) im.className = "xi";
-                if (g) g.className = "xg";
+                if (im) {
+                  im.className = "xi";
+                  im.title = "Klik untuk memperbesar";
+                  im.onclick = function () {
+                    zoomImg(x.foto, x.posisi);
+                  };
+                }
+                if (g) {
+                  g.className = "xg";
+                  g.title = "Klik untuk memperbesar";
+                  g.onclick = function () {
+                    zoomImg(x.gif, x.posisi);
+                  };
+                }
                 return h("div", {}, [
                   im,
                   h("time", {}, [x.tahun]),
