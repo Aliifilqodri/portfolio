@@ -1225,6 +1225,60 @@
           }
         }
       }
+      #sp {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 6px;
+        width: 0;
+        background: linear-gradient(90deg, var(--rd), var(--ye));
+        border-bottom: 2px solid var(--ink);
+        z-index: 100;
+      }
+      section {
+        position: relative;
+      }
+      section::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 12px;
+        background: repeating-linear-gradient(
+          -45deg,
+          var(--ink) 0 12px,
+          var(--ye) 12px 24px
+        );
+        border-block: 3px solid var(--ink);
+      }
+      .th::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -80%;
+        width: 45%;
+        height: 100%;
+        background: linear-gradient(
+          105deg,
+          transparent,
+          rgba(255, 255, 255, 0.6),
+          transparent
+        );
+        transform: skewX(-20deg);
+        pointer-events: none;
+      }
+      .pc:hover .th img {
+        filter: saturate(1.3) contrast(1.05);
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        .th::after {
+          transition: left 0.7s;
+        }
+        .pc:hover .th::after {
+          left: 130%;
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         .tape div {
           animation: none;
@@ -2265,6 +2319,44 @@
               EDIT.logout();
             }),
           );
+        if (!document.getElementById("sp")) {
+          var sp = h("div", { id: "sp" });
+          document.body.appendChild(sp);
+          addEventListener(
+            "scroll",
+            function () {
+              var m = document.documentElement.scrollHeight - innerHeight;
+              sp.style.width = (m > 0 ? (scrollY / m) * 100 : 0) + "%";
+            },
+            { passive: true },
+          );
+        }
+        document.querySelectorAll(".st strong").forEach(function (el) {
+          var m = el.textContent.match(/^(\d+)(.*)$/);
+          if (
+            !m ||
+            !("IntersectionObserver" in window) ||
+            matchMedia("(prefers-reduced-motion:reduce)").matches
+          )
+            return;
+          var n = +m[1],
+            suf = m[2];
+          el.textContent = "0" + suf;
+          var o = new IntersectionObserver(
+            function (es) {
+              if (!es[0].isIntersecting) return;
+              o.disconnect();
+              var t0 = performance.now();
+              (function f(t) {
+                var k = Math.min(1, (t - t0) / 900);
+                el.textContent = Math.round(n * k) + suf;
+                if (k < 1) requestAnimationFrame(f);
+              })(t0);
+            },
+            { threshold: 0.5 },
+          );
+          o.observe(el);
+        });
         if ("IntersectionObserver" in window) {
           var io = new IntersectionObserver(
             function (es) {
