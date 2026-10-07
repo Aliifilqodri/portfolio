@@ -1,0 +1,2303 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Portofolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --rd: #e23636;
+        --bl: #1e4fd6;
+        --ye: #ffe033;
+        --ink: #111;
+        --pp: #fff;
+        color-scheme: light;
+        --d: "Bangers", "Impact", sans-serif;
+        --b: "Comic Neue", "Comic Sans MS", system-ui, sans-serif;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: calc(66px + env(safe-area-inset-top, 0px));
+        background: var(--pp);
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        font: 700 18px/1.55 var(--b);
+        background:
+          radial-gradient(rgba(226, 54, 54, 0.16) 1.6px, transparent 1.8px) 0
+            0/14px 14px,
+          var(--pp);
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      :focus-visible {
+        outline: 4px solid var(--bl);
+        outline-offset: 3px;
+      }
+      .w {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 22px;
+      }
+      header {
+        position: sticky;
+        top: env(safe-area-inset-top, 0px);
+        z-index: 20;
+        background: var(--ink);
+        border-bottom: 5px solid var(--rd);
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 60px;
+      }
+      .logo {
+        font: 400 32px var(--d);
+        color: var(--ye);
+        letter-spacing: 1px;
+        -webkit-text-stroke: 0;
+      }
+      nav ul {
+        display: flex;
+        gap: 22px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        color: #fff;
+        font: 400 20px var(--d);
+        letter-spacing: 1px;
+      }
+      nav ul a:hover {
+        color: var(--ye);
+      }
+      @media (max-width: 860px) {
+        nav ul {
+          display: none;
+        }
+      }
+      .hero {
+        background: repeating-conic-gradient(
+          from 0deg at 72% 50%,
+          var(--ye) 0 7deg,
+          #ffd000 7deg 14deg
+        );
+        border-bottom: 6px solid var(--ink);
+        padding: 56px 0 80px;
+        overflow: hidden;
+      }
+      .hero .w {
+        display: grid;
+        grid-template-columns: 1.25fr 1fr;
+        gap: 44px;
+        align-items: center;
+      }
+      @media (max-width: 860px) {
+        .hero .w {
+          grid-template-columns: 1fr;
+        }
+      }
+      .is {
+        display: inline-block;
+        background: #fff;
+        border: 3px solid var(--ink);
+        padding: 0 12px;
+        font: 400 20px var(--d);
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+      }
+      h1 {
+        font: 400 clamp(58px, 11vw, 128px)/0.88 var(--d);
+        margin: 0;
+        color: var(--rd);
+        -webkit-text-stroke: 3px var(--ink);
+        paint-order: stroke fill;
+        text-shadow: 6px 6px 0 var(--ink);
+        transform: rotate(-2deg);
+        letter-spacing: 2px;
+        overflow-wrap: anywhere;
+      }
+      .role {
+        display: inline-block;
+        background: var(--bl);
+        color: #fff;
+        border: 4px solid var(--ink);
+        box-shadow: 5px 5px 0 var(--ink);
+        font: 400 clamp(22px, 3.4vw, 32px) var(--d);
+        letter-spacing: 1px;
+        padding: 2px 16px;
+        margin: 26px 0 0;
+        transform: rotate(1deg);
+      }
+      .sp {
+        position: relative;
+        display: block;
+        max-width: 440px;
+        background: #fff;
+        border: 4px solid var(--ink);
+        border-radius: 30px;
+        padding: 14px 20px;
+        margin: 26px 0 24px;
+      }
+      .sp:after {
+        content: "";
+        position: absolute;
+        left: 34px;
+        bottom: -18px;
+        width: 26px;
+        height: 26px;
+        background: #fff;
+        border-right: 4px solid var(--ink);
+        border-bottom: 4px solid var(--ink);
+        transform: rotate(45deg) skew(10deg, 10deg);
+      }
+      .bt {
+        display: inline-block;
+        font: 400 22px var(--d);
+        letter-spacing: 1px;
+        background: var(--rd);
+        color: #fff;
+        border: 4px solid var(--ink);
+        box-shadow: 5px 5px 0 var(--ink);
+        padding: 6px 24px;
+        margin: 6px 12px 6px 0;
+        cursor: pointer;
+      }
+      .bt.y {
+        background: var(--ye);
+        color: var(--ink);
+      }
+      .bt:hover {
+        transform: translate(-2px, -2px) rotate(-1deg);
+        box-shadow: 8px 8px 0 var(--ink);
+      }
+      .ph {
+        position: relative;
+        aspect-ratio: 4/5;
+        max-width: 370px;
+        margin-left: auto;
+        background: var(--bl);
+        border: 6px solid var(--ink);
+        box-shadow: 12px 12px 0 var(--ink);
+        transform: rotate(2.5deg);
+        display: grid;
+        place-items: center;
+        font: 400 150px var(--d);
+        color: var(--ye);
+        overflow: hidden;
+      }
+      .ph img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .ph:after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(rgba(0, 0, 0, 0.35) 2px, transparent 2.2px)
+          0 0/9px 9px;
+        -webkit-mask: linear-gradient(200deg, transparent 55%, #000);
+        mask: linear-gradient(200deg, transparent 55%, #000);
+        pointer-events: none;
+      }
+      .av {
+        position: absolute;
+        right: 8px;
+        top: 8px;
+        background: var(--ye);
+        border: 3px solid var(--ink);
+        font: 400 18px var(--d);
+        padding: 0 10px;
+        transform: rotate(4deg);
+        z-index: 2;
+      }
+      .tape {
+        background: var(--ink);
+        color: var(--ye);
+        overflow: hidden;
+        border-bottom: 5px solid var(--rd);
+      }
+      .tape div {
+        display: flex;
+        gap: 34px;
+        width: max-content;
+        padding: 8px 0;
+        animation: m 26s linear infinite;
+        font: 400 26px var(--d);
+        letter-spacing: 2px;
+      }
+      @keyframes m {
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      section {
+        padding: 74px 0 20px;
+      }
+      .cap {
+        display: inline-block;
+        background: var(--ye);
+        border: 4px solid var(--ink);
+        box-shadow: 5px 5px 0 var(--ink);
+        font: 400 clamp(30px, 5vw, 48px)/1 var(--d);
+        letter-spacing: 1px;
+        padding: 4px 18px;
+        margin: 0 0 32px;
+        transform: rotate(-1.5deg);
+      }
+      .ab {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 34px;
+      }
+      @media (max-width: 860px) {
+        .ab {
+          grid-template-columns: 1fr;
+        }
+      }
+      .nr {
+        background: #fff;
+        border: 4px solid var(--ink);
+        box-shadow: 7px 7px 0 var(--ink);
+        padding: 18px 22px;
+      }
+      .nr p {
+        margin: 0 0 12px;
+      }
+      .nr p:last-child {
+        margin: 0;
+      }
+      .st {
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+      .st div {
+        background: var(--bl);
+        color: #fff;
+        border: 4px solid var(--ink);
+        box-shadow: 5px 5px 0 var(--ink);
+        padding: 4px 16px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        transform: rotate(-1deg);
+      }
+      .st div:nth-child(2) {
+        transform: rotate(1deg);
+        background: var(--rd);
+      }
+      .st strong {
+        font: 400 44px/1 var(--d);
+        color: var(--ye);
+        -webkit-text-stroke: 1px var(--ink);
+      }
+      .gg {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px 36px;
+        background: #fff;
+        border: 4px solid var(--ink);
+        box-shadow: 7px 7px 0 var(--ink);
+        padding: 24px;
+      }
+      .gg b {
+        display: block;
+        font: 400 22px var(--d);
+        letter-spacing: 1px;
+      }
+      .bar {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 4px;
+      }
+      .bar i {
+        height: 18px;
+        border: 2px solid var(--ink);
+        background: #fff;
+      }
+      .bar i.on {
+        background: var(--rd);
+      }
+      .fl {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 28px;
+      }
+      .fl button {
+        font: 400 20px var(--d);
+        letter-spacing: 1px;
+        background: #fff;
+        border: 3px solid var(--ink);
+        padding: 2px 18px;
+        cursor: pointer;
+      }
+      .fl button[aria-pressed="true"] {
+        background: var(--ink);
+        color: var(--ye);
+      }
+      .pj {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+        gap: 30px;
+      }
+      .pc {
+        position: relative;
+        display: block;
+        width: 100%;
+        text-align: left;
+        font: inherit;
+        color: inherit;
+        background: #fff;
+        border: 5px solid var(--ink);
+        box-shadow: 8px 8px 0 var(--ink);
+        padding: 0;
+        cursor: pointer;
+      }
+      .cw:nth-child(3n + 1) .pc {
+        transform: rotate(-0.8deg);
+      }
+      .cw:nth-child(3n + 2) .pc {
+        transform: rotate(0.6deg);
+      }
+      .cw .pc:hover {
+        transform: rotate(0) translate(-3px, -3px);
+        box-shadow: 11px 11px 0 var(--bl);
+      }
+      .pc[hidden] {
+        display: none;
+      }
+      .th {
+        position: relative;
+        aspect-ratio: 16/10;
+        background:
+          radial-gradient(rgba(30, 79, 214, 0.5) 2px, transparent 2.3px) 0
+            0/10px 10px,
+          var(--ye);
+        border-bottom: 5px solid var(--ink);
+        display: grid;
+        place-items: center;
+        font: 400 72px var(--d);
+        color: var(--rd);
+        -webkit-text-stroke: 2px var(--ink);
+        overflow: hidden;
+      }
+      .th img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .th em {
+        position: absolute;
+        left: 0;
+        top: 10px;
+        background: var(--rd);
+        color: #fff;
+        border: 3px solid var(--ink);
+        border-left: 0;
+        font: 400 17px var(--d);
+        font-style: normal;
+        letter-spacing: 1px;
+        padding: 0 12px;
+      }
+      .pi {
+        padding: 12px 16px 16px;
+      }
+      .pi h3 {
+        font: 400 26px/1.1 var(--d);
+        letter-spacing: 1px;
+        margin: 0 0 4px;
+      }
+      .pi p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.4;
+      }
+      .fx {
+        position: absolute;
+        right: -12px;
+        top: -18px;
+        background: var(--ye);
+        border: 4px solid var(--ink);
+        font: 400 26px var(--d);
+        padding: 0 10px;
+        transform: rotate(9deg) scale(0);
+        transition: transform 0.15s;
+        z-index: 2;
+        clip-path: polygon(
+          0 8%,
+          10% 0,
+          30% 12%,
+          55% 0,
+          75% 10%,
+          100% 0,
+          92% 40%,
+          100% 70%,
+          90% 100%,
+          60% 88%,
+          30% 100%,
+          8% 85%,
+          0 55%
+        );
+      }
+      .pc:hover .fx,
+      .pc:focus-visible .fx {
+        transform: rotate(9deg) scale(1);
+      }
+      .ach {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      .ach .th {
+        aspect-ratio: 16/9;
+        font-size: 54px;
+      }
+      .ex {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 26px;
+      }
+      .ex > div {
+        background: #fff;
+        border: 4px solid var(--ink);
+        box-shadow: 7px 7px 0 var(--ink);
+        padding: 0 0 16px;
+      }
+      .ex time {
+        display: inline-block;
+        background: var(--ye);
+        border: 4px solid var(--ink);
+        border-left: 0;
+        border-top: 0;
+        font: 400 20px var(--d);
+        letter-spacing: 1px;
+        padding: 0 14px;
+        margin-bottom: 10px;
+      }
+      .ex h3 {
+        font: 400 26px/1.1 var(--d);
+        letter-spacing: 1px;
+        margin: 0 16px;
+      }
+      .ex small {
+        display: block;
+        margin: 2px 16px 6px;
+        color: var(--bl);
+        font-size: 16px;
+      }
+      .ex p {
+        margin: 0 16px;
+        font-size: 16px;
+        line-height: 1.4;
+      }
+      .ts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 34px;
+      }
+      blockquote {
+        position: relative;
+        margin: 0 0 22px;
+        background: #fff;
+        border: 4px solid var(--ink);
+        border-radius: 28px;
+        padding: 20px 24px;
+      }
+      blockquote:after {
+        content: "";
+        position: absolute;
+        left: 40px;
+        bottom: -17px;
+        width: 24px;
+        height: 24px;
+        background: #fff;
+        border-right: 4px solid var(--ink);
+        border-bottom: 4px solid var(--ink);
+        transform: rotate(45deg) skew(10deg, 10deg);
+      }
+      blockquote p {
+        margin: 0 0 8px;
+        font-size: 19px;
+      }
+      blockquote cite {
+        font: 400 20px var(--d);
+        letter-spacing: 1px;
+        color: var(--rd);
+        font-style: normal;
+      }
+      .ct {
+        background: var(--rd);
+        color: #fff;
+        border: 6px solid var(--ink);
+        box-shadow: 12px 12px 0 var(--ink);
+        padding: clamp(26px, 6vw, 60px);
+        margin-bottom: 24px;
+      }
+      .ct h2 {
+        font: 400 clamp(44px, 8vw, 92px)/0.95 var(--d);
+        margin: 0 0 12px;
+        letter-spacing: 2px;
+        -webkit-text-stroke: 2px var(--ink);
+        paint-order: stroke fill;
+        text-shadow: 5px 5px 0 var(--ink);
+        color: var(--ye);
+      }
+      .ct p {
+        max-width: 480px;
+        margin: 0 0 20px;
+      }
+      .ct .bt {
+        background: #fff;
+        color: var(--ink);
+      }
+      footer {
+        padding: 20px 0 40px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 15px;
+      }
+      dialog {
+        width: min(760px, 94vw);
+        max-height: 90vh;
+        padding: 0;
+        border: 6px solid var(--ink);
+        background: #fff;
+        color: var(--ink);
+        box-shadow: 14px 14px 0 var(--rd);
+        overflow: auto;
+      }
+      dialog::backdrop {
+        background: rgba(17, 17, 17, 0.78);
+      }
+      dialog[open] {
+        animation: pop 0.22s ease-out;
+      }
+      @keyframes pop {
+        from {
+          transform: scale(0.88) rotate(-2deg);
+          opacity: 0;
+        }
+      }
+      .mx {
+        position: sticky;
+        top: 0;
+        float: right;
+        margin: 10px;
+        z-index: 3;
+        font: 400 22px var(--d);
+        background: var(--rd);
+        color: #fff;
+        border: 3px solid var(--ink);
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+      }
+      .mm img {
+        display: block;
+        width: 100%;
+        border-bottom: 5px solid var(--ink);
+      }
+      .mb {
+        padding: 20px 24px 26px;
+      }
+      .mb .tg {
+        display: inline-block;
+        background: var(--ye);
+        border: 3px solid var(--ink);
+        font: 400 18px var(--d);
+        letter-spacing: 1px;
+        padding: 0 12px;
+        margin: 0 8px 8px 0;
+      }
+      .mb h3 {
+        font: 400 38px/1 var(--d);
+        letter-spacing: 1px;
+        margin: 4px 0 6px;
+      }
+      .mb p {
+        margin: 0 0 14px;
+      }
+      .err {
+        margin: 60px auto;
+        max-width: 560px;
+        background: #fff;
+        border: 5px solid var(--ink);
+        box-shadow: 8px 8px 0 var(--rd);
+        padding: 20px;
+      }
+      .ph {
+        max-width: 420px;
+      }
+      .hi {
+        position: absolute;
+        left: -6px;
+        bottom: 18px;
+        z-index: 2;
+        background: var(--rd);
+        color: #fff;
+        border: 4px solid var(--ink);
+        font: 400 34px var(--d);
+        padding: 0 16px;
+        transform: rotate(-7deg);
+        clip-path: none;
+        box-shadow: 4px 4px 0 var(--ink);
+      }
+      .rv {
+        opacity: 0;
+      }
+      .rv.in {
+        opacity: 1;
+        animation: slam 0.45s ease-out backwards;
+      }
+      @keyframes slam {
+        from {
+          opacity: 0;
+          transform: translateY(28px) scale(0.94);
+        }
+      }
+      .hero h1,
+      .hero .role,
+      .hero .sp {
+        animation: slam 0.6s ease-out backwards;
+      }
+      .hero .role {
+        animation-delay: 0.12s;
+      }
+      .hero .sp {
+        animation-delay: 0.24s;
+      }
+      .cv {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 30px;
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .cv {
+          grid-template-columns: 1fr;
+        }
+      }
+      .cv .nr h3 {
+        font: 400 34px/1 var(--d);
+        letter-spacing: 1px;
+        margin: 0 0 8px;
+      }
+      .pv {
+        display: none;
+        width: 100%;
+        height: 80vh;
+        border: 5px solid var(--ink);
+        box-shadow: 8px 8px 0 var(--ink);
+        background: #fff;
+      }
+      .pv.on {
+        display: block;
+      }
+      .pvh {
+        display: grid;
+        place-items: center;
+        min-height: 240px;
+        border: 5px dashed var(--ink);
+        background: #fff;
+        text-align: center;
+        padding: 20px;
+        font: 400 28px var(--d);
+        letter-spacing: 1px;
+      }
+      .pvh.off {
+        display: none;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .rv {
+          opacity: 1;
+        }
+        .rv.in,
+        .hero h1,
+        .hero .role,
+        .hero .sp {
+          animation: none;
+        }
+      }
+      .fl button {
+        color: var(--ink);
+      }
+      .ph {
+        width: 100%;
+      }
+      @media (max-width: 860px) {
+        .ph {
+          order: -1;
+          max-width: 300px;
+          margin: 0 auto 14px;
+        }
+      }
+      .pg {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .pg button {
+        font: 400 22px var(--d);
+        background: #fff;
+        color: var(--ink);
+        border: 3px solid var(--ink);
+        box-shadow: 3px 3px 0 var(--ink);
+        min-width: 44px;
+        padding: 0 12px;
+        cursor: pointer;
+      }
+      .pg button[aria-current="true"] {
+        background: var(--ink);
+        color: var(--ye);
+      }
+      .pg button:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+      .tw {
+        text-align: center;
+        margin-top: 22px;
+      }
+      .ctg {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 34px;
+        align-items: start;
+      }
+      @media (max-width: 860px) {
+        .ctg {
+          grid-template-columns: 1fr;
+        }
+      }
+      .ci a,
+      .ci div {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        background: #fff;
+        color: var(--ink);
+        border: 4px solid var(--ink);
+        box-shadow: 4px 4px 0 var(--ink);
+        padding: 6px 12px;
+        margin-bottom: 14px;
+        max-width: 420px;
+        overflow-wrap: anywhere;
+      }
+      .ci b {
+        background: var(--ye);
+        border: 3px solid var(--ink);
+        font: 400 18px var(--d);
+        padding: 0 8px;
+        min-width: 48px;
+        text-align: center;
+      }
+      .fm {
+        background: #fff;
+        color: var(--ink);
+        border: 5px solid var(--ink);
+        box-shadow: 8px 8px 0 var(--ink);
+        padding: 20px 22px;
+      }
+      .fm h3 {
+        font: 400 32px var(--d);
+        letter-spacing: 1px;
+        margin: 0 0 12px;
+      }
+      .fm label {
+        display: block;
+        font: 400 19px var(--d);
+        letter-spacing: 1px;
+        margin-bottom: 2px;
+      }
+      .fm input,
+      .fm textarea {
+        width: 100%;
+        border: 3px solid var(--ink);
+        padding: 10px 12px;
+        font: 700 17px var(--b);
+        color: var(--ink);
+        background: #fff;
+        margin-bottom: 14px;
+        border-radius: 0;
+      }
+      .fm textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      .fm .bt {
+        width: 100%;
+        margin: 0;
+        text-align: center;
+      }
+      .fm iframe,
+      .mm iframe {
+        width: 100%;
+        height: 520px;
+        border: 0;
+      }
+      .mm iframe {
+        height: 68vh;
+      }
+      .sh {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px 16px;
+        align-items: center;
+        margin: 0 0 32px;
+      }
+      .sh .cap {
+        margin: 0;
+      }
+      .eb {
+        font: 400 17px var(--d);
+        letter-spacing: 1px;
+        background: var(--ye);
+        color: var(--ink);
+        border: 3px solid var(--ink);
+        padding: 0 12px;
+        cursor: pointer;
+        box-shadow: 3px 3px 0 var(--ink);
+      }
+      .eb:hover {
+        background: #fff;
+      }
+      .ctl {
+        position: absolute;
+        right: 8px;
+        bottom: 8px;
+        display: flex;
+        gap: 5px;
+        z-index: 3;
+      }
+      .cw,
+      .ex > div,
+      .ts > div,
+      .gg > div,
+      .st div {
+        position: relative;
+      }
+      .st .ctl {
+        top: 4px;
+        bottom: auto;
+      }
+      .gg .ctl {
+        top: 0;
+        bottom: auto;
+      }
+      .ts .ctl {
+        bottom: -8px;
+      }
+      .gg:empty,
+      .ex:empty,
+      .pj:empty,
+      .ts:empty,
+      .nr:empty,
+      .st:empty {
+        display: none;
+      }
+      .cw[hidden] {
+        display: none;
+      }
+      #adm {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 30;
+        background: var(--ink);
+        color: var(--ye);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 8px 14px calc(8px + env(safe-area-inset-bottom, 0px));
+        font: 400 20px var(--d);
+        letter-spacing: 1px;
+        border-top: 4px solid var(--rd);
+      }
+      #adm span {
+        margin-right: auto;
+      }
+      #adm:empty {
+        display: none;
+      }
+      body.am {
+        padding-bottom: 70px;
+      }
+      .lgb {
+        background: none;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+        text-decoration: underline;
+        opacity: 0.6;
+      }
+      .edb {
+        padding: 20px 24px 26px;
+      }
+      .edb h3 {
+        font: 400 34px var(--d);
+        letter-spacing: 1px;
+        margin: 0 0 14px;
+      }
+      .edb input[type="text"],
+      .edb input[type="number"],
+      .edb input[type="password"],
+      .edb textarea {
+        width: 100%;
+        border: 3px solid var(--ink);
+        padding: 10px 12px;
+        font: 700 17px var(--b);
+        color: var(--ink);
+        background: #fff;
+        margin-bottom: 14px;
+        border-radius: 0;
+      }
+      .edb textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      .edb label {
+        display: block;
+        font: 400 19px var(--d);
+        letter-spacing: 1px;
+        margin-bottom: 2px;
+      }
+      .edb .hint {
+        font-size: 14px;
+        margin: 0 0 10px;
+        min-height: 20px;
+      }
+      .edb .up {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: -6px 0 14px;
+      }
+      .edb .up img {
+        max-height: 70px;
+        border: 3px solid var(--ink);
+      }
+      .edb .bar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .edb .bt {
+        margin: 0;
+      }
+      .bt.rd {
+        background: #b00000;
+        color: #fff;
+      }
+      .bt:disabled {
+        opacity: 0.5;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .tape div {
+          animation: none;
+        }
+        html {
+          scroll-behavior: auto;
+        }
+        dialog[open] {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="w"><nav id="nav"></nav></div>
+    </header>
+    <main id="app"></main>
+    <div class="w"><footer id="ft"></footer></div>
+    <dialog id="dlg"></dialog>
+    <dialog id="ed"></dialog>
+    <div id="adm"></div>
+
+    <script>
+      function start(D) {
+        var app = document.getElementById("app");
+        app.innerHTML = "";
+        document.getElementById("nav").innerHTML = "";
+        document.getElementById("ft").innerHTML = "";
+        if (!D) {
+          app.innerHTML =
+            '<div class="err"><b>data.js tidak termuat.</b><br>Pastikan file <code>data.js</code> ada di folder yang sama dengan <code>index.html</code>, dan tidak ada koma atau kutip yang hilang di dalamnya.</div>';
+          return;
+        }
+        function h(t, a, k) {
+          var e = document.createElement(t);
+          for (var x in a || {}) {
+            if (x === "c") e.className = a[x];
+            else e.setAttribute(x, a[x]);
+          }
+          (k || []).forEach(function (c) {
+            if (c == null || c === "") return;
+            e.appendChild(
+              typeof c === "string" ? document.createTextNode(c) : c,
+            );
+          });
+          return e;
+        }
+        function ar(x) {
+          return Array.isArray(x) ? x : [];
+        }
+        function eb(t, fn) {
+          if (!ADM) return null;
+          var b = h("button", { c: "eb", type: "button" }, [t]);
+          b.onclick = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            fn();
+          };
+          return b;
+        }
+        function ctl(key, i) {
+          if (!ADM) return null;
+          return h("span", { c: "ctl" }, [
+            eb("Edit", function () {
+              EDIT.item(key, i);
+            }),
+            eb("↑", function () {
+              EDIT.move(key, i, -1);
+            }),
+            eb("↓", function () {
+              EDIT.move(key, i, 1);
+            }),
+          ]);
+        }
+        var ACTS = {
+          tentang: [
+            [
+              "Edit tentang",
+              function () {
+                EDIT.val("tentang", "Tentang saya", "paras");
+              },
+            ],
+            [
+              "+ Statistik",
+              function () {
+                EDIT.add("statistik");
+              },
+            ],
+          ],
+          skill: [
+            [
+              "+ Skill",
+              function () {
+                EDIT.add("skill");
+              },
+            ],
+            [
+              "Edit tools",
+              function () {
+                EDIT.val("tools", "Tools (pisahkan dengan koma)", "tags");
+              },
+            ],
+          ],
+          proyek: [
+            [
+              "+ Proyek",
+              function () {
+                EDIT.add("proyek");
+              },
+            ],
+          ],
+          pencapaian: [
+            [
+              "+ Pencapaian",
+              function () {
+                EDIT.add("pencapaian");
+              },
+            ],
+          ],
+          pengalaman: [
+            [
+              "+ Pengalaman",
+              function () {
+                EDIT.add("pengalaman");
+              },
+            ],
+          ],
+          cv: [
+            [
+              "Edit CV",
+              function () {
+                EDIT.obj("CV", "cv");
+              },
+            ],
+          ],
+          testimoni: [
+            [
+              "+ Testimoni",
+              function () {
+                EDIT.add("testimoni");
+              },
+            ],
+          ],
+        };
+        function ini(t) {
+          return (t || "?").trim().charAt(0).toUpperCase();
+        }
+        function img(src, alt) {
+          if (!src) return null;
+          var i = h("img", { src: src, alt: alt || "", loading: "lazy" });
+          i.onerror = function () {
+            i.remove();
+          };
+          return i;
+        }
+        document.title = D.nama + " | " + D.peran;
+        var FX = ["POW!", "ZAP!", "BAM!", "WHAM!", "BOOM!"];
+        var dlg = document.getElementById("dlg");
+        dlg.onclick = function (e) {
+          if (e.target === dlg) dlg.close();
+        };
+
+        function openM(it, sub) {
+          dlg.innerHTML = "";
+          var x = h("button", { c: "mx", "aria-label": "Tutup" }, ["X"]);
+          x.onclick = function () {
+            dlg.close();
+          };
+          var meta = [it.kategori, it.tahun, it.penerbit]
+            .filter(Boolean)
+            .map(function (m) {
+              return h("span", { c: "tg" }, [m]);
+            });
+          var body = h("div", { c: "mb" }, [
+            h("div", {}, meta),
+            h("h3", {}, [it.judul]),
+            h("p", {}, [it.deskripsi || it.ringkas || ""]),
+            h(
+              "div",
+              {},
+              ar(it.tech).map(function (t) {
+                return h("span", { c: "tg" }, [t]);
+              }),
+            ),
+            it.link
+              ? h(
+                  "a",
+                  { c: "bt", href: it.link, target: "_blank", rel: "noopener" },
+                  [sub || "Buka link"],
+                )
+              : null,
+          ]);
+          dlg.append(
+            x,
+            h("div", { c: "mm" }, [
+              img(it.gif, it.judul),
+              img(it.gambar, it.judul),
+            ]),
+            body,
+          );
+          dlg.showModal();
+        }
+        function card(it, i, tag) {
+          var b = h("button", { c: "pc", type: "button" }, [
+            h("span", { c: "fx" }, [FX[i % FX.length]]),
+            h("div", { c: "th" }, [
+              ini(it.judul),
+              img(it.gambar || it.gif, it.judul),
+              h("em", {}, [tag]),
+            ]),
+            h("div", { c: "pi" }, [
+              h("h3", {}, [it.judul]),
+              h("p", {}, [it.ringkas || it.deskripsi || ""]),
+            ]),
+          ]);
+          b.dataset.k = it.kategori || "";
+          return b;
+        }
+        function grid(items, cls, tagf, sub, key) {
+          var cats = ["Semua"];
+          items.forEach(function (p) {
+            if (p.kategori && cats.indexOf(p.kategori) < 0)
+              cats.push(p.kategori);
+          });
+          var cards = items.map(function (p, i) {
+            var c = card(p, i, tagf(p));
+            c.onclick = function () {
+              openM(p, sub);
+            };
+            var w = h("div", { c: "cw" }, [c, ctl(key, i)]);
+            w.dataset.k = p.kategori || "";
+            return w;
+          });
+          var fl = h(
+            "div",
+            { c: "fl" },
+            cats.length > 2
+              ? cats.map(function (c, i) {
+                  var b = h(
+                    "button",
+                    { "aria-pressed": i == 0 ? "true" : "false" },
+                    [c],
+                  );
+                  b.onclick = function () {
+                    fl.querySelectorAll("button").forEach(function (y) {
+                      y.setAttribute("aria-pressed", y === b);
+                    });
+                    cards.forEach(function (k) {
+                      k.hidden = i > 0 && k.dataset.k !== c;
+                    });
+                  };
+                  return b;
+                })
+              : [],
+          );
+          return h("div", {}, [fl, h("div", { c: "pj " + cls }, cards)]);
+        }
+        function sec(id, title, body) {
+          var a = ADM
+            ? (ACTS[id] || []).map(function (x) {
+                return eb(x[0], x[1]);
+              })
+            : [];
+          app.appendChild(
+            h("section", { id: id }, [
+              h("div", { c: "w" }, [
+                h(
+                  "div",
+                  { c: "sh" },
+                  [h("h2", { c: "cap" }, [title])].concat(a),
+                ),
+                body,
+              ]),
+            ]),
+          );
+        }
+
+        var L = [
+          [
+            "tentang",
+            "Tentang",
+            ar(D.tentang).length || ar(D.statistik).length,
+          ],
+          ["skill", "Skill", ar(D.skill).length],
+          ["proyek", "Proyek", ar(D.proyek).length],
+          ["pencapaian", "Pencapaian", ar(D.pencapaian).length],
+          ["pengalaman", "Pengalaman", ar(D.pengalaman).length],
+          ["cv", "CV", D.cv && D.cv.file ? 1 : 0],
+          ["testimoni", "Testimoni", ar(D.testimoni).length],
+          ["kontak", "Kontak", 1],
+        ].filter(function (l) {
+          return l[2] || ADM;
+        });
+        document.getElementById("nav").append(
+          h("a", { c: "logo", href: "#top" }, [
+            (D.nama || "").split(" ")[0] + "!",
+          ]),
+          h(
+            "ul",
+            {},
+            L.map(function (l) {
+              return h("li", {}, [h("a", { href: "#" + l[0] }, [l[1]])]);
+            }),
+          ),
+        );
+
+        app.appendChild(
+          h("div", { c: "hero", id: "top" }, [
+            h("div", { c: "w" }, [
+              h("div", {}, [
+                D.edisi ? h("div", { c: "is" }, [D.edisi]) : null,
+                h("h1", {}, [D.nama]),
+                h("div", { c: "role" }, [D.peran]),
+                D.tagline || D.lokasi
+                  ? h("span", { c: "sp" }, [
+                      (D.tagline || "") +
+                        (D.lokasi ? " (" + D.lokasi + ")" : ""),
+                    ])
+                  : null,
+                ar(D.proyek).length
+                  ? h("a", { c: "bt", href: "#proyek" }, ["Lihat karya"])
+                  : null,
+                D.cv && D.cv.file
+                  ? h(
+                      "a",
+                      {
+                        c: "bt y",
+                        href: D.cv.file,
+                        download:
+                          "CV-" + (D.nama || "").replace(/\s+/g, "-") + ".pdf",
+                      },
+                      ["Unduh CV"],
+                    )
+                  : null,
+                h("a", { c: "bt y", href: "#kontak" }, ["Hubungi saya"]),
+                ADM
+                  ? h("div", {}, [
+                      eb("Edit profil & foto", function () {
+                        EDIT.obj("Profil", "profil");
+                      }),
+                    ])
+                  : null,
+              ]),
+              h("div", { c: "ph" }, [
+                h("span", { c: "hi" }, ["HAI!"]),
+                D.tersedia ? h("span", { c: "av" }, [D.tersedia]) : null,
+                ini(D.nama),
+                img(D.foto, D.nama),
+              ]),
+            ]),
+          ]),
+        );
+        if (ar(D.tools).length) {
+          var t = D.tools.concat(D.tools, D.tools, D.tools).map(function (x) {
+            return h("span", {}, [x + " *"]);
+          });
+          app.appendChild(
+            h("div", { c: "tape", "aria-hidden": "true" }, [h("div", {}, t)]),
+          );
+        }
+
+        if (ADM || ar(D.tentang).length || ar(D.statistik).length)
+          sec(
+            "tentang",
+            "Cerita asal",
+            h("div", { c: "ab" }, [
+              h(
+                "div",
+                { c: "nr" },
+                ar(D.tentang).map(function (p) {
+                  return h("p", {}, [p]);
+                }),
+              ),
+              h(
+                "div",
+                { c: "st" },
+                ar(D.statistik).map(function (s, i) {
+                  return h("div", {}, [
+                    h("strong", {}, [s.angka]),
+                    s.label,
+                    ctl("statistik", i),
+                  ]);
+                }),
+              ),
+            ]),
+          );
+
+        if (ADM || ar(D.skill).length)
+          sec(
+            "skill",
+            "Statistik kekuatan",
+            h(
+              "div",
+              { c: "gg" },
+              D.skill.map(function (s, si) {
+                var on = Math.round(s.level / 10),
+                  b = [];
+                for (var i = 0; i < 10; i++)
+                  b.push(h("i", { c: i < on ? "on" : "" }));
+                return h("div", {}, [
+                  h("b", {}, [s.nama]),
+                  h("div", { c: "bar" }, b),
+                  ctl("skill", si),
+                ]);
+              }),
+            ),
+          );
+
+        if (ADM || ar(D.proyek).length)
+          sec(
+            "proyek",
+            "Misi",
+            grid(
+              D.proyek,
+              "",
+              function (p) {
+                return "MISI" + (p.tahun ? " " + p.tahun : "");
+              },
+              "Buka proyek",
+              "proyek",
+            ),
+          );
+        if (ADM || ar(D.pencapaian).length)
+          sec(
+            "pencapaian",
+            "Pencapaian",
+            grid(
+              D.pencapaian,
+              "ach",
+              function (p) {
+                return p.kategori || "Prestasi";
+              },
+              "Lihat kredensial",
+              "pencapaian",
+            ),
+          );
+
+        if (ADM || ar(D.pengalaman).length)
+          sec(
+            "pengalaman",
+            "Sementara itu...",
+            h(
+              "div",
+              { c: "ex" },
+              D.pengalaman.map(function (x, i) {
+                return h("div", {}, [
+                  h("time", {}, [x.tahun]),
+                  h("h3", {}, [x.posisi]),
+                  h("small", {}, [x.tempat]),
+                  h("p", {}, [x.deskripsi]),
+                  ctl("pengalaman", i),
+                ]);
+              }),
+            ),
+          );
+
+        if (!(D.cv && D.cv.file)) {
+          if (ADM) sec("cv", "Berkas misi", h("div", {}));
+        } else
+          (function () {
+            var fr = h("iframe", {
+                c: "pv",
+                src: "about:blank",
+                title: "Preview CV",
+              }),
+              ph = h("div", { c: "pvh" }, [
+                'Klik "Preview CV" untuk melihat di sini',
+              ]);
+            var pb = h("button", { c: "bt", type: "button" }, ["Preview CV"]);
+            pb.onclick = function () {
+              var on = fr.classList.toggle("on");
+              ph.classList.toggle("off", on);
+              if (on && fr.getAttribute("src") === "about:blank")
+                fr.setAttribute("src", D.cv.file);
+              pb.textContent = on ? "Tutup preview" : "Preview CV";
+            };
+            sec(
+              "cv",
+              "Berkas misi",
+              h("div", { c: "cv" }, [
+                h("div", { c: "nr" }, [
+                  h("h3", {}, [D.cv.judul || "CV"]),
+                  h("p", {}, [D.cv.ringkas || ""]),
+                  pb,
+                  h(
+                    "a",
+                    {
+                      c: "bt y",
+                      href: D.cv.file,
+                      download:
+                        "CV-" + (D.nama || "").replace(/\s+/g, "-") + ".pdf",
+                    },
+                    ["Unduh PDF"],
+                  ),
+                  h(
+                    "a",
+                    {
+                      c: "bt y",
+                      href: D.cv.file,
+                      target: "_blank",
+                      rel: "noopener",
+                    },
+                    ["Buka di tab baru"],
+                  ),
+                ]),
+                h("div", {}, [ph, fr]),
+              ]),
+            );
+          })();
+
+        function openEmbed(title, id) {
+          dlg.innerHTML = "";
+          var x = h("button", { c: "mx", "aria-label": "Tutup" }, ["X"]);
+          x.onclick = function () {
+            dlg.close();
+          };
+          var body = id
+            ? [
+                h("iframe", {
+                  src:
+                    "https://tally.so/embed/" +
+                    id +
+                    "?hideTitle=1&transparentBackground=1&dynamicHeight=1",
+                  title: title,
+                  loading: "lazy",
+                }),
+                h("div", { c: "mb" }, [
+                  h(
+                    "a",
+                    {
+                      c: "bt y",
+                      href: "https://tally.so/r/" + id,
+                      target: "_blank",
+                      rel: "noopener",
+                    },
+                    ["Buka form di tab baru"],
+                  ),
+                ]),
+              ]
+            : [
+                h("div", { c: "mb" }, [
+                  h("h3", {}, [title]),
+                  h("p", {}, [
+                    "Form belum disambungkan. Isi tally.testimoni di data.js dengan ID form Tally kamu.",
+                  ]),
+                ]),
+              ];
+          dlg.append(x, h("div", { c: "mm" }, body));
+          dlg.showModal();
+        }
+        var TL = D.tally || {};
+        if (ADM || ar(D.testimoni).length || TL.testimoni)
+          (function () {
+            var T = ar(D.testimoni),
+              per = D.testimoniPerHalaman || 3,
+              pg = 0,
+              list = h("div", { c: "ts" }),
+              pn = h("div", { c: "pg" });
+            function draw() {
+              list.innerHTML = "";
+              pn.innerHTML = "";
+              T.slice(pg * per, pg * per + per).forEach(function (x, j) {
+                list.appendChild(
+                  h("div", {}, [
+                    h("blockquote", {}, [
+                      h("p", {}, ['"' + x.isi + '"']),
+                      h("cite", {}, [
+                        x.nama + (x.jabatan ? ", " + x.jabatan : ""),
+                      ]),
+                    ]),
+                    ctl("testimoni", pg * per + j),
+                  ]),
+                );
+              });
+              var n = Math.ceil(T.length / per);
+              if (n < 2) return;
+              var pv = h(
+                "button",
+                { type: "button", "aria-label": "Sebelumnya" },
+                ["<"],
+              );
+              pv.disabled = pg === 0;
+              pv.onclick = function () {
+                pg--;
+                draw();
+              };
+              pn.appendChild(pv);
+              for (var i = 0; i < n; i++)
+                (function (i) {
+                  var b = h(
+                    "button",
+                    { type: "button", "aria-label": "Halaman " + (i + 1) },
+                    ["" + (i + 1)],
+                  );
+                  if (i === pg) b.setAttribute("aria-current", "true");
+                  b.onclick = function () {
+                    pg = i;
+                    draw();
+                  };
+                  pn.appendChild(b);
+                })(i);
+              var nx = h(
+                "button",
+                { type: "button", "aria-label": "Berikutnya" },
+                [">"],
+              );
+              nx.disabled = pg === n - 1;
+              nx.onclick = function () {
+                pg++;
+                draw();
+              };
+              pn.appendChild(nx);
+            }
+            draw();
+            var wb = h("button", { c: "bt", type: "button" }, [
+              "Tulis testimoni",
+            ]);
+            wb.onclick = function () {
+              openEmbed("Tulis testimoni", TL.testimoni);
+            };
+            sec(
+              "testimoni",
+              "Kata mereka",
+              h("div", {}, [list, pn, h("div", { c: "tw" }, [wb])]),
+            );
+          })();
+
+        var K = D.kontak || {},
+          bt = [],
+          info = [];
+        ["github", "instagram", "linkedin", "tiktok", "youtube"].forEach(
+          function (n) {
+            if (K[n]) bt.push([n.charAt(0).toUpperCase() + n.slice(1), K[n]]);
+          },
+        );
+        if (K.email) info.push(["@", "Email", K.email, "mailto:" + K.email]);
+        if (K.whatsapp)
+          info.push([
+            "WA",
+            "WhatsApp",
+            "+" + K.whatsapp,
+            "https://wa.me/" + K.whatsapp,
+          ]);
+        if (D.lokasi) info.push(["LOK", "Lokasi", D.lokasi, null]);
+        var left = h("div", {}, [
+          h("h2", {}, ["Bersambung..."]),
+          h("p", {}, [K.ajakan]),
+          h(
+            "div",
+            { c: "ci" },
+            info.map(function (i) {
+              var c = [h("b", {}, [i[0]]), h("span", {}, [i[1] + ": " + i[2]])];
+              return i[3]
+                ? h("a", { href: i[3], target: "_blank", rel: "noopener" }, c)
+                : h("div", {}, c);
+            }),
+          ),
+          h(
+            "div",
+            {},
+            bt.map(function (b) {
+              return h(
+                "a",
+                { c: "bt", href: b[1], target: "_blank", rel: "noopener" },
+                [b[0]],
+              );
+            }),
+          ),
+          ADM
+            ? h("div", {}, [
+                eb("Edit kontak", function () {
+                  EDIT.obj("Kontak", "kontak");
+                }),
+                eb("Edit Tally", function () {
+                  EDIT.obj("Form Tally", "tally");
+                }),
+              ])
+            : null,
+        ]);
+        var right;
+        if (TL.pesan) {
+          right = h("div", { c: "fm" }, [
+            h("h3", {}, ["Kirim pesan"]),
+            h("iframe", {
+              src:
+                "https://tally.so/embed/" +
+                TL.pesan +
+                "?hideTitle=1&transparentBackground=1&dynamicHeight=1",
+              title: "Form pesan",
+              loading: "lazy",
+            }),
+          ]);
+        } else if (K.email) {
+          var fn = h("input", {
+              id: "fn",
+              required: "",
+              placeholder: "Nama kamu",
+            }),
+            fe = h("input", {
+              id: "fe",
+              type: "email",
+              required: "",
+              placeholder: "Email kamu",
+            }),
+            fm = h("textarea", {
+              id: "fp",
+              required: "",
+              placeholder: "Tulis pesanmu",
+            });
+          var f = h("form", {}, [
+            h("label", { for: "fn" }, ["Nama"]),
+            fn,
+            h("label", { for: "fe" }, ["Email"]),
+            fe,
+            h("label", { for: "fp" }, ["Pesan"]),
+            fm,
+            h("button", { c: "bt", type: "submit" }, ["Kirim pesan"]),
+          ]);
+          f.onsubmit = function (e) {
+            e.preventDefault();
+            location.href =
+              "mailto:" +
+              (K.email || "") +
+              "?subject=" +
+              encodeURIComponent("Pesan dari " + fn.value) +
+              "&body=" +
+              encodeURIComponent(
+                fm.value + "\n\n" + fn.value + " (" + fe.value + ")",
+              );
+          };
+          right = h("div", { c: "fm" }, [h("h3", {}, ["Kirim pesan"]), f]);
+        }
+        app.appendChild(
+          h("section", { id: "kontak" }, [
+            h("div", { c: "w" }, [
+              h("div", { c: "ct" }, [h("div", { c: "ctg" }, [left, right])]),
+            ]),
+          ]),
+        );
+        document.getElementById("ft").append(
+          h("span", {}, ["© " + new Date().getFullYear() + " " + D.nama]),
+          h("span", {}, [D.lokasi]),
+          ADM
+            ? h("span")
+            : (function () {
+                var b = h("button", { c: "lgb", type: "button" }, ["Login"]);
+                b.onclick = function () {
+                  EDIT.login();
+                };
+                return b;
+              })(),
+        );
+        var ab = document.getElementById("adm");
+        ab.innerHTML = "";
+        document.body.classList.toggle("am", ADM);
+        if (ADM)
+          ab.append(
+            h("span", {}, ["MODE ADMIN"]),
+            eb("Ganti password", function () {
+              EDIT.pw();
+            }),
+            eb("Keluar", function () {
+              EDIT.logout();
+            }),
+          );
+        if ("IntersectionObserver" in window) {
+          var io = new IntersectionObserver(
+            function (es) {
+              es.forEach(function (e) {
+                if (e.isIntersecting) {
+                  e.target.classList.add("in");
+                  io.unobserve(e.target);
+                }
+              });
+            },
+            { threshold: 0.12 },
+          );
+          document
+            .querySelectorAll(
+              ".pc,.nr,.st div,.gg,.ex>div,blockquote,.ct,.pvh,.fm",
+            )
+            .forEach(function (el) {
+              el.classList.add("rv");
+              io.observe(el);
+            });
+        }
+      }
+      var EMPTY = {
+        nama: "Nama Kamu",
+        peran: "Web Developer",
+        lokasi: "",
+        tagline: "",
+        foto: "",
+        edisi: "Edisi #01",
+        tersedia: "",
+        cv: {},
+        tentang: [],
+        statistik: [],
+        skill: [],
+        tools: [],
+        proyek: [],
+        pencapaian: [],
+        pengalaman: [],
+        testimoniPerHalaman: 3,
+        testimoni: [],
+        tally: {},
+        kontak: {},
+      };
+      var ADM = false,
+        DT = {},
+        J = { "Content-Type": "application/json" };
+      var SC = {
+        profil: [
+          ["nama", "Nama"],
+          ["peran", "Peran"],
+          ["lokasi", "Lokasi"],
+          ["tagline", "Tagline", "ta"],
+          ["foto", "Foto profil", "img"],
+          ["edisi", "Label sampul (contoh: Edisi #01)"],
+          ["tersedia", "Status (kosongkan untuk sembunyi)"],
+          ["testimoniPerHalaman", "Testimoni per halaman", "num"],
+        ],
+        cv: [
+          ["file", "File CV (PDF)", "pdf"],
+          ["judul", "Judul"],
+          ["ringkas", "Ringkasan", "ta"],
+        ],
+        kontak: [
+          ["ajakan", "Kalimat ajakan", "ta"],
+          ["email", "Email"],
+          ["whatsapp", "WhatsApp (format 62812..., tanpa +)"],
+          ["github", "Link GitHub"],
+          ["instagram", "Link Instagram"],
+          ["linkedin", "Link LinkedIn"],
+          ["tiktok", "Link TikTok"],
+          ["youtube", "Link YouTube"],
+        ],
+        tally: [
+          ["pesan", "ID form Tally untuk pesan"],
+          ["testimoni", "ID form Tally untuk testimoni"],
+        ],
+        statistik: [
+          ["angka", "Angka (contoh: 10+)"],
+          ["label", "Keterangan"],
+        ],
+        skill: [
+          ["nama", "Nama skill"],
+          ["level", "Level 0 - 100", "num"],
+        ],
+        proyek: [
+          ["judul", "Judul"],
+          ["kategori", "Kategori (Web, UI/UX, ...)"],
+          ["tahun", "Tahun"],
+          ["ringkas", "Ringkasan untuk kartu"],
+          ["deskripsi", "Deskripsi lengkap", "ta"],
+          ["gambar", "Gambar", "img"],
+          ["gif", "GIF (opsional)", "img"],
+          ["link", "Link demo / repo"],
+          ["tech", "Teknologi (pisahkan dengan koma)", "tags"],
+        ],
+        pencapaian: [
+          ["judul", "Judul"],
+          ["kategori", "Kategori (Prestasi, Organisasi, Sertifikat, ...)"],
+          ["tahun", "Tahun"],
+          ["penerbit", "Penyelenggara / lembaga"],
+          ["ringkas", "Ringkasan untuk kartu"],
+          ["deskripsi", "Deskripsi lengkap", "ta"],
+          ["gambar", "Foto sertifikat / dokumentasi", "img"],
+          ["gif", "GIF (opsional)", "img"],
+          ["link", "Link kredensial"],
+        ],
+        pengalaman: [
+          ["tahun", "Tahun (contoh: 2024 - sekarang)"],
+          ["posisi", "Posisi"],
+          ["tempat", "Tempat"],
+          ["deskripsi", "Deskripsi", "ta"],
+        ],
+        testimoni: [
+          ["isi", "Isi testimoni", "ta"],
+          ["nama", "Nama"],
+          ["jabatan", "Jabatan"],
+        ],
+      };
+      function el(t, c, x) {
+        var e = document.createElement(t);
+        if (c) e.className = c;
+        if (x != null) e.textContent = x;
+        return e;
+      }
+      function api(u, o) {
+        return fetch(u, o).then(function (r) {
+          return r
+            .json()
+            .catch(function () {
+              return {};
+            })
+            .then(function (j) {
+              if (!r.ok) {
+                var e = new Error(j.error || "Gagal");
+                e.status = r.status;
+                throw e;
+              }
+              return j;
+            });
+        });
+      }
+      function say(m) {
+        var s = document.getElementById("edst");
+        if (s) s.textContent = m;
+      }
+      function b64(b) {
+        return new Promise(function (ok, no) {
+          var r = new FileReader();
+          r.onload = function () {
+            ok(r.result.split(",")[1]);
+          };
+          r.onerror = no;
+          r.readAsDataURL(b);
+        });
+      }
+      async function shrink(f) {
+        var bm = await createImageBitmap(f),
+          k = Math.min(1, 1600 / Math.max(bm.width, bm.height)),
+          c = document.createElement("canvas");
+        c.width = Math.round(bm.width * k);
+        c.height = Math.round(bm.height * k);
+        var x = c.getContext("2d");
+        x.fillStyle = "#fff";
+        x.fillRect(0, 0, c.width, c.height);
+        x.drawImage(bm, 0, 0, c.width, c.height);
+        return new Promise(function (ok) {
+          c.toBlob(ok, "image/jpeg", 0.86);
+        });
+      }
+      async function upload(f, kind) {
+        var okT =
+          kind === "pdf"
+            ? ["application/pdf"]
+            : ["image/jpeg", "image/png", "image/webp", "image/gif"];
+        if (okT.indexOf(f.type) < 0)
+          throw new Error(
+            kind === "pdf"
+              ? "File harus PDF"
+              : "File harus JPG, PNG, WEBP, atau GIF",
+          );
+        var blob = f,
+          type = f.type;
+        if (kind === "img" && type !== "image/gif") {
+          blob = await shrink(f);
+          type = "image/jpeg";
+        }
+        if (blob.size > 3 * 1024 * 1024)
+          throw new Error("Maksimal 3 MB. Kompres dulu filenya.");
+        var r = await api("/api/upload", {
+          method: "POST",
+          headers: J,
+          body: JSON.stringify({ type: type, data: await b64(blob) }),
+        });
+        return r.url;
+      }
+      function field(t, f) {
+        var k = f[0],
+          type = f[2],
+          w = el("div", "f");
+        w.append(el("label", "", f[1]));
+        if (type === "img" || type === "pdf") {
+          var tx = el("input");
+          tx.type = "text";
+          tx.placeholder = "Tempel URL, atau pilih file di bawah";
+          tx.value = t[k] || "";
+          var row = el("div", "up"),
+            fi = el("input");
+          fi.type = "file";
+          fi.accept = type === "pdf" ? "application/pdf" : "image/*";
+          var pv = el("span");
+          var show = function () {
+            pv.innerHTML = "";
+            if (!t[k]) return;
+            if (type === "img") {
+              var im = el("img");
+              im.src = t[k];
+              pv.append(im);
+            } else {
+              var a = el("a", "", "Lihat file");
+              a.href = t[k];
+              a.target = "_blank";
+              pv.append(a);
+            }
+          };
+          tx.oninput = function () {
+            t[k] = tx.value.trim();
+            show();
+          };
+          fi.onchange = async function () {
+            var f0 = fi.files[0];
+            if (!f0) return;
+            say("Mengunggah...");
+            try {
+              t[k] = await upload(f0, type);
+              tx.value = t[k];
+              say("Selesai diunggah. Klik Simpan.");
+              show();
+            } catch (e) {
+              say(e.message);
+            }
+            fi.value = "";
+          };
+          var cl = el("button", "eb", "Hapus");
+          cl.type = "button";
+          cl.onclick = function () {
+            t[k] = "";
+            tx.value = "";
+            show();
+          };
+          row.append(fi, cl, pv);
+          w.append(tx, row);
+          show();
+          return w;
+        }
+        var i =
+          type === "ta" || type === "paras" ? el("textarea") : el("input");
+        if (i.tagName === "INPUT")
+          i.type =
+            type === "num" ? "number" : type === "pw" ? "password" : "text";
+        i.value =
+          type === "tags"
+            ? (t[k] || []).join(", ")
+            : type === "paras"
+              ? (t[k] || []).join("\n\n")
+              : t[k] == null
+                ? ""
+                : t[k];
+        i.oninput = function () {
+          var v = i.value;
+          t[k] =
+            type === "num"
+              ? v === ""
+                ? ""
+                : Number(v)
+              : type === "tags"
+                ? v
+                    .split(",")
+                    .map(function (s) {
+                      return s.trim();
+                    })
+                    .filter(Boolean)
+                : type === "paras"
+                  ? v
+                      .split(/\n\s*\n/)
+                      .map(function (s) {
+                        return s.trim();
+                      })
+                      .filter(Boolean)
+                  : v;
+        };
+        w.append(i);
+        if (type === "paras" || type === "tags") {
+          var h = el(
+            "p",
+            "hint",
+            type === "paras"
+              ? "Pisahkan paragraf dengan satu baris kosong."
+              : "Pisahkan dengan koma.",
+          );
+          w.append(h);
+        }
+        return w;
+      }
+      var ed = document.getElementById("ed");
+      ed.onclick = function (e) {
+        if (e.target === ed) ed.close();
+      };
+      function render() {
+        start(DT);
+      }
+      var EDIT = {
+        open: function (title, fields, src, onSave, onDel, label) {
+          var tmp = JSON.parse(JSON.stringify(src)),
+            box = el("div", "edb"),
+            x = el("button", "mx", "X");
+          x.type = "button";
+          x.onclick = function () {
+            ed.close();
+          };
+          box.append(el("h3", "", title));
+          fields.forEach(function (f) {
+            box.append(field(tmp, f));
+          });
+          var st = el("p", "hint");
+          st.id = "edst";
+          box.append(st);
+          var bar = el("div", "bar"),
+            ok = el("button", "bt", label || "Simpan");
+          ok.type = "button";
+          ok.onclick = function () {
+            ok.disabled = true;
+            st.textContent = "Menyimpan...";
+            Promise.resolve()
+              .then(function () {
+                var r = onSave(tmp);
+                return r && r.then ? r : EDIT.save();
+              })
+              .then(function () {
+                ed.close();
+              })
+              .catch(function (e) {
+                st.textContent = e.message || "Gagal";
+                ok.disabled = false;
+              });
+          };
+          bar.append(ok);
+          if (onDel) {
+            var d = el("button", "bt rd", "Hapus");
+            d.type = "button";
+            d.onclick = function () {
+              if (!confirm("Hapus item ini?")) return;
+              Promise.resolve()
+                .then(function () {
+                  onDel();
+                  return EDIT.save();
+                })
+                .then(function () {
+                  ed.close();
+                })
+                .catch(function (e) {
+                  st.textContent = e.message || "Gagal";
+                });
+            };
+            bar.append(d);
+          }
+          box.append(bar);
+          box.onkeydown = function (e) {
+            if (
+              e.key === "Enter" &&
+              e.target.tagName === "INPUT" &&
+              e.target.type !== "file"
+            ) {
+              e.preventDefault();
+              ok.click();
+            }
+          };
+          ed.innerHTML = "";
+          ed.append(x, box);
+          if (!ed.open) ed.showModal();
+        },
+        save: function () {
+          return api("/api/data", {
+            method: "PUT",
+            headers: J,
+            body: JSON.stringify(DT),
+          })
+            .then(function () {
+              render();
+            })
+            .catch(function (e) {
+              if (e.status === 401) {
+                ADM = false;
+                render();
+              }
+              throw e;
+            });
+        },
+        obj: function (title, key) {
+          var t = key === "profil" ? DT : (DT[key] = DT[key] || {}),
+            src = {};
+          SC[key].forEach(function (f) {
+            src[f[0]] = t[f[0]];
+          });
+          EDIT.open(title, SC[key], src, function (v) {
+            Object.assign(t, v);
+          });
+        },
+        val: function (key, label, type) {
+          EDIT.open(
+            label,
+            [["v", label, type]],
+            { v: DT[key] || [] },
+            function (t) {
+              DT[key] = t.v;
+            },
+          );
+        },
+        item: function (key, i) {
+          var a = DT[key];
+          EDIT.open(
+            "Edit",
+            SC[key],
+            a[i],
+            function (v) {
+              a[i] = v;
+            },
+            function () {
+              a.splice(i, 1);
+            },
+          );
+        },
+        add: function (key) {
+          var a = (DT[key] = DT[key] || []);
+          EDIT.open("Tambah", SC[key], {}, function (v) {
+            if (a.indexOf(v) < 0) a.push(v);
+          });
+        },
+        move: function (key, i, d) {
+          var a = DT[key],
+            j = i + d;
+          if (j < 0 || j >= a.length) return;
+          var t = a[i];
+          a[i] = a[j];
+          a[j] = t;
+          EDIT.save().catch(function (e) {
+            alert(e.message);
+          });
+        },
+        login: function () {
+          EDIT.open(
+            "Login admin",
+            [["password", "Password", "pw"]],
+            {},
+            function (v) {
+              return api("/api/login", {
+                method: "POST",
+                headers: J,
+                body: JSON.stringify({ password: v.password }),
+              }).then(function () {
+                ADM = true;
+                render();
+              });
+            },
+            null,
+            "Masuk",
+          );
+        },
+        pw: function () {
+          EDIT.open(
+            "Ganti password",
+            [
+              ["lama", "Password lama", "pw"],
+              ["baru", "Password baru (minimal 10 karakter)", "pw"],
+              ["ulang", "Ulangi password baru", "pw"],
+            ],
+            {},
+            function (v) {
+              if (v.baru !== v.ulang)
+                return Promise.reject(new Error("Password baru tidak sama"));
+              return api("/api/password", {
+                method: "POST",
+                headers: J,
+                body: JSON.stringify({ lama: v.lama, baru: v.baru }),
+              }).then(function () {
+                alert("Password berhasil diganti.");
+              });
+            },
+            null,
+            "Ganti",
+          );
+        },
+        logout: function () {
+          api("/api/login", { method: "DELETE" }).then(function () {
+            ADM = false;
+            render();
+          });
+        },
+      };
+      Promise.all([
+        api("/api/login").catch(function () {
+          return { ok: false };
+        }),
+        api("/api/data?t=" + Date.now()).catch(function () {
+          return {};
+        }),
+      ]).then(function (r) {
+        ADM = !!r[0].ok;
+        DT = Object.assign({}, EMPTY, r[1]);
+        render();
+      });
+    </script>
+  </body>
+</html>

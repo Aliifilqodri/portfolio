@@ -1,0 +1,7 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "scripts": { "start": "node dev.js", "dev": "node dev.js" },
+  "dependencies": { "mongodb": "^6.8.0" },
+  "engines": { "node": ">=18" }
+}
