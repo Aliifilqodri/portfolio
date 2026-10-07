@@ -1961,10 +1961,14 @@
                         cv.style.height = "580px";
                         cv.appendChild(
                           h("iframe", {
-                            src: "https://www.tiktok.com/embed/v2/" + m[1],
+                            src:
+                              "https://www.tiktok.com/player/v1/" +
+                              m[1] +
+                              "?autoplay=1&music_info=1&description=1",
                             title: k.judul,
-                            loading: "lazy",
-                            allow: "fullscreen",
+                            allow:
+                              "autoplay; fullscreen; picture-in-picture; encrypted-media",
+                            allowfullscreen: "",
                           }),
                         );
                         b.remove();
