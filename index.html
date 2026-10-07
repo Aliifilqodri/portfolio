@@ -10,19 +10,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --rd: #e23636;
-        --bl: #1e4fd6;
-        --ye: #ffe033;
-        --ink: #111;
+        --rd: #ec1d24;
+        --bl: #0b2a6b;
+        --ye: #f5c518;
+        --ink: #0a0a0a;
         --pp: #fff;
         color-scheme: light;
-        --d: "Bangers", "Impact", sans-serif;
-        --b: "Comic Neue", "Comic Sans MS", system-ui, sans-serif;
+        --d: "Anton", "Impact", sans-serif;
+        --b: "Barlow", system-ui, sans-serif;
         box-sizing: border-box;
         padding-top: env(safe-area-inset-top, 0px);
         padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -1279,6 +1279,54 @@
           left: 130%;
         }
       }
+      #in {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 300;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+      }
+      #in img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: contrast(1.1) saturate(1.2);
+      }
+      #in:not(.fin)::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(transparent 40%, #000 100%);
+      }
+      .inm {
+        position: relative;
+        font: 400 clamp(44px, 12vw, 150px)/1 var(--d);
+        color: #fff;
+        background: var(--rd);
+        padding: 0.05em 0.3em;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: scale(1.3);
+      }
+      #in.fin .inm {
+        opacity: 1;
+        transform: none;
+        transition: all 0.25s;
+      }
+      #in.fin {
+        animation: inout 0.4s 0.9s forwards;
+      }
+      @keyframes inout {
+        to {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         .tape div {
           animation: none;
@@ -1303,7 +1351,57 @@
     <div id="adm"></div>
 
     <script>
+      function intro(D) {
+        if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+        try {
+          if (sessionStorage.getItem("in")) return;
+          sessionStorage.setItem("in", "1");
+        } catch (e) {}
+        var A = function (x) {
+            return Array.isArray(x) ? x : [];
+          },
+          im = A(D.proyek)
+            .concat(A(D.pencapaian), A(D.pengalaman))
+            .map(function (x) {
+              return x.gambar || x.foto;
+            })
+            .filter(Boolean)
+            .slice(0, 14);
+        im.forEach(function (u) {
+          new Image().src = u;
+        });
+        var pic = document.createElement("img"),
+          o = document.createElement("div"),
+          nm = document.createElement("div"),
+          i = 0;
+        pic.alt = "";
+        o.id = "in";
+        nm.className = "inm";
+        nm.textContent = D.nama || "";
+        o.append(pic, nm);
+        document.body.appendChild(o);
+        var t = setInterval(function () {
+          if (i < im.length) {
+            pic.src = im[i++];
+          } else {
+            clearInterval(t);
+            pic.style.display = "none";
+            o.classList.add("fin");
+            setTimeout(function () {
+              o.remove();
+            }, 1400);
+          }
+        }, 110);
+        o.onclick = function () {
+          clearInterval(t);
+          o.remove();
+        };
+      }
       function start(D) {
+        if (!window.introDone) {
+          window.introDone = 1;
+          intro(D);
+        }
         var app = document.getElementById("app");
         app.innerHTML = "";
         document.getElementById("nav").innerHTML = "";
@@ -1661,7 +1759,7 @@
           ["skill", "Tech", ar(D.skill).length],
           ["proyek", "Proyek", ar(D.proyek).length],
           ["pencapaian", "Pencapaian", ar(D.pencapaian).length],
-          ["konten", "Siaran", ar(D.konten).length],
+          ["konten", "Post-credit", ar(D.konten).length],
           ["pengalaman", "Pengalaman", ar(D.pengalaman).length],
           ["cv", "CV", D.cv && D.cv.file ? 1 : 0],
           ["testimoni", "Testimoni", ar(D.testimoni).length],
@@ -1839,7 +1937,7 @@
         if (ADM || ar(D.konten).length)
           sec(
             "konten",
-            "Siaran khusus",
+            "Post-credit scene",
             paged(
               ar(D.konten).map(function (k, i) {
                 var m = String(k.link || "").match(
@@ -1910,7 +2008,7 @@
         if (ADM || ar(D.pengalaman).length)
           sec(
             "pengalaman",
-            "Sementara itu...",
+            "Fase karier",
             grid(
               ar(D.pengalaman).map(function (x) {
                 return {
@@ -2184,11 +2282,16 @@
         var K = D.kontak || {},
           bt = [],
           info = [];
-        ["github", "instagram", "linkedin", "tiktok", "youtube"].forEach(
-          function (n) {
-            if (K[n]) bt.push([n.charAt(0).toUpperCase() + n.slice(1), K[n]]);
-          },
-        );
+        [
+          "github",
+          "instagram",
+          "linkedin",
+          "tiktok",
+          "wattpad",
+          "youtube",
+        ].forEach(function (n) {
+          if (K[n]) bt.push([n.charAt(0).toUpperCase() + n.slice(1), K[n]]);
+        });
         if (K.email) info.push(["@", "Email", K.email, "mailto:" + K.email]);
         if (K.whatsapp)
           info.push([
@@ -2199,7 +2302,7 @@
           ]);
         if (D.lokasi) info.push(["LOK", "Lokasi", D.lokasi, null]);
         var left = h("div", {}, [
-          h("h2", {}, ["Bersambung..."]),
+          h("h2", {}, ["Ayo assemble!"]),
           h("p", {}, [K.ajakan]),
           h(
             "div",
@@ -2428,6 +2531,7 @@
           ["instagram", "Link Instagram"],
           ["linkedin", "Link LinkedIn"],
           ["tiktok", "Link TikTok"],
+          ["wattpad", "Link Wattpad"],
           ["youtube", "Link YouTube"],
         ],
         tally: [["pesan", "ID form Tally untuk pesan"]],
