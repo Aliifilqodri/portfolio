@@ -1061,6 +1061,162 @@
         min-height: 20px;
         margin: 0 0 10px;
       }
+      .ch {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .ch small {
+        font-weight: 700;
+        font-size: 13px;
+      }
+      .ch button {
+        font: 700 13px var(--b);
+        background: var(--ye);
+        color: var(--ink);
+        border: 2px solid var(--ink);
+        padding: 2px 8px;
+        cursor: pointer;
+      }
+      .ch button:hover {
+        background: var(--rd);
+        color: #fff;
+      }
+      .xi {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-bottom: 4px solid var(--ink);
+        margin-bottom: 10px;
+      }
+      .xg {
+        display: block;
+        width: 96px;
+        margin: 10px 16px 0;
+        border: 3px solid var(--ink);
+      }
+      .kn {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+        gap: 26px;
+      }
+      .kn > div {
+        background: #fff;
+        border: 4px solid var(--ink);
+        box-shadow: 7px 7px 0 var(--ink);
+      }
+      .kc {
+        position: relative;
+        aspect-ratio: 3/4;
+        background: var(--ink);
+        overflow: hidden;
+      }
+      .kc img,
+      .kc iframe {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: 0;
+        display: block;
+      }
+      .kp {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        background: var(--rd);
+        color: #fff;
+        border: 3px solid var(--ink);
+        font: 400 18px var(--d);
+        padding: 0 10px;
+      }
+      .kb {
+        padding: 14px 16px;
+      }
+      .kn h3 {
+        font: 400 24px/1.1 var(--d);
+        margin: 0 0 6px;
+      }
+      .kn p {
+        margin: 0 0 10px;
+        font-size: 15px;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        body::before {
+          content: "";
+          position: fixed;
+          inset: 0;
+          background: #fff;
+          z-index: 99;
+          pointer-events: none;
+          animation: flash 0.7s ease-out forwards;
+        }
+        @keyframes flash {
+          to {
+            opacity: 0;
+            visibility: hidden;
+          }
+        }
+        .hero h1 {
+          animation: hs 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.2) backwards;
+        }
+        @keyframes hs {
+          0% {
+            opacity: 0;
+            transform: scale(1.4) skewX(-12deg);
+            filter: brightness(3);
+          }
+          60% {
+            filter: brightness(1.6);
+          }
+          100% {
+            opacity: 1;
+            transform: none;
+            filter: none;
+          }
+        }
+        .pc,
+        .kn > div,
+        .ex > div {
+          transition:
+            transform 0.15s,
+            box-shadow 0.15s;
+        }
+        .pc:hover,
+        .kn > div:hover,
+        .ex > div:hover {
+          transform: translate(-4px, -4px) rotate(-0.8deg);
+          box-shadow: 11px 11px 0 var(--ink);
+        }
+        .cap {
+          animation: cp 3s steps(1) infinite;
+        }
+        @keyframes cp {
+          0%,
+          90% {
+            background: var(--ye);
+          }
+          93% {
+            background: var(--rd);
+            color: #fff;
+          }
+          96%,
+          100% {
+            background: var(--ye);
+            color: var(--ink);
+          }
+        }
+        .bar i.on {
+          animation: gl 1.6s ease-in-out infinite alternate;
+        }
+        @keyframes gl {
+          to {
+            filter: brightness(1.4);
+          }
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         .tape div {
           animation: none;
@@ -1189,6 +1345,14 @@
               },
             ],
           ],
+          konten: [
+            [
+              "+ Konten",
+              function () {
+                EDIT.add("konten");
+              },
+            ],
+          ],
           cv: [
             [
               "Edit CV",
@@ -1253,6 +1417,18 @@
                   [sub || "Buka link"],
                 )
               : null,
+            it.figma
+              ? h(
+                  "a",
+                  {
+                    c: "bt y",
+                    href: it.figma,
+                    target: "_blank",
+                    rel: "noopener",
+                  },
+                  ["Lihat desain Figma"],
+                )
+              : null,
           ]);
           var m = img(it.gambar, it.judul),
             g = img(it.gif, it.judul);
@@ -1282,6 +1458,56 @@
           b.dataset.k = it.kategori || "";
           return b;
         }
+        function pgr(n, per, pg, go) {
+          var pn = h("div", { c: "pg" }),
+            m = Math.ceil(n / per);
+          if (m < 2) return pn;
+          var pv = h("button", { type: "button", "aria-label": "Sebelumnya" }, [
+            "<",
+          ]);
+          pv.disabled = pg === 0;
+          pv.onclick = function () {
+            go(pg - 1);
+          };
+          pn.appendChild(pv);
+          for (var i = 0; i < m; i++)
+            (function (i) {
+              var b = h(
+                "button",
+                { type: "button", "aria-label": "Halaman " + (i + 1) },
+                ["" + (i + 1)],
+              );
+              if (i === pg) b.setAttribute("aria-current", "true");
+              b.onclick = function () {
+                go(i);
+              };
+              pn.appendChild(b);
+            })(i);
+          var nx = h("button", { type: "button", "aria-label": "Berikutnya" }, [
+            ">",
+          ]);
+          nx.disabled = pg === m - 1;
+          nx.onclick = function () {
+            go(pg + 1);
+          };
+          pn.appendChild(nx);
+          return pn;
+        }
+        function paged(els, per, cls) {
+          var list = h("div", { c: cls || "" }),
+            pw = h("div", {}),
+            box = h("div", {}, [list, pw]);
+          function go(p) {
+            list.innerHTML = "";
+            els.slice(p * per, p * per + per).forEach(function (e) {
+              list.appendChild(e);
+            });
+            pw.innerHTML = "";
+            pw.appendChild(pgr(els.length, per, p, go));
+          }
+          go(0);
+          return box;
+        }
         function grid(items, cls, tagf, sub, key) {
           var cats = ["Semua"];
           items.forEach(function (p) {
@@ -1289,14 +1515,28 @@
               cats.push(p.kategori);
           });
           var cards = items.map(function (p, i) {
-            var c = card(p, i, tagf(p));
-            c.onclick = function () {
-              openM(p, sub);
-            };
-            var w = h("div", { c: "cw" }, [c, ctl(key, i)]);
-            w.dataset.k = p.kategori || "";
-            return w;
-          });
+              var c = card(p, i, tagf(p));
+              c.onclick = function () {
+                openM(p, sub);
+              };
+              var w = h("div", { c: "cw" }, [c, ctl(key, i)]);
+              w.dataset.k = p.kategori || "";
+              return w;
+            }),
+            cat = "Semua",
+            wrap = h("div", {});
+          function draw() {
+            wrap.innerHTML = "";
+            wrap.appendChild(
+              paged(
+                cards.filter(function (k) {
+                  return cat === "Semua" || k.dataset.k === cat;
+                }),
+                6,
+                "pj " + cls,
+              ),
+            );
+          }
           var fl = h(
             "div",
             { c: "fl" },
@@ -1311,15 +1551,15 @@
                     fl.querySelectorAll("button").forEach(function (y) {
                       y.setAttribute("aria-pressed", y === b);
                     });
-                    cards.forEach(function (k) {
-                      k.hidden = i > 0 && k.dataset.k !== c;
-                    });
+                    cat = c;
+                    draw();
                   };
                   return b;
                 })
               : [],
           );
-          return h("div", {}, [fl, h("div", { c: "pj " + cls }, cards)]);
+          draw();
+          return h("div", {}, [fl, wrap]);
         }
         function sec(id, title, body) {
           var a = ADM
@@ -1347,9 +1587,10 @@
             "Tentang",
             ar(D.tentang).length || ar(D.statistik).length,
           ],
-          ["skill", "Skill", ar(D.skill).length],
+          ["skill", "Tech", ar(D.skill).length],
           ["proyek", "Proyek", ar(D.proyek).length],
           ["pencapaian", "Pencapaian", ar(D.pencapaian).length],
+          ["konten", "Siaran", ar(D.konten).length],
           ["pengalaman", "Pengalaman", ar(D.pengalaman).length],
           ["cv", "CV", D.cv && D.cv.file ? 1 : 0],
           ["testimoni", "Testimoni", ar(D.testimoni).length],
@@ -1454,18 +1695,41 @@
         if (ADM || ar(D.skill).length)
           sec(
             "skill",
-            "Statistik kekuatan",
+            "Tech stack",
             h(
               "div",
               { c: "gg" },
-              D.skill.map(function (s, si) {
+              ar(D.skill).map(function (s, si) {
                 var on = Math.round(s.level / 10),
                   b = [];
                 for (var i = 0; i < 10; i++)
                   b.push(h("i", { c: i < on ? "on" : "" }));
+                var used = ar(s.proyek)
+                  .map(function (n) {
+                    var p = ar(D.proyek).filter(function (q) {
+                      return (
+                        (q.judul || "").toLowerCase() ===
+                        String(n).trim().toLowerCase()
+                      );
+                    })[0];
+                    if (!p) return null;
+                    var bb = h("button", { type: "button" }, [p.judul]);
+                    bb.onclick = function () {
+                      openM(p, "Buka proyek");
+                    };
+                    return bb;
+                  })
+                  .filter(Boolean);
                 return h("div", {}, [
                   h("b", {}, [s.nama]),
                   h("div", { c: "bar" }, b),
+                  used.length
+                    ? h(
+                        "div",
+                        { c: "ch" },
+                        [h("small", {}, ["Dipakai di:"])].concat(used),
+                      )
+                    : null,
                   ctl("skill", si),
                 ]);
               }),
@@ -1501,22 +1765,99 @@
             ),
           );
 
+        if (ADM || ar(D.konten).length)
+          sec(
+            "konten",
+            "Siaran khusus",
+            paged(
+              ar(D.konten).map(function (k, i) {
+                var m = String(k.link || "").match(
+                    /tiktok\.com\/.*\/video\/(\d+)/,
+                  ),
+                  wp = /wattpad/i.test((k.platform || "") + (k.link || ""));
+                var cv = h("div", { c: "kc" }, [
+                  img(k.gambar, k.judul),
+                  h("span", { c: "kp" }, [
+                    k.platform || (m ? "TikTok" : wp ? "Wattpad" : "Konten"),
+                  ]),
+                ]);
+                var act = m
+                  ? (function () {
+                      var b = h("button", { c: "bt", type: "button" }, [
+                        "Putar preview",
+                      ]);
+                      b.onclick = function () {
+                        cv.innerHTML = "";
+                        cv.style.aspectRatio = "auto";
+                        cv.style.height = "580px";
+                        cv.appendChild(
+                          h("iframe", {
+                            src: "https://www.tiktok.com/embed/v2/" + m[1],
+                            title: k.judul,
+                            loading: "lazy",
+                            allow: "fullscreen",
+                          }),
+                        );
+                        b.remove();
+                      };
+                      return b;
+                    })()
+                  : null;
+                return h("div", {}, [
+                  cv,
+                  h("div", { c: "kb" }, [
+                    h("h3", {}, [k.judul]),
+                    h("p", {}, [k.deskripsi || ""]),
+                    act,
+                    k.link
+                      ? h(
+                          "a",
+                          {
+                            c: "bt y",
+                            href: k.link,
+                            target: "_blank",
+                            rel: "noopener",
+                          },
+                          [
+                            m
+                              ? "Buka di TikTok"
+                              : wp
+                                ? "Baca di Wattpad"
+                                : "Buka link",
+                          ],
+                        )
+                      : null,
+                  ]),
+                  ctl("konten", i),
+                ]);
+              }),
+              6,
+              "kn",
+            ),
+          );
+
         if (ADM || ar(D.pengalaman).length)
           sec(
             "pengalaman",
             "Sementara itu...",
-            h(
-              "div",
-              { c: "ex" },
-              D.pengalaman.map(function (x, i) {
+            paged(
+              ar(D.pengalaman).map(function (x, i) {
+                var im = img(x.foto, x.posisi),
+                  g = img(x.gif, x.posisi);
+                if (im) im.className = "xi";
+                if (g) g.className = "xg";
                 return h("div", {}, [
+                  im,
                   h("time", {}, [x.tahun]),
                   h("h3", {}, [x.posisi]),
                   h("small", {}, [x.tempat]),
                   h("p", {}, [x.deskripsi]),
+                  g,
                   ctl("pengalaman", i),
                 ]);
               }),
+              6,
+              "ex",
             ),
           );
 
@@ -1921,7 +2262,7 @@
           );
           document
             .querySelectorAll(
-              ".pc,.nr,.st div,.gg,.ex>div,blockquote,.ct,.pvh,.fm",
+              ".pc,.kn>div,.nr,.st div,.gg,.ex>div,blockquote,.ct,.pvh,.fm",
             )
             .forEach(function (el) {
               el.classList.add("rv");
@@ -1945,6 +2286,7 @@
         proyek: [],
         pencapaian: [],
         pengalaman: [],
+        konten: [],
         testimoniPerHalaman: 3,
         testimoni: [],
         tally: {},
@@ -1985,8 +2327,13 @@
           ["label", "Keterangan"],
         ],
         skill: [
-          ["nama", "Nama skill"],
+          ["nama", "Nama tech"],
           ["level", "Level 0 - 100", "num"],
+          [
+            "proyek",
+            "Dipakai di proyek (tulis judul proyek persis, pisahkan koma)",
+            "tags",
+          ],
         ],
         proyek: [
           ["judul", "Judul"],
@@ -1997,6 +2344,7 @@
           ["gambar", "Gambar", "img"],
           ["gif", "GIF (opsional)", "img"],
           ["link", "Link demo / repo"],
+          ["figma", "Link Figma (opsional)"],
           ["tech", "Teknologi (pisahkan dengan koma)", "tags"],
         ],
         pencapaian: [
@@ -2015,6 +2363,15 @@
           ["posisi", "Posisi"],
           ["tempat", "Tempat"],
           ["deskripsi", "Deskripsi", "ta"],
+          ["foto", "Foto kegiatan", "img"],
+          ["gif", "GIF (opsional)", "img"],
+        ],
+        konten: [
+          ["judul", "Judul"],
+          ["platform", "Platform (TikTok / Wattpad)"],
+          ["link", "Link video TikTok atau cerita Wattpad"],
+          ["gambar", "Cover / thumbnail", "img"],
+          ["deskripsi", "Deskripsi singkat", "ta"],
         ],
         testimoni: [
           ["isi", "Isi testimoni", "ta"],
