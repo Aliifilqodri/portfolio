@@ -622,6 +622,18 @@
         width: 100%;
         border-bottom: 5px solid var(--ink);
       }
+      .mm img.gt {
+        width: 200px;
+        max-width: 42%;
+        margin: 14px 24px 0;
+        border: 4px solid var(--ink);
+        cursor: zoom-in;
+      }
+      .mm img.gt.big {
+        width: auto;
+        max-width: calc(100% - 48px);
+        cursor: zoom-out;
+      }
       .mb {
         padding: 20px 24px 26px;
       }
@@ -1242,14 +1254,16 @@
                 )
               : null,
           ]);
-          dlg.append(
-            x,
-            h("div", { c: "mm" }, [
-              img(it.gif, it.judul),
-              img(it.gambar, it.judul),
-            ]),
-            body,
-          );
+          var m = img(it.gambar, it.judul),
+            g = img(it.gif, it.judul);
+          if (m && g) {
+            g.classList.add("gt");
+            g.title = "Klik untuk memperbesar";
+            g.onclick = function () {
+              g.classList.toggle("big");
+            };
+          }
+          dlg.append(x, h("div", { c: "mm" }, m ? [m, g] : [g]), body);
           dlg.showModal();
         }
         function card(it, i, tag) {
