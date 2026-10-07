@@ -1022,6 +1022,33 @@
       .bt:disabled {
         opacity: 0.5;
       }
+      .tf label {
+        display: block;
+        font: 400 19px var(--d);
+        letter-spacing: 1px;
+        margin-bottom: 2px;
+      }
+      .tf input,
+      .tf textarea {
+        width: 100%;
+        box-sizing: border-box;
+        border: 3px solid var(--ink);
+        padding: 10px 12px;
+        font: 700 17px var(--b);
+        color: var(--ink);
+        background: #fff;
+        margin-bottom: 14px;
+        border-radius: 0;
+      }
+      .tf textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      .tf .hint {
+        font-size: 14px;
+        min-height: 20px;
+        margin: 0 0 10px;
+      }
       @media (prefers-reduced-motion: reduce) {
         .tape div {
           animation: none;
@@ -1573,82 +1600,160 @@
           dlg.append(x, h("div", { c: "mm" }, body));
           dlg.showModal();
         }
-        var TL = D.tally || {};
-        if (ADM || ar(D.testimoni).length || TL.testimoni)
-          (function () {
-            var T = ar(D.testimoni),
-              per = D.testimoniPerHalaman || 3,
-              pg = 0,
-              list = h("div", { c: "ts" }),
-              pn = h("div", { c: "pg" });
-            function draw() {
-              list.innerHTML = "";
-              pn.innerHTML = "";
-              T.slice(pg * per, pg * per + per).forEach(function (x, j) {
-                list.appendChild(
-                  h("div", {}, [
-                    h("blockquote", {}, [
-                      h("p", {}, ['"' + x.isi + '"']),
-                      h("cite", {}, [
-                        x.nama + (x.jabatan ? ", " + x.jabatan : ""),
-                      ]),
-                    ]),
-                    ctl("testimoni", pg * per + j),
+        function openTesti() {
+          dlg.innerHTML = "";
+          var x = h("button", { c: "mx", "aria-label": "Tutup" }, ["X"]);
+          x.onclick = function () {
+            dlg.close();
+          };
+          var fn = h("input", {
+              id: "tn",
+              maxlength: "80",
+              required: "",
+              placeholder: "Nama kamu",
+            }),
+            fj = h("input", {
+              id: "tj",
+              maxlength: "80",
+              placeholder: "Jabatan atau asal (opsional)",
+            }),
+            fi = h("textarea", {
+              id: "ti",
+              maxlength: "600",
+              required: "",
+              placeholder: "Tulis testimonimu",
+            }),
+            hp = h("input", {
+              name: "website",
+              tabindex: "-1",
+              autocomplete: "off",
+              "aria-hidden": "true",
+              style: "position:absolute;left:-9999px",
+            });
+          var st = h("p", { c: "hint" }),
+            sb = h("button", { c: "bt", type: "submit" }, ["Kirim testimoni"]);
+          var f = h("form", {}, [
+            h("label", { for: "tn" }, ["Nama"]),
+            fn,
+            h("label", { for: "tj" }, ["Jabatan"]),
+            fj,
+            h("label", { for: "ti" }, ["Testimoni"]),
+            fi,
+            hp,
+            st,
+            sb,
+          ]);
+          f.onsubmit = function (e) {
+            e.preventDefault();
+            sb.disabled = true;
+            st.textContent = "Mengirim...";
+            api("/api/testimoni", {
+              method: "POST",
+              headers: J,
+              body: JSON.stringify({
+                nama: fn.value,
+                jabatan: fj.value,
+                isi: fi.value,
+                website: hp.value,
+              }),
+            })
+              .then(function () {
+                f.innerHTML = "";
+                f.appendChild(
+                  h("p", {}, [
+                    "Terima kasih! Testimonimu sudah tampil di halaman ini.",
                   ]),
                 );
+                return api("/api/data?t=" + Date.now()).then(function (d) {
+                  DT = Object.assign({}, EMPTY, d);
+                  render();
+                });
+              })
+              .catch(function (er) {
+                st.textContent = er.message || "Gagal mengirim";
+                sb.disabled = false;
               });
-              var n = Math.ceil(T.length / per);
-              if (n < 2) return;
-              var pv = h(
-                "button",
-                { type: "button", "aria-label": "Sebelumnya" },
-                ["<"],
+          };
+          dlg.append(
+            x,
+            h("div", { c: "mb tf" }, [h("h3", {}, ["Tulis testimoni"]), f]),
+          );
+          dlg.showModal();
+          fn.focus();
+        }
+        var TL = D.tally || {};
+        (function () {
+          var T = ar(D.testimoni),
+            per = D.testimoniPerHalaman || 3,
+            pg = 0,
+            list = h("div", { c: "ts" }),
+            pn = h("div", { c: "pg" });
+          function draw() {
+            list.innerHTML = "";
+            pn.innerHTML = "";
+            T.slice(pg * per, pg * per + per).forEach(function (x, j) {
+              list.appendChild(
+                h("div", {}, [
+                  h("blockquote", {}, [
+                    h("p", {}, ['"' + x.isi + '"']),
+                    h("cite", {}, [
+                      x.nama + (x.jabatan ? ", " + x.jabatan : ""),
+                    ]),
+                  ]),
+                  ctl("testimoni", pg * per + j),
+                ]),
               );
-              pv.disabled = pg === 0;
-              pv.onclick = function () {
-                pg--;
-                draw();
-              };
-              pn.appendChild(pv);
-              for (var i = 0; i < n; i++)
-                (function (i) {
-                  var b = h(
-                    "button",
-                    { type: "button", "aria-label": "Halaman " + (i + 1) },
-                    ["" + (i + 1)],
-                  );
-                  if (i === pg) b.setAttribute("aria-current", "true");
-                  b.onclick = function () {
-                    pg = i;
-                    draw();
-                  };
-                  pn.appendChild(b);
-                })(i);
-              var nx = h(
-                "button",
-                { type: "button", "aria-label": "Berikutnya" },
-                [">"],
-              );
-              nx.disabled = pg === n - 1;
-              nx.onclick = function () {
-                pg++;
-                draw();
-              };
-              pn.appendChild(nx);
-            }
-            draw();
-            var wb = h("button", { c: "bt", type: "button" }, [
-              "Tulis testimoni",
-            ]);
-            wb.onclick = function () {
-              openEmbed("Tulis testimoni", TL.testimoni);
-            };
-            sec(
-              "testimoni",
-              "Kata mereka",
-              h("div", {}, [list, pn, h("div", { c: "tw" }, [wb])]),
+            });
+            var n = Math.ceil(T.length / per);
+            if (n < 2) return;
+            var pv = h(
+              "button",
+              { type: "button", "aria-label": "Sebelumnya" },
+              ["<"],
             );
-          })();
+            pv.disabled = pg === 0;
+            pv.onclick = function () {
+              pg--;
+              draw();
+            };
+            pn.appendChild(pv);
+            for (var i = 0; i < n; i++)
+              (function (i) {
+                var b = h(
+                  "button",
+                  { type: "button", "aria-label": "Halaman " + (i + 1) },
+                  ["" + (i + 1)],
+                );
+                if (i === pg) b.setAttribute("aria-current", "true");
+                b.onclick = function () {
+                  pg = i;
+                  draw();
+                };
+                pn.appendChild(b);
+              })(i);
+            var nx = h(
+              "button",
+              { type: "button", "aria-label": "Berikutnya" },
+              [">"],
+            );
+            nx.disabled = pg === n - 1;
+            nx.onclick = function () {
+              pg++;
+              draw();
+            };
+            pn.appendChild(nx);
+          }
+          draw();
+          var wb = h("button", { c: "bt", type: "button" }, [
+            "Tulis testimoni",
+          ]);
+          wb.onclick = openTesti;
+          sec(
+            "testimoni",
+            "Kata mereka",
+            h("div", {}, [list, pn, h("div", { c: "tw" }, [wb])]),
+          );
+        })();
 
         var K = D.kontak || {},
           bt = [],
@@ -1860,10 +1965,7 @@
           ["tiktok", "Link TikTok"],
           ["youtube", "Link YouTube"],
         ],
-        tally: [
-          ["pesan", "ID form Tally untuk pesan"],
-          ["testimoni", "ID form Tally untuk testimoni"],
-        ],
+        tally: [["pesan", "ID form Tally untuk pesan"]],
         statistik: [
           ["angka", "Angka (contoh: 10+)"],
           ["label", "Keterangan"],
@@ -2174,14 +2276,22 @@
             headers: J,
             body: JSON.stringify(DT),
           })
-            .then(function () {
+            .then(function (r) {
+              DT._v = r.v;
               render();
             })
             .catch(function (e) {
               if (e.status === 401) {
                 ADM = false;
                 render();
+                throw e;
               }
+              if (e.status === 409)
+                return api("/api/data?t=" + Date.now()).then(function (d) {
+                  DT = Object.assign({}, EMPTY, d);
+                  render();
+                  throw e;
+                });
               throw e;
             });
         },
