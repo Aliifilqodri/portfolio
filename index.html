@@ -70,6 +70,24 @@
         justify-content: space-between;
         height: 60px;
       }
+      .lg {
+        display: flex;
+        gap: 4px;
+        margin-left: 14px;
+      }
+      .lg button {
+        font: 400 16px var(--d);
+        background: transparent;
+        color: #fff;
+        border: 2px solid #fff;
+        padding: 0 8px;
+        cursor: pointer;
+      }
+      .lg button[aria-pressed="true"] {
+        background: var(--ye);
+        color: var(--ink);
+        border-color: var(--ye);
+      }
       .logo {
         font: 400 32px var(--d);
         color: var(--ye);
@@ -1351,6 +1369,136 @@
     <div id="adm"></div>
 
     <script>
+      var TR = {
+        Tentang: ["About", "关于"],
+        Tech: ["Tech", "技术栈"],
+        Proyek: ["Projects", "项目"],
+        Pencapaian: ["Achievements", "成就"],
+        "Post-credit": ["Extras", "彩蛋"],
+        Pengalaman: ["Experience", "经历"],
+        Kontributor: ["Contributors", "贡献者"],
+        CV: ["CV", "简历"],
+        Testimoni: ["Testimonials", "评价"],
+        Kontak: ["Contact", "联系"],
+        "HAI!": ["HI!", "你好！"],
+        "Lihat karya": ["View my work", "查看作品"],
+        "Unduh CV": ["Download CV", "下载简历"],
+        "Hubungi saya": ["Contact me", "联系我"],
+        "Cerita asal": ["Origin story", "起源故事"],
+        "Tech stack": ["Tech stack", "技术栈"],
+        Misi: ["Missions", "任务"],
+        "Fase karier": ["Career phases", "职业阶段"],
+        "Post-credit scene": ["Post-credit scene", "片尾彩蛋"],
+        "Kontributor di hidupku": [
+          "Contributors in my life",
+          "我生命中的贡献者",
+        ],
+        "Berkas misi": ["Mission file", "任务档案"],
+        "Kata mereka": ["What they say", "他们的评价"],
+        "Ayo assemble!": ["Let's assemble!", "一起集结吧！"],
+        MISI: ["MISSION", "任务"],
+        Prestasi: ["Achievement", "成就"],
+        KONTRIBUTOR: ["CONTRIBUTOR", "贡献者"],
+        "Dipakai di:": ["Used in:", "用于："],
+        Semua: ["All", "全部"],
+        "Buka proyek": ["Open project", "打开项目"],
+        "Lihat kredensial": ["View credential", "查看证书"],
+        "Buka link": ["Open link", "打开链接"],
+        "Buka Instagram": ["Open Instagram", "打开 Instagram"],
+        "Lihat desain Figma": ["View Figma design", "查看 Figma 设计"],
+        "Putar preview": ["Play preview", "播放预览"],
+        "Buka di TikTok": ["Open on TikTok", "在 TikTok 打开"],
+        "Baca di Wattpad": ["Read on Wattpad", "在 Wattpad 阅读"],
+        "Preview CV": ["Preview CV", "预览简历"],
+        "Tutup preview": ["Close preview", "关闭预览"],
+        "Unduh PDF": ["Download PDF", "下载 PDF"],
+        "Buka di tab baru": ["Open in new tab", "在新标签页打开"],
+        'Klik "Preview CV" untuk melihat di sini': [
+          'Click "Preview CV" to view it here',
+          "点击“预览简历”在此查看",
+        ],
+        "Tulis testimoni": ["Write a testimonial", "写评价"],
+        Nama: ["Name", "姓名"],
+        Jabatan: ["Position", "职位"],
+        "Kirim testimoni": ["Send testimonial", "提交评价"],
+        "Mengirim...": ["Sending...", "发送中…"],
+        "Terima kasih! Testimonimu sudah tampil di halaman ini.": [
+          "Thank you! Your testimonial is now shown on this page.",
+          "谢谢！你的评价已显示在本页。",
+        ],
+        "Nama kamu": ["Your name", "你的姓名"],
+        "Jabatan atau asal (opsional)": [
+          "Position or origin (optional)",
+          "职位或来源（选填）",
+        ],
+        "Tulis testimonimu": ["Write your testimonial", "写下你的评价"],
+        "Kirim pesan": ["Send message", "发送消息"],
+        Email: ["Email", "邮箱"],
+        Pesan: ["Message", "留言"],
+        "Email kamu": ["Your email", "你的邮箱"],
+        "Tulis pesanmu": ["Write your message", "写下你的留言"],
+        Login: ["Log in", "登录"],
+        Sebelumnya: ["Previous", "上一页"],
+        Berikutnya: ["Next", "下一页"],
+        Tutup: ["Close", "关闭"],
+        "Klik untuk memperbesar": ["Click to enlarge", "点击放大"],
+      };
+      var LANG = "id";
+      try {
+        LANG = localStorage.getItem("lang") || "id";
+      } catch (e) {}
+      document.documentElement.lang = LANG === "zh" ? "zh-CN" : LANG;
+      function trs(s) {
+        if (LANG === "id") return s;
+        var k = s.trim(),
+          i = LANG === "en" ? 0 : 1,
+          v = TR[k];
+        if (v && k) return s.replace(k, v[i]);
+        var m = k.match(/^MISI(\s.*)$/);
+        return m ? s.replace(k, TR.MISI[i] + m[1]) : s;
+      }
+      function trn(n) {
+        if (LANG === "id" || !n) return;
+        if (n.nodeType === 3) {
+          var v = trs(n.nodeValue);
+          if (v !== n.nodeValue) n.nodeValue = v;
+          return;
+        }
+        if (n.nodeType !== 1) return;
+        var w = document.createTreeWalker(n, NodeFilter.SHOW_TEXT),
+          t,
+          a = [];
+        while ((t = w.nextNode())) a.push(t);
+        a.forEach(trn);
+        [n]
+          .concat(
+            [].slice.call(
+              n.querySelectorAll("[placeholder],[aria-label],[title]"),
+            ),
+          )
+          .forEach(function (e) {
+            ["placeholder", "aria-label", "title"].forEach(function (k) {
+              var x = e.getAttribute && e.getAttribute(k);
+              if (x) {
+                var v = trs(x);
+                if (v !== x) e.setAttribute(k, v);
+              }
+            });
+          });
+      }
+      new MutationObserver(function (ms) {
+        ms.forEach(function (m) {
+          m.addedNodes.forEach(trn);
+        });
+      }).observe(document.documentElement, { childList: true, subtree: true });
+      function setLang(l) {
+        LANG = l;
+        try {
+          localStorage.setItem("lang", l);
+        } catch (e) {}
+        document.documentElement.lang = l === "zh" ? "zh-CN" : l;
+        render();
+      }
       function intro(D) {
         if (matchMedia("(prefers-reduced-motion:reduce)").matches) return;
         try {
@@ -1401,6 +1549,18 @@
         if (!window.introDone) {
           window.introDone = 1;
           intro(D);
+        }
+        if (LANG !== "id" && D[LANG]) {
+          var ov = D[LANG],
+            cp = Object.assign({}, D);
+          ["peran", "tagline", "tersedia"].forEach(function (k) {
+            if (ov[k]) cp[k] = ov[k];
+          });
+          if (ov.tentang)
+            cp.tentang = String(ov.tentang)
+              .split(/\n\s*\n/)
+              .filter(Boolean);
+          D = cp;
         }
         var app = document.getElementById("app");
         app.innerHTML = "";
@@ -1510,6 +1670,14 @@
               "+ Konten",
               function () {
                 EDIT.add("konten");
+              },
+            ],
+          ],
+          orang: [
+            [
+              "+ Kontributor",
+              function () {
+                EDIT.add("orang");
               },
             ],
           ],
@@ -1761,6 +1929,7 @@
           ["pencapaian", "Pencapaian", ar(D.pencapaian).length],
           ["konten", "Post-credit", ar(D.konten).length],
           ["pengalaman", "Pengalaman", ar(D.pengalaman).length],
+          ["orang", "Kontributor", ar(D.orang).length],
           ["cv", "CV", D.cv && D.cv.file ? 1 : 0],
           ["testimoni", "Testimoni", ar(D.testimoni).length],
           ["kontak", "Kontak", 1],
@@ -1776,6 +1945,29 @@
             {},
             L.map(function (l) {
               return h("li", {}, [h("a", { href: "#" + l[0] }, [l[1]])]);
+            }),
+          ),
+          h(
+            "div",
+            { c: "lg" },
+            [
+              ["id", "ID"],
+              ["en", "EN"],
+              ["zh", "中文"],
+            ].map(function (l) {
+              var b = h(
+                "button",
+                {
+                  type: "button",
+                  "aria-pressed": LANG === l[0] ? "true" : "false",
+                  "aria-label": l[1],
+                },
+                [l[1]],
+              );
+              b.onclick = function () {
+                setLang(l[0]);
+              };
+              return b;
             }),
           ),
         );
@@ -1813,6 +2005,12 @@
                   ? h("div", {}, [
                       eb("Edit profil & foto", function () {
                         EDIT.obj("Profil", "profil");
+                      }),
+                      eb("Terjemahan EN", function () {
+                        EDIT.obj("Terjemahan English", "en");
+                      }),
+                      eb("Terjemahan 中文", function () {
+                        EDIT.obj("Terjemahan 中文", "zh");
                       }),
                     ])
                   : null,
@@ -1992,7 +2190,8 @@
                             rel: "noopener",
                           },
                           [
-                            m
+                            m ||
+                            /tiktok/i.test((k.platform || "") + (k.link || ""))
                               ? "Buka di TikTok"
                               : wp
                                 ? "Baca di Wattpad"
@@ -2031,6 +2230,33 @@
               },
               "",
               "pengalaman",
+            ),
+          );
+
+        if (ADM || ar(D.orang).length)
+          sec(
+            "orang",
+            "Kontributor di hidupku",
+            grid(
+              ar(D.orang).map(function (x) {
+                var raw = String(x.instagram || "").trim(),
+                  m = raw.match(/instagram\.com\/([^\/?#]+)/i),
+                  user = m ? m[1] : raw.replace(/^@/, "").split(/[\/?#\s]/)[0];
+                return {
+                  judul: x.nama,
+                  ringkas: user ? "@" + user : x.hubungan || "",
+                  deskripsi: x.deskripsi || x.kontribusi || "",
+                  gambar: x.foto,
+                  gif: x.gif,
+                  link: user ? "https://instagram.com/" + user : "",
+                };
+              }),
+              "",
+              function () {
+                return "KONTRIBUTOR";
+              },
+              "Buka Instagram",
+              "orang",
             ),
           );
 
@@ -2503,6 +2729,7 @@
         pencapaian: [],
         pengalaman: [],
         konten: [],
+        orang: [],
         testimoniPerHalaman: 3,
         testimoni: [],
         tally: {},
@@ -2589,6 +2816,32 @@
           ["link", "Link video TikTok atau cerita Wattpad"],
           ["gambar", "Cover / thumbnail", "img"],
           ["deskripsi", "Deskripsi singkat", "ta"],
+        ],
+        orang: [
+          ["nama", "Nama"],
+          ["instagram", "Instagram (username atau link)"],
+          ["deskripsi", "Deskripsi (opsional)", "ta"],
+          ["foto", "Foto", "img"],
+        ],
+        en: [
+          ["peran", "Peran (English)"],
+          ["tagline", "Tagline (English)", "ta"],
+          ["tersedia", "Status (English)"],
+          [
+            "tentang",
+            "Tentang saya (English, pisahkan paragraf dengan baris kosong)",
+            "ta",
+          ],
+        ],
+        zh: [
+          ["peran", "Peran (中文)"],
+          ["tagline", "Tagline (中文)", "ta"],
+          ["tersedia", "Status (中文)"],
+          [
+            "tentang",
+            "Tentang saya (中文, pisahkan paragraf dengan baris kosong)",
+            "ta",
+          ],
         ],
         testimoni: [
           ["isi", "Isi testimoni", "ta"],
