@@ -1742,6 +1742,88 @@
           transition: none;
         }
       }
+      .mb h4 {
+        font: 400 22px var(--d);
+        letter-spacing: 1px;
+        margin: 14px 0 8px;
+      }
+      .ktl {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .ktc {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        background: #fff;
+        border: 3px solid var(--ink);
+        box-shadow: 4px 4px 0 var(--ink);
+        padding: 6px 10px;
+      }
+      .ktc b {
+        font: 400 20px var(--d);
+        letter-spacing: 1px;
+        margin-right: 4px;
+      }
+      .ktc a {
+        font: 700 13px var(--b);
+        background: var(--ye);
+        border: 2px solid var(--ink);
+        padding: 0 8px;
+      }
+      .ktc a:hover {
+        background: var(--rd);
+        color: #fff;
+      }
+      .kst {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+      }
+      .kst i {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 3px solid var(--ink);
+        background: var(--ye);
+        color: var(--ink);
+        font: 400 15px/24px var(--d);
+        font-style: normal;
+        text-align: center;
+        margin-left: -8px;
+      }
+      .kst i:first-child {
+        margin-left: 0;
+      }
+      .kst i:nth-child(2) {
+        background: var(--bl);
+        color: #fff;
+      }
+      .kst i:nth-child(3) {
+        background: #fff;
+      }
+      .kst i.mo {
+        background: var(--rd);
+        color: #fff;
+      }
+      .edb .pr {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+      .edb .pr input[type="text"] {
+        flex: 1 1 130px;
+        width: auto;
+        margin-bottom: 0;
+      }
+      .edb .pp {
+        margin-bottom: 14px;
+      }
       @media (prefers-reduced-motion: reduce) {
         .tape div {
           animation: none;
@@ -1800,6 +1882,7 @@
         "Buka link": ["Open link", "打开链接"],
         "Buka Instagram": ["Open Instagram", "打开 Instagram"],
         "Buka LinkedIn": ["Open LinkedIn", "打开 LinkedIn"],
+        Kontributor: ["Contributors", "贡献者"],
         "Selalu ada buatku": ["Always there for me", "一直陪着我"],
         "Kata dari aku": ["From me", "我想说的话"],
         "Dari mereka": ["From them", "他们的话"],
@@ -2134,6 +2217,22 @@
             .map(function (m) {
               return h("span", { c: "tg" }, [m]);
             });
+          var kt = ktParse(it.kontributor).map(function (p) {
+            var x = nfInfo({ nama: p[0], instagram: p[1], linkedin: p[2] });
+            return h("div", { c: "ktc" }, [
+              h("b", {}, [x.nama]),
+              x.ig
+                ? h("a", { href: x.ig, target: "_blank", rel: "noopener" }, [
+                    "Instagram",
+                  ])
+                : null,
+              x.li
+                ? h("a", { href: x.li, target: "_blank", rel: "noopener" }, [
+                    "LinkedIn",
+                  ])
+                : null,
+            ]);
+          });
           var body = h("div", { c: "mb" }, [
             h("div", {}, meta),
             h("h3", {}, [it.judul]),
@@ -2145,6 +2244,12 @@
                 return h("span", { c: "tg" }, [t]);
               }),
             ),
+            kt.length
+              ? h("div", {}, [
+                  h("h4", {}, ["Kontributor"]),
+                  h("div", { c: "ktl" }, kt),
+                ])
+              : null,
             it.link
               ? h(
                   "a",
@@ -2177,6 +2282,39 @@
           dlg.append(x, h("div", { c: "mm" }, m ? [m, g] : [g]), body);
           dlg.showModal();
         }
+        function ktParse(s) {
+          return String(s || "")
+            .split("\n")
+            .map(function (l) {
+              return l.split("|").map(function (x) {
+                return x.trim();
+              });
+            })
+            .filter(function (p) {
+              return p[0];
+            });
+        }
+        function ktStack(it) {
+          var a = ktParse(it.kontributor);
+          if (!a.length) return null;
+          var sh = a.slice(0, 3).map(function (p) {
+            return h("i", {}, [ini(p[0])]);
+          });
+          if (a.length > 3)
+            sh.push(h("i", { c: "mo" }, ["+" + (a.length - 3)]));
+          return h(
+            "div",
+            {
+              c: "kst",
+              title: a
+                .map(function (p) {
+                  return p[0];
+                })
+                .join(", "),
+            },
+            sh,
+          );
+        }
         function card(it, i, tag) {
           var b = h("button", { c: "pc", type: "button" }, [
             h("span", { c: "fx" }, [FX[i % FX.length]]),
@@ -2188,6 +2326,7 @@
             h("div", { c: "pi" }, [
               h("h3", {}, [it.judul]),
               h("p", {}, [it.ringkas || it.deskripsi || ""]),
+              ktStack(it),
             ]),
           ]);
           b.dataset.k = it.kategori || "";
@@ -3300,6 +3439,7 @@
           ["link", "Link demo / repo"],
           ["figma", "Link Figma (opsional)"],
           ["tech", "Teknologi (pisahkan dengan koma)", "tags"],
+          ["kontributor", "Kontributor proyek", "people"],
         ],
         pencapaian: [
           ["judul", "Judul"],
@@ -3495,6 +3635,73 @@
           row.append(fi, cl, pv);
           w.append(tx, row);
           show();
+          return w;
+        }
+        if (type === "people") {
+          var rows = String(t[k] || "")
+              .split("\n")
+              .map(function (l) {
+                return l.split("|").map(function (x) {
+                  return x.trim();
+                });
+              })
+              .filter(function (p) {
+                return p[0];
+              }),
+            box = el("div", "pp");
+          var sync = function () {
+            t[k] = rows
+              .filter(function (r) {
+                return (r[0] || "").trim();
+              })
+              .map(function (r) {
+                return [r[0], r[1] || "", r[2] || ""]
+                  .map(function (x) {
+                    return String(x).replace(/\|/g, "/").trim();
+                  })
+                  .join(" | ");
+              })
+              .join("\n");
+          };
+          var draw = function () {
+            box.innerHTML = "";
+            rows.forEach(function (r, n) {
+              var line = el("div", "pr");
+              [
+                ["Nama", 0],
+                ["Instagram (username/link)", 1],
+                ["LinkedIn (username/link)", 2],
+              ].forEach(function (f) {
+                var inp = el("input");
+                inp.type = "text";
+                inp.placeholder = f[0];
+                inp.value = r[f[1]] || "";
+                inp.oninput = function () {
+                  r[f[1]] = inp.value;
+                  sync();
+                };
+                line.append(inp);
+              });
+              var rm = el("button", "eb", "x");
+              rm.type = "button";
+              rm.onclick = function () {
+                rows.splice(n, 1);
+                sync();
+                draw();
+              };
+              line.append(rm);
+              box.append(line);
+            });
+            var add = el("button", "eb", "+ Tambah kontributor");
+            add.type = "button";
+            add.onclick = function () {
+              rows.push(["", "", ""]);
+              draw();
+            };
+            box.append(add);
+          };
+          draw();
+          w.append(box);
           return w;
         }
         var i =
