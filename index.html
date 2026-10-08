@@ -1467,6 +1467,281 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
+      .nf {
+        background: #141414;
+        border: 5px solid var(--ink);
+        box-shadow: 9px 9px 0 var(--rd);
+        padding: 22px 0 26px;
+        color: #fff;
+      }
+      .nfh {
+        font: 400 28px var(--d);
+        letter-spacing: 1px;
+        padding: 0 56px 4px;
+      }
+      .nfw {
+        position: relative;
+      }
+      .nft {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding: 26px 56px;
+        scrollbar-width: none;
+      }
+      .nft::-webkit-scrollbar {
+        display: none;
+      }
+      .nfi {
+        position: relative;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: flex-end;
+        scroll-snap-align: start;
+      }
+      .nfi:hover,
+      .nfi:focus-within {
+        z-index: 5;
+      }
+      .nfn {
+        font: 400 150px/0.8 var(--d);
+        color: #141414;
+        -webkit-text-stroke: 4px #6b6b6b;
+        margin-right: -24px;
+        letter-spacing: -8px;
+        z-index: 1;
+        user-select: none;
+      }
+      .nfp {
+        position: relative;
+        z-index: 2;
+        width: 170px;
+        aspect-ratio: 2/3;
+        padding: 0;
+        border: 0;
+        border-radius: 6px;
+        overflow: hidden;
+        background: var(--bl);
+        color: #fff;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s,
+          filter 0.25s;
+      }
+      .nfp img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .nfl {
+        font: 400 80px var(--d);
+        color: var(--ye);
+      }
+      .nfp::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.92),
+          rgba(0, 0, 0, 0.15) 58%,
+          transparent
+        );
+      }
+      .nfm {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 3;
+        padding: 12px;
+      }
+      .nfm h3 {
+        font: 400 24px/1 var(--d);
+        letter-spacing: 1px;
+        margin: 0 0 3px;
+      }
+      .nfm span {
+        font: 700 13px var(--b);
+        color: #d2d2d2;
+      }
+      .nfm em {
+        display: block;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        margin-top: 6px;
+        font: 700 12px/1.35 var(--b);
+        font-style: normal;
+        color: #e5e5e5;
+        transition:
+          max-height 0.25s,
+          opacity 0.25s;
+      }
+      .nfi:hover .nfp,
+      .nfp:focus-visible {
+        transform: scale(1.14);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85);
+      }
+      .nfi:hover .nfm em,
+      .nfp:focus-visible .nfm em {
+        max-height: 64px;
+        opacity: 1;
+      }
+      .nft:hover .nfi:not(:hover) .nfp {
+        filter: brightness(0.5);
+      }
+      .nfa {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        z-index: 6;
+        width: 48px;
+        border: 0;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        font: 400 40px var(--d);
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .nfa.l {
+        left: 0;
+      }
+      .nfa.r {
+        right: 0;
+      }
+      .nfw:hover .nfa,
+      .nfa:focus-visible {
+        opacity: 1;
+      }
+      .nfi .ctl {
+        top: 6px;
+        bottom: auto;
+        right: 6px;
+        z-index: 8;
+      }
+      .nfd {
+        background: #181818;
+        color: #fff;
+      }
+      .nfhe {
+        position: relative;
+        aspect-ratio: 16/10;
+        background: var(--bl);
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+      }
+      .nfhe > img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        border: 0;
+      }
+      .nfhe::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, #181818 2%, transparent 65%);
+      }
+      .nfhg {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 2;
+        padding: 0 24px 20px;
+        width: 100%;
+      }
+      .nfk {
+        color: #46d369;
+        font: 700 15px var(--b);
+      }
+      .nfhg h3 {
+        font: 400 clamp(40px, 8vw, 64px)/1 var(--d);
+        letter-spacing: 1px;
+        margin: 2px 0;
+      }
+      .nfhg p {
+        margin: 0 0 12px;
+        color: #d2d2d2;
+      }
+      .nfb {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .nb1,
+      .nb2 {
+        font: 700 17px var(--b);
+        padding: 8px 22px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .nb1 {
+        background: #fff;
+        color: #000;
+      }
+      .nb2 {
+        background: rgba(109, 109, 110, 0.7);
+        color: #fff;
+      }
+      .nb1:hover {
+        background: #e6e6e6;
+      }
+      .nb2:hover {
+        background: rgba(109, 109, 110, 0.4);
+      }
+      .nfc {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 22px;
+        padding: 6px 24px 28px;
+      }
+      .nfc h4 {
+        font: 400 22px var(--d);
+        letter-spacing: 1px;
+        margin: 0 0 6px;
+        color: var(--ye);
+      }
+      .nfc p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.5;
+        white-space: pre-line;
+        color: #e5e5e5;
+      }
+      @media (max-width: 600px) {
+        .nfh,
+        .nft {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .nfp {
+          width: 140px;
+        }
+        .nfn {
+          font-size: 110px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .nfp,
+        .nfm em,
+        .nfa {
+          transition: none;
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         .tape div {
           animation: none;
@@ -1524,6 +1799,10 @@
         "Lihat kredensial": ["View credential", "查看证书"],
         "Buka link": ["Open link", "打开链接"],
         "Buka Instagram": ["Open Instagram", "打开 Instagram"],
+        "Buka LinkedIn": ["Open LinkedIn", "打开 LinkedIn"],
+        "Selalu ada buatku": ["Always there for me", "一直陪着我"],
+        "Kata dari aku": ["From me", "我想说的话"],
+        "Dari mereka": ["From them", "他们的话"],
         "Lihat desain Figma": ["View Figma design", "查看 Figma 设计"],
         "Putar preview": ["Play preview", "播放预览"],
         "Buka di TikTok": ["Open on TikTok", "在 TikTok 打开"],
@@ -1932,6 +2211,123 @@
             openM(it, "Buka Instagram");
           };
           return b;
+        }
+        function nfInfo(x) {
+          var raw = String(x.instagram || "").trim(),
+            m = raw.match(/instagram\.com\/([^\/?#]+)/i),
+            user = m ? m[1] : raw.replace(/^@/, "").split(/[\/?#\s]/)[0],
+            li = String(x.linkedin || "").trim();
+          return {
+            nama: x.nama,
+            foto: x.foto,
+            handle: user ? "@" + user : x.hubungan || "",
+            ig: user ? "https://instagram.com/" + user : "",
+            li: li
+              ? /^https?:\/\//i.test(li)
+                ? li
+                : "https://www.linkedin.com/in/" +
+                  li.replace(/^@/, "").replace(/^\/+|\/+$/g, "")
+              : "",
+            kata: x.kata || "",
+            desk: x.deskripsi || x.kontribusi || "",
+          };
+        }
+        function openNF(x) {
+          dlg.innerHTML = "";
+          var cl = h("button", { c: "mx", "aria-label": "Tutup" }, ["X"]);
+          cl.onclick = function () {
+            dlg.close();
+          };
+          var bt = [];
+          if (x.ig)
+            bt.push(
+              h(
+                "a",
+                { c: "nb1", href: x.ig, target: "_blank", rel: "noopener" },
+                ["Buka Instagram"],
+              ),
+            );
+          if (x.li)
+            bt.push(
+              h(
+                "a",
+                { c: "nb2", href: x.li, target: "_blank", rel: "noopener" },
+                ["Buka LinkedIn"],
+              ),
+            );
+          var cols = [];
+          if (x.kata)
+            cols.push(
+              h("div", {}, [
+                h("h4", {}, ["Kata dari aku"]),
+                h("p", {}, [x.kata]),
+              ]),
+            );
+          if (x.desk)
+            cols.push(
+              h("div", {}, [
+                h("h4", {}, ["Dari mereka"]),
+                h("p", {}, [x.desk]),
+              ]),
+            );
+          dlg.append(
+            cl,
+            h("div", { c: "nfd" }, [
+              h("div", { c: "nfhe" }, [
+                img(x.foto, x.nama) || h("span", { c: "nfl" }, [ini(x.nama)]),
+                h("div", { c: "nfhg" }, [
+                  h("span", { c: "nfk" }, ["100% Support"]),
+                  h("h3", {}, [x.nama]),
+                  x.handle ? h("p", {}, [x.handle]) : null,
+                  h("div", { c: "nfb" }, bt),
+                ]),
+              ]),
+              cols.length ? h("div", { c: "nfc" }, cols) : null,
+            ]),
+          );
+          dlg.showModal();
+        }
+        function nfRow(a) {
+          var it = a.map(function (o, i) {
+            var x = nfInfo(o);
+            var p = h("button", { c: "nfp", type: "button" }, [
+              img(x.foto, x.nama) || h("span", { c: "nfl" }, [ini(x.nama)]),
+              h("div", { c: "nfm" }, [
+                h("h3", {}, [x.nama]),
+                h("span", {}, [x.handle]),
+                x.kata || x.desk ? h("em", {}, [x.kata || x.desk]) : null,
+              ]),
+            ]);
+            p.onclick = function () {
+              openNF(x);
+            };
+            return h("div", { c: "nfi" }, [
+              h("span", { c: "nfn" }, ["" + (i + 1)]),
+              p,
+              ctl("orang", i),
+            ]);
+          });
+          var tr = h("div", { c: "nft" }, it),
+            L = h(
+              "button",
+              { c: "nfa l", type: "button", "aria-label": "Sebelumnya" },
+              ["<"],
+            ),
+            R = h(
+              "button",
+              { c: "nfa r", type: "button", "aria-label": "Berikutnya" },
+              [">"],
+            );
+          L.onclick = function () {
+            tr.scrollBy({ left: -tr.clientWidth * 0.8, behavior: "smooth" });
+          };
+          R.onclick = function () {
+            tr.scrollBy({ left: tr.clientWidth * 0.8, behavior: "smooth" });
+          };
+          return h("div", { c: "nf" }, [
+            h("div", { c: "nfh" }, ["Selalu ada buatku"]),
+            h("div", { c: "nfw" }, [L, tr, R]),
+          ]);
         }
         function pgr(n, per, pg, go) {
           var pn = h("div", { c: "pg" }),
@@ -2372,33 +2768,7 @@
           );
 
         if (ADM || ar(D.orang).length)
-          sec(
-            "orang",
-            "Support system",
-            paged(
-              ar(D.orang).map(function (x, i) {
-                var raw = String(x.instagram || "").trim(),
-                  m = raw.match(/instagram\.com\/([^\/?#]+)/i),
-                  user = m ? m[1] : raw.replace(/^@/, "").split(/[\/?#\s]/)[0];
-                return h("div", { c: "cw" }, [
-                  sCard(
-                    {
-                      judul: x.nama,
-                      ringkas: user ? "@" + user : x.hubungan || "",
-                      deskripsi: x.deskripsi || x.kontribusi || "",
-                      gambar: x.foto,
-                      gif: x.gif,
-                      link: user ? "https://instagram.com/" + user : "",
-                    },
-                    i,
-                  ),
-                  ctl("orang", i),
-                ]);
-              }),
-              6,
-              "sg",
-            ),
-          );
+          sec("orang", "Support system", nfRow(ar(D.orang)));
 
         if (!(D.cv && D.cv.file)) {
           if (ADM) sec("cv", "Berkas misi", h("div", {}));
@@ -2960,8 +3330,10 @@
         orang: [
           ["nama", "Nama"],
           ["instagram", "Instagram (username atau link)"],
-          ["deskripsi", "Deskripsi (opsional)", "ta"],
+          ["linkedin", "LinkedIn (username atau link)"],
           ["foto", "Foto", "img"],
+          ["kata", "Kata-kata dari aku untuknya (opsional)", "ta"],
+          ["deskripsi", "Deskripsi dari mereka (opsional)", "ta"],
         ],
         en: [
           ["peran", "Peran (English)"],
