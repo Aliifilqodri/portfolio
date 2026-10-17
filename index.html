@@ -1836,6 +1836,179 @@
       .edb .pp {
         margin-bottom: 14px;
       }
+      #pdf {
+        position: absolute;
+        left: -99999px;
+        top: 0;
+        width: 186mm;
+        background: #fff;
+        color: #111;
+        font:
+          400 10.5pt/1.45 "Barlow",
+          Arial,
+          sans-serif;
+        text-align: left;
+      }
+      #pdf * {
+        box-sizing: border-box;
+      }
+      #pdf a {
+        color: #0b2a6b;
+        text-decoration: underline;
+        overflow-wrap: anywhere;
+      }
+      #pdf h1 {
+        font:
+          400 44pt/0.95 "Anton",
+          "Impact",
+          sans-serif;
+        color: #ec1d24;
+        margin: 6pt 0 4pt;
+        -webkit-text-stroke: 0;
+        text-shadow: none;
+        transform: none;
+        letter-spacing: 1px;
+      }
+      #pdf .prl {
+        display: inline-block;
+        background: #0b2a6b;
+        color: #fff;
+        font:
+          400 14pt "Anton",
+          "Impact",
+          sans-serif;
+        padding: 2pt 10pt;
+        margin-bottom: 8pt;
+      }
+      #pdf .pcv {
+        display: flex;
+        gap: 14pt;
+        align-items: flex-start;
+        border-bottom: 4pt solid #111;
+        padding-bottom: 12pt;
+        margin-bottom: 6pt;
+      }
+      #pdf .pcv > div {
+        flex: 1;
+      }
+      #pdf .pcv img {
+        width: 46mm;
+        aspect-ratio: 4/5;
+        object-fit: cover;
+        border: 2.5pt solid #111;
+        flex: none;
+      }
+      #pdf h2 {
+        font:
+          400 17pt "Anton",
+          "Impact",
+          sans-serif;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        background: #f5c518;
+        color: #111;
+        border: 2pt solid #111;
+        padding: 1pt 8pt;
+        display: inline-block;
+        margin: 14pt 0 8pt;
+        break-after: avoid;
+        transform: none;
+        box-shadow: none;
+        animation: none;
+      }
+      #pdf h3 {
+        font:
+          400 13pt "Anton",
+          "Impact",
+          sans-serif;
+        margin: 0 0 2pt;
+        letter-spacing: 0.5px;
+      }
+      #pdf .pit {
+        display: flex;
+        gap: 9pt;
+        border: 1.5pt solid #111;
+        padding: 7pt;
+        margin: 0 0 8pt;
+        break-inside: avoid;
+      }
+      #pdf .pit > div {
+        flex: 1;
+        min-width: 0;
+      }
+      #pdf .pit img {
+        width: 38mm;
+        height: 26mm;
+        object-fit: cover;
+        border: 1.5pt solid #111;
+        flex: none;
+      }
+      #pdf p {
+        margin: 0 0 4pt;
+      }
+      #pdf .pm {
+        color: #555;
+        font-size: 9pt;
+      }
+      #pdf .pk {
+        font-size: 9pt;
+      }
+      #pdf .pg2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5pt 16pt;
+      }
+      #pdf .pg2 > div {
+        break-inside: avoid;
+      }
+      #pdf .pb {
+        height: 6pt;
+        background: #ddd;
+        border: 1pt solid #111;
+      }
+      #pdf .pb i {
+        display: block;
+        height: 100%;
+        background: #ec1d24;
+      }
+      #pdf .ptag {
+        display: inline-block;
+        background: #f5c518;
+        border: 1pt solid #111;
+        padding: 0 5pt;
+        margin: 0 3pt 3pt 0;
+        font-size: 9pt;
+      }
+      #pdf .pq {
+        border-left: 4pt solid #ec1d24;
+        padding: 2pt 0 2pt 8pt;
+        margin: 0 0 7pt;
+        break-inside: avoid;
+      }
+      @media print {
+        @page {
+          size: A4;
+          margin: 12mm;
+        }
+        body.pp {
+          background: #fff !important;
+        }
+        body.pp::before {
+          display: none !important;
+        }
+        body.pp > *:not(#pdf) {
+          display: none !important;
+        }
+        body.pp #pdf {
+          position: static;
+          width: auto;
+        }
+        body.pp,
+        body.pp #pdf {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         .tape div {
           animation: none;
@@ -2562,6 +2735,248 @@
             h("div", { c: "nfw" }, [L, tr, R]),
           ]);
         }
+        function buildPDF() {
+          var P = document.getElementById("pdf");
+          if (P) P.remove();
+          P = h("div", { id: "pdf" });
+          var K = D.kontak || {},
+            im = function (src) {
+              if (!src) return null;
+              var i = h("img", { src: src, alt: "" });
+              i.onerror = function () {
+                i.remove();
+              };
+              return i;
+            },
+            A = function (u, t) {
+              return u ? h("a", { href: u }, [t || u]) : null;
+            },
+            S = function (t, kids) {
+              var a = kids.filter(Boolean);
+              if (a.length)
+                P.appendChild(h("div", {}, [h("h2", {}, [t])].concat(a)));
+            },
+            R = function (src, kids) {
+              return h("div", { c: "pit" }, [
+                im(src),
+                h("div", {}, kids.filter(Boolean)),
+              ]);
+            },
+            M = function (a) {
+              a = a.filter(Boolean);
+              return a.length ? h("p", { c: "pm" }, [a.join("  |  ")]) : null;
+            },
+            kt = function (it) {
+              var a = ktParse(it.kontributor).map(function (p) {
+                var x = nfInfo({ nama: p[0], instagram: p[1], linkedin: p[2] });
+                return x.nama + (x.handle ? " (" + x.handle + ")" : "");
+              });
+              return a.length
+                ? h("p", { c: "pk" }, [
+                    h("b", {}, ["Kontributor"]),
+                    ": " + a.join(", "),
+                  ])
+                : null;
+            },
+            tg = function (a) {
+              return ar(a).map(function (t) {
+                return h("span", { c: "ptag" }, [t]);
+              });
+            };
+          var ct = [];
+          [
+            ["email", "mailto:" + K.email],
+            ["whatsapp", "https://wa.me/" + K.whatsapp],
+          ].forEach(function (x) {
+            if (K[x[0]])
+              ct.push(A(x[1], x[0] === "email" ? K.email : "+" + K.whatsapp));
+          });
+          [
+            "github",
+            "instagram",
+            "linkedin",
+            "tiktok",
+            "wattpad",
+            "youtube",
+          ].forEach(function (n) {
+            if (K[n])
+              ct.push(
+                A(
+                  K[n],
+                  n.charAt(0).toUpperCase() +
+                    n.slice(1) +
+                    ": " +
+                    K[n].replace(/^https?:\/\/(www\.)?/, ""),
+                ),
+              );
+          });
+          P.appendChild(
+            h("div", { c: "pcv" }, [
+              h(
+                "div",
+                {},
+                [
+                  D.edisi ? h("p", { c: "pm" }, [D.edisi]) : null,
+                  h("h1", {}, [D.nama]),
+                  h("div", { c: "prl" }, [D.peran]),
+                  D.tagline ? h("p", {}, [D.tagline]) : null,
+                  D.lokasi ? h("p", { c: "pm" }, [D.lokasi]) : null,
+                ].concat(
+                  ct.map(function (c) {
+                    return h("p", { c: "pk" }, [c]);
+                  }),
+                ),
+              ),
+              im(D.foto),
+            ]),
+          );
+          S(
+            "Tentang",
+            ar(D.tentang)
+              .map(function (t) {
+                return h("p", {}, [t]);
+              })
+              .concat(
+                ar(D.statistik).length
+                  ? [
+                      M(
+                        ar(D.statistik).map(function (x) {
+                          return x.angka + " " + x.label;
+                        }),
+                      ),
+                    ]
+                  : [],
+              ),
+          );
+          S("Tech stack", [
+            ar(D.skill).length
+              ? h(
+                  "div",
+                  { c: "pg2" },
+                  ar(D.skill).map(function (x) {
+                    return h("div", {}, [
+                      h("b", {}, [x.nama + " - " + (x.level || 0) + "%"]),
+                      h("div", { c: "pb" }, [
+                        h("i", {
+                          style:
+                            "width:" +
+                            Math.max(0, Math.min(100, x.level || 0)) +
+                            "%",
+                        }),
+                      ]),
+                    ]);
+                  }),
+                )
+              : null,
+            ar(D.tools).length ? h("p", {}, tg(D.tools)) : null,
+          ]);
+          S(
+            "Proyek",
+            ar(D.proyek).map(function (x) {
+              return R(x.gambar, [
+                h("h3", {}, [x.judul]),
+                M([x.kategori, x.tahun]),
+                x.ringkas ? h("p", {}, [x.ringkas]) : null,
+                x.deskripsi ? h("p", {}, [x.deskripsi]) : null,
+                ar(x.tech).length ? h("p", {}, tg(x.tech)) : null,
+                kt(x),
+                x.link ? h("p", { c: "pk" }, [A(x.link)]) : null,
+                x.figma ? h("p", { c: "pk" }, ["Figma: ", A(x.figma)]) : null,
+              ]);
+            }),
+          );
+          S(
+            "Pencapaian",
+            ar(D.pencapaian).map(function (x) {
+              return R(x.gambar, [
+                h("h3", {}, [x.judul]),
+                M([x.kategori, x.tahun, x.penerbit]),
+                x.ringkas ? h("p", {}, [x.ringkas]) : null,
+                x.deskripsi ? h("p", {}, [x.deskripsi]) : null,
+                kt(x),
+                x.link ? h("p", { c: "pk" }, [A(x.link)]) : null,
+              ]);
+            }),
+          );
+          S(
+            "Pengalaman",
+            ar(D.pengalaman).map(function (x) {
+              return R(x.foto, [
+                h("h3", {}, [x.posisi]),
+                M([x.tempat, x.tahun]),
+                x.deskripsi ? h("p", {}, [x.deskripsi]) : null,
+              ]);
+            }),
+          );
+          S(
+            "Konten",
+            ar(D.konten).map(function (x) {
+              return R(x.gambar, [
+                h("h3", {}, [x.judul]),
+                M([x.platform]),
+                x.deskripsi ? h("p", {}, [x.deskripsi]) : null,
+                x.link ? h("p", { c: "pk" }, [A(x.link)]) : null,
+              ]);
+            }),
+          );
+          S(
+            "Support system",
+            ar(D.orang).map(function (o) {
+              var x = nfInfo(o);
+              return R(x.foto, [
+                h("h3", {}, [x.nama]),
+                M([x.handle]),
+                x.kata ? h("p", {}, [x.kata]) : null,
+                x.desk ? h("p", {}, [x.desk]) : null,
+                x.ig ? h("p", { c: "pk" }, [A(x.ig)]) : null,
+                x.li ? h("p", { c: "pk" }, [A(x.li)]) : null,
+              ]);
+            }),
+          );
+          S(
+            "Testimoni",
+            ar(D.testimoni).map(function (x) {
+              return h("div", { c: "pq" }, [
+                h("p", {}, ['"' + x.isi + '"']),
+                h("b", {}, [x.nama + (x.jabatan ? ", " + x.jabatan : "")]),
+              ]);
+            }),
+          );
+          document.body.appendChild(P);
+          var prev = document.documentElement.getAttribute("data-theme"),
+            done = false,
+            imgs = [].slice.call(P.querySelectorAll("img"));
+          function fin() {
+            if (done) return;
+            done = true;
+            P.remove();
+            document.body.classList.remove("pp");
+            document.documentElement.setAttribute("data-theme", prev);
+            removeEventListener("afterprint", fin);
+          }
+          addEventListener("afterprint", fin);
+          Promise.race([
+            Promise.all(
+              imgs.map(function (i) {
+                return i.complete
+                  ? 0
+                  : new Promise(function (r) {
+                      i.onload = i.onerror = r;
+                    });
+              }),
+            ),
+            new Promise(function (r) {
+              setTimeout(r, 6000);
+            }),
+          ]).then(function () {
+            document.documentElement.setAttribute("data-theme", "light");
+            document.body.classList.add("pp");
+            setTimeout(function () {
+              print();
+            }, 150);
+          });
+        }
+        window.buildPDF = buildPDF;
         function pgr(n, per, pg, go) {
           var pn = h("div", { c: "pg" }),
             m = Math.ceil(n / per);
@@ -3407,6 +3822,9 @@
         if (ADM)
           ab.append(
             h("span", {}, ["MODE ADMIN"]),
+            eb("Unduh PDF portofolio", function () {
+              buildPDF();
+            }),
             eb("Ganti password", function () {
               EDIT.pw();
             }),
