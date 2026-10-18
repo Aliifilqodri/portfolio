@@ -1840,7 +1840,7 @@
         position: absolute;
         left: -99999px;
         top: 0;
-        width: 186mm;
+        width: 277mm;
         background: #fff;
         color: #111;
         font:
@@ -1859,7 +1859,7 @@
       }
       #pdf .cvr {
         position: relative;
-        height: 262mm;
+        height: 188mm;
         overflow: hidden;
         border: 3pt solid #111;
         background: repeating-conic-gradient(
@@ -1883,7 +1883,7 @@
         transform: rotate(-2deg);
         letter-spacing: 1px;
         overflow-wrap: anywhere;
-        max-width: 112mm;
+        max-width: 150mm;
       }
       #pdf .ed {
         display: inline-block;
@@ -1915,14 +1915,14 @@
         border-radius: 16pt;
         padding: 8pt 12pt;
         margin: 10mm 0 4mm;
-        max-width: 88mm;
+        max-width: 120mm;
         font-weight: 700;
       }
       #pdf .cph {
         position: absolute;
         right: 12mm;
-        bottom: 62mm;
-        width: 66mm;
+        bottom: 42mm;
+        width: 70mm;
         aspect-ratio: 4/5;
         border: 4pt solid #111;
         box-shadow: 6pt 6pt 0 #111;
@@ -1948,7 +1948,7 @@
         position: absolute;
         left: 0;
         right: 0;
-        bottom: 44mm;
+        bottom: 30mm;
         background: #111;
         color: #f5c518;
         font:
@@ -2015,9 +2015,22 @@
         flex: 1;
         min-width: 0;
       }
+      #pdf .gr2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 14pt;
+      }
+      #pdf .phn {
+        font:
+          400 20pt "Anton",
+          "Impact",
+          sans-serif;
+        text-align: center;
+        padding: 6pt;
+      }
       #pdf .pit img {
-        width: 40mm;
-        height: 28mm;
+        width: 36mm;
+        height: 26mm;
         object-fit: cover;
         border: 2pt solid #111;
         flex: none;
@@ -2071,7 +2084,7 @@
       }
       #pdf .pg2 {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 6pt 16pt;
       }
       #pdf .pg2 > div {
@@ -2097,7 +2110,7 @@
       }
       #pdf .kg {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 12pt;
       }
       #pdf .kg > div {
@@ -2160,8 +2173,8 @@
       }
       @media print {
         @page {
-          size: A4;
-          margin: 12mm;
+          size: A4 landscape;
+          margin: 10mm;
           @bottom-center {
             content: counter(page);
             font:
@@ -2187,6 +2200,33 @@
         body.pp #pdf {
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
+        }
+      }
+      .mb2 {
+        display: none;
+        font: 400 22px var(--d);
+        background: transparent;
+        color: #fff;
+        border: 2px solid #fff;
+        padding: 0 10px;
+        cursor: pointer;
+        margin-left: 8px;
+      }
+      @media (max-width: 860px) {
+        .mb2 {
+          display: block;
+        }
+        header.open nav ul {
+          display: flex;
+          flex-direction: column;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 100%;
+          background: var(--ink);
+          padding: 14px 22px 18px;
+          gap: 14px;
+          border-bottom: 5px solid var(--rd);
         }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -2264,6 +2304,7 @@
         "Buka Instagram": ["Open Instagram", "打开 Instagram"],
         "Buka LinkedIn": ["Open LinkedIn", "打开 LinkedIn"],
         Kontributor: ["Contributors", "贡献者"],
+        Menu: ["Menu", "菜单"],
         "Mode terang": ["Light mode", "浅色模式"],
         "Mode gelap": ["Dark mode", "深色模式"],
         Lokasi: ["Location", "位置"],
@@ -2940,6 +2981,13 @@
             },
             S = function (t, kids) {
               var a = kids.filter(Boolean);
+              if (
+                a.length &&
+                a.every(function (k) {
+                  return k.className === "pit";
+                })
+              )
+                a = [h("div", { c: "gr2" }, a)];
               if (a.length)
                 P.appendChild(h("div", {}, [h("h2", {}, [t])].concat(a)));
             },
@@ -3119,7 +3167,8 @@
                   ar(D.konten).map(function (x) {
                     return h("div", {}, [
                       h("div", { c: "kc2" }, [
-                        im(x.gambar) || ini(x.judul),
+                        im(x.gambar) ||
+                          h("span", { c: "phn" }, [x.platform || ini(x.judul)]),
                         h("span", { c: "pw" }, [x.platform || "Konten"]),
                       ]),
                       h("div", { c: "kb2" }, [
@@ -3134,20 +3183,6 @@
                 )
               : null,
           ]);
-          S(
-            "Support system",
-            ar(D.orang).map(function (o) {
-              var x = nfInfo(o);
-              return R(x.foto, [
-                h("h3", {}, [x.nama]),
-                M([x.handle]),
-                x.kata ? h("p", {}, [x.kata]) : null,
-                x.desk ? h("p", {}, [x.desk]) : null,
-                x.ig ? h("p", { c: "pk" }, [A(x.ig, short(x.ig))]) : null,
-                x.li ? h("p", { c: "pk" }, [A(x.li, short(x.li))]) : null,
-              ]);
-            }),
-          );
           if (chips.length)
             P.appendChild(
               h("div", { c: "end" }, [
@@ -3384,6 +3419,21 @@
                 })(),
               ]),
           ),
+          (function () {
+            var mb = h(
+              "button",
+              { c: "mb2", type: "button", "aria-label": "Menu" },
+              ["\u2630"],
+            );
+            mb.onclick = function () {
+              document.querySelector("header").classList.toggle("open");
+            };
+            document.getElementById("nav").onclick = function (e) {
+              if (e.target.closest && e.target.closest("ul a"))
+                document.querySelector("header").classList.remove("open");
+            };
+            return mb;
+          })(),
         );
 
         app.appendChild(
@@ -4582,8 +4632,8 @@
               return Promise.reject(new Error("Link harus diawali https://"));
             say("Mengambil preview...");
             return api("/api/preview?url=" + encodeURIComponent(u))
-              .catch(function () {
-                return {};
+              .catch(function (e) {
+                return { _e: e && e.status };
               })
               .then(function (p) {
                 DT.konten = Array.isArray(DT.konten) ? DT.konten : [];
@@ -4594,7 +4644,16 @@
                   gambar: p.image || "",
                   deskripsi: v.deskripsi || "",
                 });
-                return EDIT.save();
+                return EDIT.save().then(function () {
+                  if (!p.image)
+                    alert(
+                      "Kartu ditambahkan, tapi gambar preview tidak bisa diambil" +
+                        (p._e === 404
+                          ? " (file api/preview.js belum ter-deploy)"
+                          : "") +
+                        ". Kamu bisa upload cover manual lewat Edit.",
+                    );
+                });
               });
           },
           null,
