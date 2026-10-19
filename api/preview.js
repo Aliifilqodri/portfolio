@@ -55,6 +55,9 @@ async function save(u, ref) {
   return '/api/file?id=' + w.insertedId;
 }
 
+const unesc = t => String(t || '').replace(/\\u002F/gi, '/').replace(/\\u0026/gi, '&').replace(/\\\//g, '/');
+const jsonVal = (html, key) => { const m = html.match(new RegExp('"' + key + '":"([^"]+)"')); return m ? unesc(m[1]) : ''; };
+
 module.exports = async (req, res) => {
   if (req.method !== 'GET') return res.status(405).end();
   if (!ok(req)) return res.status(401).json({ error: 'Belum login' });
@@ -63,29 +66,39 @@ module.exports = async (req, res) => {
     let x;
     try { x = await safe(url); } catch (e) { return res.status(400).json({ error: e.message || 'Link tidak valid' }); }
     const host = x.hostname.replace(/^www\./, '');
+    const isTT = /(^|\.)tiktok\.com$/.test(host);
     const why = [];
+    let target = url;
+    if (isTT) {
+      if (/^(vm|vt)\./.test(host) || /^\/t\//.test(x.pathname)) { try { const r0 = await get(url); if (r0.url) target = r0.url; } catch (e) { } }
+      target = target.split('?')[0];
+    }
+    const isVid = isTT && /\/(video|photo)\/\d+/.test(target);
     let title = '', author = '', img = '';
-    const oe = /(^|\.)tiktok\.com$/.test(host) ? 'https://www.tiktok.com/oembed?url=' + encodeURIComponent(url)
+    const oe = isVid ? 'https://www.tiktok.com/oembed?url=' + encodeURIComponent(target)
       : /(^|\.)youtube\.com$|^youtu\.be$/.test(host) ? 'https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(url) : '';
     if (oe) {
       try {
         const r = await get(oe, { Accept: 'application/json' });
         if (r.ok) { const j = await r.json(); title = j.title || ''; author = j.author_name || ''; img = j.thumbnail_url || ''; if (!img) why.push('oEmbed tanpa gambar'); }
-        else why.push('oEmbed ' + r.status);
+        else why.push('oEmbed ' + r.status + (r.status === 400 || r.status === 404 ? ' (video tidak ditemukan atau bukan link video)' : ''));
       } catch (e) { why.push('oEmbed gagal (' + (e.name === 'TimeoutError' ? 'waktu habis' : e.message) + ')'); }
     }
     if (!img || !title) {
       try {
-        const r = await get(url, { Accept: 'text/html' });
+        const r = await get(isTT ? target : url, { Accept: 'text/html' });
         if (r.ok) {
-          const html = (await r.text()).slice(0, 400000);
+          const html = (await r.text()).slice(0, 600000);
           img = img || meta(html, 'og:image') || meta(html, 'twitter:image');
-          title = title || meta(html, 'og:title') || dec((html.match(/<title[^>]*>([^<]*)/i) || [])[1]);
+          if (!img && isTT) for (const k of (isVid ? ['originCover', 'cover', 'avatarLarger'] : ['avatarLarger', 'avatarMedium', 'avatarThumb'])) { img = jsonVal(html, k); if (img) break; }
+          title = title || meta(html, 'og:title') || (isTT && !isVid ? jsonVal(html, 'nickname') : '') || dec((html.match(/<title[^>]*>([^<]*)/i) || [])[1]);
+          if (!author && isTT) author = jsonVal(html, 'nickname');
         } else why.push('halaman ' + r.status);
       } catch (e) { why.push('halaman gagal (' + (e.name === 'TimeoutError' ? 'waktu habis' : e.message) + ')'); }
     }
     let image = '';
     if (img) { try { image = await save(new URL(img, x).href, x.origin + '/'); } catch (e) { why.push(e.message); } }
+    else if (isTT && !isVid) why.push('TikTok tidak memberi gambar untuk link profil, pakai Cover manual');
     else if (!why.length) why.push('halaman tidak punya gambar pratinjau');
     res.json({ platform: platform(host), title: title.trim().slice(0, 200), author, image, why: image ? '' : why.join('; ') });
   } catch (e) {
