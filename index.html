@@ -4547,6 +4547,14 @@
             });
         });
       }
+      function prevErr(e) {
+        var c = e && e.status;
+        if (c === 401) return "Sesi login habis. Login admin lagi, lalu coba ulang.";
+        if (c === 404) return "File api/preview.js belum ter-deploy. Deploy ulang dulu.";
+        if (c >= 500 || !c)
+          return "Server terlalu lama atau gagal membalas (TikTok sering memblokir server). Upload cover manual di kolom Cover. Untuk preview putar, pakai link video lengkap (tiktok.com/@nama/video/angka).";
+        return (e && e.message) || "Gagal";
+      }
       function say(m) {
         var s = document.getElementById("edst");
         if (s) s.textContent = m;
@@ -4680,6 +4688,7 @@
             say("Mengambil preview...");
             api("/api/preview?url=" + encodeURIComponent(u))
               .then(function (p) {
+                if (p.url) setF("link", p.url);
                 if (p.image) setF("gambar", p.image);
                 if (p.title && !t.judul) setF("judul", p.title);
                 if (p.platform && !t.platform) setF("platform", p.platform);
@@ -4692,7 +4701,7 @@
                 );
               })
               .catch(function (e) {
-                say(e.message || "Gagal");
+                say(prevErr(e));
               });
           };
           w.append(bt);
@@ -4903,14 +4912,14 @@
             say("Mengambil preview...");
             return api("/api/preview?url=" + encodeURIComponent(u))
               .catch(function (e) {
-                return { _e: e && e.status };
+                return { _e: (e && e.status) || 599 };
               })
               .then(function (p) {
                 DT.konten = Array.isArray(DT.konten) ? DT.konten : [];
                 DT.konten.push({
                   judul: String(v.judul || "").trim() || p.title || u,
                   platform: p.platform || "",
-                  link: u,
+                  link: p.url || u,
                   gambar: v.gambar || p.image || "",
                   deskripsi: v.deskripsi || "",
                 });
@@ -4918,8 +4927,8 @@
                   if (!(v.gambar || p.image))
                     alert(
                       "Kartu ditambahkan, tapi gambar preview tidak bisa diambil" +
-                        (p._e === 404
-                          ? " (file api/preview.js belum ter-deploy)"
+                        (p._e
+                          ? " (" + prevErr({ status: p._e }) + ")"
                           : p.why
                             ? " (alasan: " + p.why + ")"
                             : "") +
