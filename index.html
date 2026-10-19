@@ -1840,11 +1840,10 @@
         position: absolute;
         left: -99999px;
         top: 0;
-        width: 277mm;
-        background: #fff;
+        width: 297mm;
         color: #111;
         font:
-          400 10.5pt/1.45 "Barlow",
+          400 10pt/1.4 "Barlow",
           Arial,
           sans-serif;
         text-align: left;
@@ -1855,24 +1854,350 @@
       #pdf a {
         color: #0b2a6b;
         text-decoration: underline;
-        overflow-wrap: anywhere;
+      }
+      #pdf .q {
+        position: relative;
+        width: 297mm;
+        height: 208.5mm;
+        overflow: hidden;
+        break-after: page;
+        page-break-after: always;
+        background:
+          radial-gradient(rgba(236, 29, 36, 0.14) 1.4pt, transparent 1.6pt) 0
+            0/11px 11px,
+          #fff;
+        padding: 11mm 14mm 0;
+      }
+      #pdf .q:last-child {
+        break-after: auto;
+        page-break-after: auto;
+      }
+      #pdf .q:not(.cvr):not(.end2)::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 5mm;
+        background: repeating-linear-gradient(
+          -45deg,
+          #111 0 3mm,
+          #f5c518 3mm 6mm
+        );
+      }
+      #pdf .qh {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 15mm;
+        margin-top: 3mm;
+      }
+      #pdf .qt {
+        font:
+          400 24pt/1 "Anton",
+          "Impact",
+          sans-serif;
+        letter-spacing: 1px;
+        background: #f5c518;
+        border: 2.5pt solid #111;
+        box-shadow: 3pt 3pt 0 #111;
+        padding: 1pt 14pt;
+        transform: rotate(-1.2deg);
+        text-transform: uppercase;
+      }
+      #pdf .qs {
+        font:
+          400 12pt "Anton",
+          "Impact",
+          sans-serif;
+        letter-spacing: 2px;
+        color: #ec1d24;
+      }
+      #pdf .qf {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 9mm;
+        background: #111;
+        color: #f5c518;
+        border-top: 3pt solid #ec1d24;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 14mm;
+        font:
+          400 10pt "Anton",
+          "Impact",
+          sans-serif;
+        letter-spacing: 2px;
+      }
+      #pdf .qb {
+        position: absolute;
+        left: 14mm;
+        right: 14mm;
+        top: 34mm;
+        bottom: 15mm;
+      }
+      #pdf .qg {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 8mm 10mm;
+        height: 100%;
+      }
+      #pdf .qc {
+        position: relative;
+        display: flex;
+        background: #fff;
+        border: 2.5pt solid #111;
+        box-shadow: 4pt 4pt 0 #111;
+        overflow: hidden;
+        min-height: 0;
+      }
+      #pdf .qc > img,
+      #pdf .qi {
+        width: 50mm;
+        height: 100%;
+        flex: none;
+        object-fit: cover;
+        border-right: 2.5pt solid #111;
+        display: grid;
+        place-items: center;
+        background: #0b2a6b;
+        color: #f5c518;
+        font:
+          400 54pt "Anton",
+          "Impact",
+          sans-serif;
+      }
+      #pdf .qx {
+        flex: 1;
+        min-width: 0;
+        padding: 4.5mm 5mm 3mm;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 1.3mm;
+      }
+      #pdf .qx h3,
+      #pdf .kb3 h3 {
+        font:
+          400 15pt/1.05 "Anton",
+          "Impact",
+          sans-serif;
+        letter-spacing: 0.5px;
+        margin: 0;
+        padding-right: 16mm;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      #pdf p {
+        margin: 0;
+      }
+      #pdf .qm {
+        color: #555;
+        font-size: 8.5pt;
+      }
+      #pdf .qd {
+        font-size: 9.5pt;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      #pdf .qtags {
+        max-height: 15pt;
+        overflow: hidden;
+      }
+      #pdf .ptag {
+        display: inline-block;
+        background: #f5c518;
+        border: 1pt solid #111;
+        padding: 0 5pt;
+        margin: 0 3pt 3pt 0;
+        font-size: 8.5pt;
+      }
+      #pdf .pk {
+        font-size: 8.5pt;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      #pdf .qlk {
+        font-size: 8.5pt;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      #pdf .qw {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 2;
+        background: #ec1d24;
+        color: #fff;
+        font:
+          400 10pt "Anton",
+          "Impact",
+          sans-serif;
+        padding: 1pt 8pt;
+        border-left: 2.5pt solid #111;
+        border-bottom: 2.5pt solid #111;
+        max-width: 44mm;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      #pdf .qk4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr 1fr;
+        gap: 8mm;
+        height: 100%;
+      }
+      #pdf .kc3 {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border: 2.5pt solid #111;
+        box-shadow: 3pt 3pt 0 #111;
+        background: #fff;
+        overflow: hidden;
+        min-height: 0;
+      }
+      #pdf .kt3 {
+        position: relative;
+        height: 44mm;
+        flex: none;
+        background: #0b2a6b;
+        border-bottom: 2.5pt solid #111;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+      #pdf .kt3 img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 25%;
+      }
+      #pdf .phn {
+        font:
+          400 20pt "Anton",
+          "Impact",
+          sans-serif;
+        color: #f5c518;
+        text-align: center;
+        padding: 6pt;
+      }
+      #pdf .kt3 .qw {
+        left: 0;
+        right: auto;
+        border-left: 0;
+        border-right: 2.5pt solid #111;
+      }
+      #pdf .kb3 {
+        padding: 3mm 3.5mm;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 1mm;
+        min-height: 0;
+      }
+      #pdf .kb3 h3 {
+        font-size: 12pt;
+        padding-right: 0;
+      }
+      #pdf .qd2 {
+        font-size: 8.5pt;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      #pdf .qa {
+        display: grid;
+        grid-template-columns: 1.7fr 1fr;
+        gap: 10mm;
+        height: 100%;
+      }
+      #pdf .qp {
+        background: #fff;
+        border: 2.5pt solid #111;
+        box-shadow: 4pt 4pt 0 #111;
+        padding: 7mm 8mm;
+        font-size: 12pt;
+        line-height: 1.5;
+        overflow: hidden;
+      }
+      #pdf .qp p {
+        margin: 0 0 3mm;
+      }
+      #pdf .qr {
+        display: flex;
+        flex-direction: column;
+        gap: 5mm;
+        overflow: hidden;
+      }
+      #pdf .qsb {
+        background: #0b2a6b;
+        color: #fff;
+        border: 2.5pt solid #111;
+        box-shadow: 3pt 3pt 0 #111;
+        padding: 3mm 6mm;
+        font-size: 11pt;
+      }
+      #pdf .qsb b {
+        font:
+          400 30pt "Anton",
+          "Impact",
+          sans-serif;
+        color: #f5c518;
+        margin-right: 5mm;
+      }
+      #pdf .qtg {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 7mm 10mm;
+        align-content: start;
+      }
+      #pdf .qsn {
+        display: flex;
+        justify-content: space-between;
+        font:
+          400 12pt "Anton",
+          "Impact",
+          sans-serif;
+        letter-spacing: 0.5px;
+        margin-bottom: 1mm;
+      }
+      #pdf .pb {
+        height: 9pt;
+        background: #e5e5e5;
+        border: 1.5pt solid #111;
+      }
+      #pdf .pb i {
+        display: block;
+        height: 100%;
+        background: #ec1d24;
       }
       #pdf .cvr {
-        position: relative;
-        height: 188mm;
-        overflow: hidden;
-        border: 3pt solid #111;
         background: repeating-conic-gradient(
-          from 0deg at 70% 45%,
+          from 0deg at 72% 40%,
           #f5c518 0 7deg,
           #ffd000 7deg 14deg
         );
-        break-after: page;
-        padding: 14mm 12mm;
+        padding: 14mm 16mm;
       }
       #pdf .cvr h1 {
         font:
-          400 66pt/0.88 "Anton",
+          400 70pt/0.88 "Anton",
           "Impact",
           sans-serif;
         color: #ec1d24;
@@ -1883,7 +2208,7 @@
         transform: rotate(-2deg);
         letter-spacing: 1px;
         overflow-wrap: anywhere;
-        max-width: 150mm;
+        max-width: 175mm;
       }
       #pdf .ed {
         display: inline-block;
@@ -1902,28 +2227,28 @@
         border: 2.5pt solid #111;
         box-shadow: 3pt 3pt 0 #111;
         font:
-          400 17pt "Anton",
+          400 18pt "Anton",
           "Impact",
           sans-serif;
         padding: 2pt 12pt;
         transform: rotate(1deg);
       }
       #pdf .bub {
-        position: relative;
         background: #fff;
         border: 2.5pt solid #111;
         border-radius: 16pt;
-        padding: 8pt 12pt;
-        margin: 10mm 0 4mm;
-        max-width: 120mm;
+        padding: 8pt 14pt;
+        margin: 9mm 0 4mm;
+        max-width: 125mm;
         font-weight: 700;
+        font-size: 12pt;
       }
       #pdf .cph {
         position: absolute;
-        right: 12mm;
-        bottom: 42mm;
-        width: 70mm;
-        aspect-ratio: 4/5;
+        right: 16mm;
+        top: 14mm;
+        width: 78mm;
+        height: 97mm;
         border: 4pt solid #111;
         box-shadow: 6pt 6pt 0 #111;
         transform: rotate(2.5deg);
@@ -1948,7 +2273,7 @@
         position: absolute;
         left: 0;
         right: 0;
-        bottom: 30mm;
+        bottom: 25mm;
         background: #111;
         color: #f5c518;
         font:
@@ -1956,7 +2281,7 @@
           "Impact",
           sans-serif;
         letter-spacing: 2px;
-        padding: 4pt 12mm;
+        padding: 4pt 16mm;
         white-space: nowrap;
         overflow: hidden;
         border-top: 3pt solid #ec1d24;
@@ -1966,222 +2291,55 @@
         left: 0;
         right: 0;
         bottom: 0;
+        min-height: 25mm;
         background: #111;
         color: #f5c518;
-        padding: 9pt 12mm;
-        font-size: 9.5pt;
+        padding: 6mm 16mm;
+        font-size: 10pt;
         border-top: 4pt solid #ec1d24;
         line-height: 1.7;
       }
       #pdf .cct a {
         color: #f5c518;
       }
-      #pdf h2 {
-        font:
-          400 20pt "Anton",
-          "Impact",
-          sans-serif;
-        letter-spacing: 1px;
-        background: #f5c518;
-        color: #111;
-        border: 2.5pt solid #111;
-        box-shadow: 3pt 3pt 0 #111;
-        padding: 1pt 12pt;
-        display: inline-block;
-        margin: 16pt 0 10pt;
-        break-after: avoid;
-        transform: rotate(-1deg);
-      }
-      #pdf h3 {
-        font:
-          400 14pt "Anton",
-          "Impact",
-          sans-serif;
-        margin: 0 0 2pt;
-        letter-spacing: 0.5px;
-      }
-      #pdf .pit {
-        position: relative;
+      #pdf .end2 {
+        background: #ec1d24;
         display: flex;
-        gap: 9pt;
-        border: 2.5pt solid #111;
-        box-shadow: 4pt 4pt 0 #111;
-        padding: 8pt;
-        margin: 0 4pt 12pt 0;
-        break-inside: avoid;
-        background: #fff;
-      }
-      #pdf .pit > div {
-        flex: 1;
-        min-width: 0;
-      }
-      #pdf .gr2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0 14pt;
-      }
-      #pdf .phn {
-        font:
-          400 20pt "Anton",
-          "Impact",
-          sans-serif;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         text-align: center;
-        padding: 6pt;
+        padding: 20mm;
       }
-      #pdf .pit img {
-        width: 36mm;
-        height: 26mm;
-        object-fit: cover;
-        border: 2pt solid #111;
-        flex: none;
-      }
-      #pdf .pw {
-        position: absolute;
-        right: -6pt;
-        top: -9pt;
-        background: #ec1d24;
-        color: #fff;
-        border: 2pt solid #111;
+      #pdf .big {
         font:
-          400 11pt "Anton",
-          "Impact",
-          sans-serif;
-        padding: 0 7pt;
-        transform: rotate(6deg);
-        z-index: 2;
-      }
-      #pdf p {
-        margin: 0 0 4pt;
-      }
-      #pdf .pm {
-        color: #555;
-        font-size: 9pt;
-      }
-      #pdf .pk {
-        font-size: 9pt;
-      }
-      #pdf .sts {
-        display: flex;
-        gap: 10pt;
-        flex-wrap: wrap;
-        margin-top: 6pt;
-      }
-      #pdf .sts > div {
-        background: #0b2a6b;
-        color: #fff;
-        border: 2.5pt solid #111;
-        box-shadow: 3pt 3pt 0 #111;
-        padding: 3pt 12pt;
-        font-size: 10pt;
-      }
-      #pdf .sts b {
-        font:
-          400 24pt "Anton",
+          400 78pt/1 "Anton",
           "Impact",
           sans-serif;
         color: #f5c518;
-        margin-right: 6pt;
+        -webkit-text-stroke: 3pt #111;
+        paint-order: stroke fill;
+        text-shadow: 6pt 6pt 0 #111;
       }
-      #pdf .pg2 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 6pt 16pt;
+      #pdf .et {
+        color: #fff;
+        font-size: 14pt;
+        font-weight: 700;
+        margin: 8mm 0;
       }
-      #pdf .pg2 > div {
-        break-inside: avoid;
-      }
-      #pdf .pb {
-        height: 7pt;
-        background: #ddd;
-        border: 1.2pt solid #111;
-      }
-      #pdf .pb i {
-        display: block;
-        height: 100%;
-        background: #ec1d24;
-      }
-      #pdf .ptag {
-        display: inline-block;
-        background: #f5c518;
-        border: 1pt solid #111;
-        padding: 0 5pt;
-        margin: 0 3pt 3pt 0;
-        font-size: 9pt;
-      }
-      #pdf .kg {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12pt;
-      }
-      #pdf .kg > div {
-        position: relative;
-        border: 2.5pt solid #111;
-        box-shadow: 3pt 3pt 0 #111;
-        break-inside: avoid;
+      #pdf .ec {
         background: #fff;
-      }
-      #pdf .kc2 {
-        position: relative;
-        aspect-ratio: 3/4;
-        background: #0b2a6b;
-        overflow: hidden;
-        border-bottom: 2.5pt solid #111;
-        display: grid;
-        place-items: center;
-        color: #f5c518;
-        font:
-          400 60pt "Anton",
-          "Impact",
-          sans-serif;
-      }
-      #pdf .kc2 img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      #pdf .kb2 {
-        padding: 5pt 7pt;
-      }
-      #pdf .kb2 h3 {
-        font-size: 11.5pt;
-      }
-      #pdf .end {
-        margin-top: 14mm;
-        background: #ec1d24;
-        color: #fff;
         border: 3pt solid #111;
         box-shadow: 5pt 5pt 0 #111;
-        padding: 12pt 16pt;
-        text-align: center;
-        break-inside: avoid;
-      }
-      #pdf .end .big {
-        font:
-          400 36pt/1 "Anton",
-          "Impact",
-          sans-serif;
-        color: #f5c518;
-        -webkit-text-stroke: 1.5pt #111;
-        paint-order: stroke fill;
-        text-shadow: 3pt 3pt 0 #111;
-        margin-bottom: 6pt;
-      }
-      #pdf .end a {
-        color: #fff;
+        padding: 6mm 10mm;
+        font-size: 11pt;
+        line-height: 1.8;
+        max-width: 250mm;
       }
       @media print {
         @page {
           size: A4 landscape;
-          margin: 10mm;
-          @bottom-center {
-            content: counter(page);
-            font:
-              400 9pt "Anton",
-              sans-serif;
-            color: #555;
-          }
+          margin: 0;
         }
         body.pp {
           background: #fff !important;
@@ -2968,6 +3126,7 @@
           P = h("div", { id: "pdf" });
           var K = D.kontak || {},
             FXP = ["POW!", "ZAP!", "BAM!", "WHAM!", "BOOM!"],
+            pages = [],
             im = function (src) {
               if (!src) return null;
               var i = h("img", { src: src, alt: "" });
@@ -2979,30 +3138,31 @@
             A = function (u, t) {
               return u ? h("a", { href: u }, [t || u]) : null;
             },
-            S = function (t, kids) {
-              var a = kids.filter(Boolean);
-              if (
-                a.length &&
-                a.every(function (k) {
-                  return k.className === "pit";
-                })
-              )
-                a = [h("div", { c: "gr2" }, a)];
-              if (a.length)
-                P.appendChild(h("div", {}, [h("h2", {}, [t])].concat(a)));
+            short = function (u) {
+              return String(u).replace(/^https?:\/\/(www\.)?/, "");
             },
-            R = function (src, kids, n) {
-              return h("div", { c: "pit" }, [
-                n != null
-                  ? h("span", { c: "pw" }, [FXP[n % FXP.length]])
-                  : null,
-                im(src),
-                h("div", {}, kids.filter(Boolean)),
+            C = function (a, n) {
+              var r = [];
+              for (var i = 0; i < a.length; i += n) r.push(a.slice(i, i + n));
+              return r;
+            },
+            sub = function (i, n) {
+              return n > 1 ? i + 1 + " / " + n : "";
+            },
+            Pg = function (title, kids, sb) {
+              var q = h("div", { c: "q" }, [
+                h("div", { c: "qh" }, [
+                  h("span", { c: "qt" }, [title]),
+                  sb ? h("span", { c: "qs" }, [sb]) : null,
+                ]),
+                h("div", { c: "qb" }, kids),
               ]);
+              q.dataset.f = "1";
+              pages.push(q);
             },
             M = function (a) {
               a = a.filter(Boolean);
-              return a.length ? h("p", { c: "pm" }, [a.join("  |  ")]) : null;
+              return a.length ? h("p", { c: "qm" }, [a.join("  |  ")]) : null;
             },
             kt = function (it) {
               var a = ktParse(it.kontributor).map(function (p) {
@@ -3021,8 +3181,14 @@
                 return h("span", { c: "ptag" }, [t]);
               });
             },
-            short = function (u) {
-              return String(u).replace(/^https?:\/\/(www\.)?/, "");
+            card = function (src, n, title, kids) {
+              return h("div", { c: "qc" }, [
+                n != null
+                  ? h("span", { c: "qw" }, [FXP[n % FXP.length]])
+                  : null,
+                im(src) || h("span", { c: "qi" }, [ini(title)]),
+                h("div", { c: "qx" }, kids.filter(Boolean)),
+              ]);
             };
           var ct = [];
           if (K.email) ct.push(A("mailto:" + K.email, K.email));
@@ -3049,13 +3215,13 @@
             if (i) chips.push("   |   ");
             chips.push(c);
           });
-          P.appendChild(
-            h("div", { c: "cvr" }, [
+          pages.push(
+            h("div", { c: "q cvr" }, [
               D.edisi ? h("span", { c: "ed" }, [D.edisi]) : null,
               h("h1", {}, [D.nama]),
               h("div", { c: "prl" }, [D.peran]),
               D.tagline ? h("div", { c: "bub" }, [D.tagline]) : null,
-              D.lokasi ? h("p", { c: "pm" }, [D.lokasi]) : null,
+              D.lokasi ? h("p", { c: "qm" }, [D.lokasi]) : null,
               h("div", { c: "cph" }, [im(D.foto) || ini(D.nama)]),
               ar(D.tools).length
                 ? h("div", { c: "tp" }, [ar(D.tools).join("   *   ")])
@@ -3063,133 +3229,192 @@
               chips.length ? h("div", { c: "cct" }, chips) : null,
             ]),
           );
-          S(
-            "Tentang",
-            ar(D.tentang)
-              .map(function (t) {
-                return h("p", {}, [t]);
-              })
-              .concat(
-                ar(D.statistik).length
-                  ? [
-                      h(
-                        "div",
-                        { c: "sts" },
-                        ar(D.statistik).map(function (x) {
-                          return h("div", {}, [h("b", {}, [x.angka]), x.label]);
-                        }),
-                      ),
-                    ]
-                  : [],
-              ),
-          );
-          S("Tech stack", [
-            ar(D.skill).length
-              ? h(
+          if (
+            ar(D.tentang).length ||
+            ar(D.statistik).length ||
+            ar(D.tools).length
+          )
+            Pg("Tentang", [
+              h("div", { c: "qa" }, [
+                h(
                   "div",
-                  { c: "pg2" },
-                  ar(D.skill).map(function (x) {
+                  { c: "qp" },
+                  ar(D.tentang).map(function (t) {
+                    return h("p", {}, [t]);
+                  }),
+                ),
+                h(
+                  "div",
+                  { c: "qr" },
+                  ar(D.statistik)
+                    .map(function (x) {
+                      return h("div", { c: "qsb" }, [
+                        h("b", {}, [x.angka]),
+                        x.label,
+                      ]);
+                    })
+                    .concat(
+                      ar(D.tools).length ? [h("div", {}, tg(D.tools))] : [],
+                    ),
+                ),
+              ]),
+            ]);
+          var sk = C(ar(D.skill), 18);
+          sk.forEach(function (a, i) {
+            Pg(
+              "Tech stack",
+              [
+                h(
+                  "div",
+                  { c: "qtg" },
+                  a.map(function (x) {
+                    var l = Math.max(0, Math.min(100, x.level || 0));
                     return h("div", {}, [
-                      h("b", {}, [x.nama + " - " + (x.level || 0) + "%"]),
+                      h("div", { c: "qsn" }, [
+                        h("b", {}, [x.nama]),
+                        h("span", {}, [l + "%"]),
+                      ]),
                       h("div", { c: "pb" }, [
-                        h("i", {
-                          style:
-                            "width:" +
-                            Math.max(0, Math.min(100, x.level || 0)) +
-                            "%",
-                        }),
+                        h("i", { style: "width:" + l + "%" }),
                       ]),
                     ]);
                   }),
-                )
-              : null,
-          ]);
-          S(
-            "Proyek",
-            ar(D.proyek).map(function (x, n) {
-              return R(
-                x.gambar,
-                [
-                  h("h3", {}, [x.judul]),
-                  M([x.kategori, x.tahun]),
-                  x.ringkas ? h("p", {}, [x.ringkas]) : null,
-                  x.deskripsi ? h("p", {}, [x.deskripsi]) : null,
-                  ar(x.tech).length ? h("p", {}, tg(x.tech)) : null,
-                  kt(x),
-                  x.link
-                    ? h("p", { c: "pk" }, [A(x.link, short(x.link))])
-                    : null,
-                  x.figma
-                    ? h("p", { c: "pk" }, [
-                        "Figma: ",
-                        A(x.figma, short(x.figma)),
-                      ])
-                    : null,
-                ],
-                n,
-              );
-            }),
-          );
-          S(
-            "Pencapaian",
-            ar(D.pencapaian).map(function (x, n) {
-              return R(
-                x.gambar,
-                [
-                  h("h3", {}, [x.judul]),
-                  M([x.kategori, x.tahun, x.penerbit]),
-                  x.ringkas ? h("p", {}, [x.ringkas]) : null,
-                  x.deskripsi ? h("p", {}, [x.deskripsi]) : null,
-                  kt(x),
-                  x.link
-                    ? h("p", { c: "pk" }, [A(x.link, short(x.link))])
-                    : null,
-                ],
-                n,
-              );
-            }),
-          );
-          S(
-            "Pengalaman",
-            ar(D.pengalaman).map(function (x) {
-              return R(x.foto, [
-                h("h3", {}, [x.posisi]),
-                M([x.tempat, x.tahun]),
-                x.deskripsi ? h("p", {}, [x.deskripsi]) : null,
-              ]);
-            }),
-          );
-          S("Konten", [
-            ar(D.konten).length
-              ? h(
+                ),
+              ],
+              sub(i, sk.length),
+            );
+          });
+          var pj = C(ar(D.proyek), 4);
+          pj.forEach(function (a, i) {
+            Pg(
+              "Proyek",
+              [
+                h(
                   "div",
-                  { c: "kg" },
-                  ar(D.konten).map(function (x) {
-                    return h("div", {}, [
-                      h("div", { c: "kc2" }, [
+                  { c: "qg" },
+                  a.map(function (x, n) {
+                    return card(x.gambar, i * 4 + n, x.judul, [
+                      h("h3", {}, [x.judul]),
+                      M([x.kategori, x.tahun]),
+                      x.deskripsi || x.ringkas
+                        ? h("p", { c: "qd" }, [x.deskripsi || x.ringkas])
+                        : null,
+                      ar(x.tech).length
+                        ? h("div", { c: "qtags" }, tg(x.tech))
+                        : null,
+                      kt(x),
+                      x.link
+                        ? h("p", { c: "qlk" }, [A(x.link, short(x.link))])
+                        : null,
+                      x.figma
+                        ? h("p", { c: "qlk" }, [
+                            "Figma: ",
+                            A(x.figma, short(x.figma)),
+                          ])
+                        : null,
+                    ]);
+                  }),
+                ),
+              ],
+              sub(i, pj.length),
+            );
+          });
+          var pc = C(ar(D.pencapaian), 4);
+          pc.forEach(function (a, i) {
+            Pg(
+              "Pencapaian",
+              [
+                h(
+                  "div",
+                  { c: "qg" },
+                  a.map(function (x, n) {
+                    return card(x.gambar, i * 4 + n, x.judul, [
+                      h("h3", {}, [x.judul]),
+                      M([x.kategori, x.tahun, x.penerbit]),
+                      x.deskripsi || x.ringkas
+                        ? h("p", { c: "qd" }, [x.deskripsi || x.ringkas])
+                        : null,
+                      kt(x),
+                      x.link
+                        ? h("p", { c: "qlk" }, [A(x.link, short(x.link))])
+                        : null,
+                    ]);
+                  }),
+                ),
+              ],
+              sub(i, pc.length),
+            );
+          });
+          var pe = C(ar(D.pengalaman), 4);
+          pe.forEach(function (a, i) {
+            Pg(
+              "Pengalaman",
+              [
+                h(
+                  "div",
+                  { c: "qg" },
+                  a.map(function (x) {
+                    return card(x.foto, null, x.posisi, [
+                      h("h3", {}, [x.posisi]),
+                      M([x.tempat, x.tahun]),
+                      x.deskripsi ? h("p", { c: "qd" }, [x.deskripsi]) : null,
+                    ]);
+                  }),
+                ),
+              ],
+              sub(i, pe.length),
+            );
+          });
+          var kn = C(ar(D.konten), 8);
+          kn.forEach(function (a, i) {
+            Pg(
+              "Konten",
+              [
+                h(
+                  "div",
+                  { c: "qk4" },
+                  a.map(function (x) {
+                    return h("div", { c: "kc3" }, [
+                      h("div", { c: "kt3" }, [
                         im(x.gambar) ||
                           h("span", { c: "phn" }, [x.platform || ini(x.judul)]),
-                        h("span", { c: "pw" }, [x.platform || "Konten"]),
+                        h("span", { c: "qw" }, [x.platform || "Konten"]),
                       ]),
-                      h("div", { c: "kb2" }, [
+                      h("div", { c: "kb3" }, [
                         h("h3", {}, [x.judul]),
-                        x.deskripsi ? h("p", { c: "pk" }, [x.deskripsi]) : null,
+                        x.deskripsi
+                          ? h("p", { c: "qd2" }, [x.deskripsi])
+                          : null,
                         x.link
-                          ? h("p", { c: "pk" }, [A(x.link, short(x.link))])
+                          ? h("p", { c: "qlk" }, [A(x.link, short(x.link))])
                           : null,
                       ]),
                     ]);
                   }),
-                )
-              : null,
-          ]);
+                ),
+              ],
+              sub(i, kn.length),
+            );
+          });
           if (chips.length)
-            P.appendChild(
-              h("div", { c: "end" }, [
+            pages.push(
+              h("div", { c: "q end2" }, [
                 h("div", { c: "big" }, ["Ayo assemble!"]),
-                h("p", {}, chips),
+                D.tagline ? h("p", { c: "et" }, [D.tagline]) : null,
+                h("div", { c: "ec" }, chips),
               ]),
             );
+          var N = pages.length;
+          pages.forEach(function (q, i) {
+            if (q.dataset.f === "1")
+              q.appendChild(
+                h("div", { c: "qf" }, [
+                  h("span", {}, [D.nama]),
+                  h("span", {}, [i + 1 + " / " + N]),
+                ]),
+              );
+            P.appendChild(q);
+          });
           document.body.appendChild(P);
           var prev = document.documentElement.getAttribute("data-theme"),
             done = false,
@@ -4259,6 +4484,7 @@
           ["judul", "Judul"],
           ["platform", "Platform (TikTok / Wattpad)"],
           ["link", "Link video TikTok atau cerita Wattpad"],
+          ["_prev", "Preview otomatis", "prev"],
           ["gambar", "Cover / thumbnail", "img"],
           ["deskripsi", "Deskripsi singkat", "ta"],
         ],
@@ -4384,6 +4610,7 @@
           var tx = el("input");
           tx.type = "text";
           tx.placeholder = "Tempel URL, atau pilih file di bawah";
+          tx.dataset.k = k;
           tx.value = t[k] || "";
           var row = el("div", "up"),
             fi = el("input");
@@ -4432,6 +4659,43 @@
           row.append(fi, cl, pv);
           w.append(tx, row);
           show();
+          return w;
+        }
+        if (type === "prev") {
+          var bt = el("button", "eb", "Ambil preview dari link");
+          bt.type = "button";
+          var setF = function (n, v) {
+            var e = document.querySelector('#ed [data-k="' + n + '"]');
+            if (e) {
+              e.value = v;
+              e.dispatchEvent(new Event("input"));
+            }
+          };
+          bt.onclick = function () {
+            var u = String(t.link || "").trim();
+            if (!/^https?:\/\//i.test(u)) {
+              say("Isi kolom link dulu (diawali https://).");
+              return;
+            }
+            say("Mengambil preview...");
+            api("/api/preview?url=" + encodeURIComponent(u))
+              .then(function (p) {
+                if (p.image) setF("gambar", p.image);
+                if (p.title && !t.judul) setF("judul", p.title);
+                if (p.platform && !t.platform) setF("platform", p.platform);
+                say(
+                  p.image
+                    ? "Preview diambil. Klik Simpan."
+                    : "Gambar tidak bisa diambil" +
+                        (p.why ? " (" + p.why + ")" : "") +
+                        ". Upload cover manual di kolom Cover.",
+                );
+              })
+              .catch(function (e) {
+                say(e.message || "Gagal");
+              });
+          };
+          w.append(bt);
           return w;
         }
         if (type === "lang") {
@@ -4516,6 +4780,7 @@
         }
         var i =
           type === "ta" || type === "paras" ? el("textarea") : el("input");
+        i.dataset.k = k;
         if (i.tagName === "INPUT")
           i.type =
             type === "num" ? "number" : type === "pw" ? "password" : "text";
@@ -4623,6 +4888,11 @@
               "Tempel link (TikTok, YouTube, Figma, Wattpad, Canva, dll)",
             ],
             ["judul", "Judul (kosongkan = otomatis dari link)"],
+            [
+              "gambar",
+              "Cover manual (opsional, dipakai kalau preview otomatis gagal)",
+              "img",
+            ],
             ["deskripsi", "Deskripsi (opsional)", "ta"],
           ],
           {},
@@ -4641,17 +4911,19 @@
                   judul: String(v.judul || "").trim() || p.title || u,
                   platform: p.platform || "",
                   link: u,
-                  gambar: p.image || "",
+                  gambar: v.gambar || p.image || "",
                   deskripsi: v.deskripsi || "",
                 });
                 return EDIT.save().then(function () {
-                  if (!p.image)
+                  if (!(v.gambar || p.image))
                     alert(
                       "Kartu ditambahkan, tapi gambar preview tidak bisa diambil" +
                         (p._e === 404
                           ? " (file api/preview.js belum ter-deploy)"
-                          : "") +
-                        ". Kamu bisa upload cover manual lewat Edit.",
+                          : p.why
+                            ? " (alasan: " + p.why + ")"
+                            : "") +
+                        ". Buka Edit di kartu itu, lalu klik Ambil preview dari link atau upload cover manual.",
                     );
                 });
               });
