@@ -1,1 +1,4 @@
-{ "cleanUrls": true }
+{
+  "cleanUrls": true,
+  "crons": [{ "path": "/api/cron-ultah", "schedule": "0 1 * * *" }]
+}

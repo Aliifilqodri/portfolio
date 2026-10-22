@@ -2414,6 +2414,200 @@
       html[data-theme="dark"] .pvh {
         background: var(--cd);
       }
+      #ub {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        background: #ec1d24;
+        color: #fff;
+        border-bottom: 4px solid #0a0a0a;
+        padding: 8px 14px;
+        font:
+          400 18px "Anton",
+          "Impact",
+          sans-serif;
+        letter-spacing: 1px;
+        text-align: center;
+      }
+      #ub button {
+        font:
+          400 15px "Anton",
+          "Impact",
+          sans-serif;
+        background: #f5c518;
+        color: #0a0a0a;
+        border: 2px solid #0a0a0a;
+        padding: 0 10px;
+        cursor: pointer;
+      }
+      .ul .ulh {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 8px 0;
+      }
+      .ul .ulh b {
+        font: 400 22px var(--d);
+        letter-spacing: 1px;
+      }
+      .ul .ulg {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        margin-bottom: 16px;
+        text-align: center;
+      }
+      .ul .ulg span {
+        padding: 4px 0;
+        border: 2px solid transparent;
+        font-size: 14px;
+      }
+      .ul .ulg .dw {
+        font: 400 14px var(--d);
+        color: var(--rd);
+      }
+      .ul .ulg .td {
+        border-color: var(--bl);
+      }
+      .ul .ulg .bd {
+        background: var(--rd);
+        color: #fff;
+        border-color: var(--ln);
+        font-weight: 700;
+        cursor: help;
+      }
+      .ul .ulr {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        border: 3px solid var(--ln);
+        background: var(--cd);
+        box-shadow: 3px 3px 0 var(--ln);
+        padding: 8px 10px;
+        margin-bottom: 10px;
+      }
+      .ul .ulb {
+        min-width: 84px;
+        text-align: center;
+        background: var(--ye);
+        color: var(--ink);
+        border: 3px solid var(--ln);
+        font: 400 16px var(--d);
+        padding: 2px 6px;
+      }
+      .ul .ulb.now {
+        background: var(--rd);
+        color: #fff;
+      }
+      .ul .uli {
+        flex: 1;
+        min-width: 140px;
+      }
+      .ul .uli b {
+        font: 400 20px var(--d);
+        letter-spacing: 0.5px;
+      }
+      .ul .uli small {
+        display: block;
+        opacity: 0.75;
+      }
+      .ul .ulx {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 14px 0 6px;
+      }
+      nav {
+        gap: 14px;
+      }
+      .logo {
+        white-space: nowrap;
+        flex: none;
+      }
+      nav ul {
+        flex: 1;
+        min-width: 0;
+        justify-content: center;
+        gap: clamp(8px, 1.1vw, 16px);
+        font-size: 17px;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+      }
+      nav ul a {
+        display: block;
+        padding: 4px 0;
+        border-bottom: 3px solid transparent;
+      }
+      nav ul a[aria-current="true"] {
+        color: var(--ye);
+        border-bottom-color: var(--rd);
+      }
+      .nr2 {
+        display: flex;
+        align-items: center;
+        flex: none;
+      }
+      .nr2 .lg {
+        margin-left: 0;
+      }
+      .lgm {
+        display: none;
+      }
+      @media (max-width: 1240px) {
+        nav ul {
+          display: none;
+        }
+        .nr2 {
+          margin-left: auto;
+        }
+        .mb2 {
+          display: block;
+          margin-left: 8px;
+        }
+        header.open nav ul {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 100%;
+          background: var(--ink);
+          padding: 10px 22px 16px;
+          gap: 0 18px;
+          border-bottom: 5px solid var(--rd);
+          max-height: calc(100vh - 70px);
+          overflow: auto;
+          z-index: 19;
+          font-size: 20px;
+          letter-spacing: 1px;
+        }
+        header.open nav ul a {
+          padding: 11px 4px;
+          border-bottom: 1px solid #2b2b2b;
+        }
+        header.open nav ul a[aria-current="true"] {
+          border-bottom-color: var(--rd);
+        }
+      }
+      @media (max-width: 560px) {
+        .nr2 .lg {
+          display: none;
+        }
+        header.open nav ul {
+          grid-template-columns: 1fr 1fr;
+        }
+        header.open .lgm {
+          display: block;
+          grid-column: 1/-1;
+          padding-top: 12px;
+        }
+        .lgm .lg {
+          margin: 0;
+        }
+      }
     </style>
   </head>
   <body>
@@ -3591,6 +3785,65 @@
         ].filter(function (l) {
           return l[2] || ADM;
         });
+        var navCtl = function () {
+          var g = h(
+            "div",
+            { c: "lg" },
+            [
+              ["id", "ID"],
+              ["en", "EN"],
+              ["zh", "中文"],
+            ].map(function (l) {
+              var b = h(
+                "button",
+                {
+                  type: "button",
+                  "aria-pressed": LANG === l[0] ? "true" : "false",
+                  "aria-label": l[1],
+                },
+                [l[1]],
+              );
+              b.onclick = function () {
+                setLang(l[0]);
+              };
+              return b;
+            }),
+          );
+          var tb = h(
+            "button",
+            {
+              type: "button",
+              title: THEME === "dark" ? "Mode terang" : "Mode gelap",
+              "aria-label": THEME === "dark" ? "Mode terang" : "Mode gelap",
+            },
+            [THEME === "dark" ? "\u2600" : "\u263E"],
+          );
+          tb.onclick = function () {
+            setTheme(THEME === "dark" ? "light" : "dark");
+          };
+          g.appendChild(tb);
+          return g;
+        };
+        var mb = h(
+          "button",
+          {
+            c: "mb2",
+            type: "button",
+            "aria-label": "Menu",
+            "aria-expanded": "false",
+          },
+          ["\u2630"],
+        );
+        mb.onclick = function () {
+          var o = document.querySelector("header").classList.toggle("open");
+          mb.setAttribute("aria-expanded", o ? "true" : "false");
+        };
+        document.getElementById("nav").onclick = function (e) {
+          if (e.target.closest && e.target.closest("ul a")) {
+            document.querySelector("header").classList.remove("open");
+            mb.setAttribute("aria-expanded", "false");
+          }
+        };
         document.getElementById("nav").append(
           h("a", { c: "logo", href: "#top" }, [
             (D.nama || "").split(" ")[0] + "!",
@@ -3600,65 +3853,9 @@
             {},
             L.map(function (l) {
               return h("li", {}, [h("a", { href: "#" + l[0] }, [l[1]])]);
-            }),
+            }).concat([h("li", { c: "lgm" }, [navCtl()])]),
           ),
-          h(
-            "div",
-            { c: "lg" },
-            [
-              ["id", "ID"],
-              ["en", "EN"],
-              ["zh", "中文"],
-            ]
-              .map(function (l) {
-                var b = h(
-                  "button",
-                  {
-                    type: "button",
-                    "aria-pressed": LANG === l[0] ? "true" : "false",
-                    "aria-label": l[1],
-                  },
-                  [l[1]],
-                );
-                b.onclick = function () {
-                  setLang(l[0]);
-                };
-                return b;
-              })
-              .concat([
-                (function () {
-                  var tb = h(
-                    "button",
-                    {
-                      type: "button",
-                      title: THEME === "dark" ? "Mode terang" : "Mode gelap",
-                      "aria-label":
-                        THEME === "dark" ? "Mode terang" : "Mode gelap",
-                    },
-                    [THEME === "dark" ? "☀" : "☾"],
-                  );
-                  tb.onclick = function () {
-                    setTheme(THEME === "dark" ? "light" : "dark");
-                  };
-                  return tb;
-                })(),
-              ]),
-          ),
-          (function () {
-            var mb = h(
-              "button",
-              { c: "mb2", type: "button", "aria-label": "Menu" },
-              ["\u2630"],
-            );
-            mb.onclick = function () {
-              document.querySelector("header").classList.toggle("open");
-            };
-            document.getElementById("nav").onclick = function (e) {
-              if (e.target.closest && e.target.closest("ul a"))
-                document.querySelector("header").classList.remove("open");
-            };
-            return mb;
-          })(),
+          h("div", { c: "nr2" }, [navCtl(), mb]),
         );
 
         app.appendChild(
@@ -4307,9 +4504,17 @@
         var ab = document.getElementById("adm");
         ab.innerHTML = "";
         document.body.classList.toggle("am", ADM);
+        if (!ADM) {
+          ULT = null;
+          var ubx = document.getElementById("ub");
+          if (ubx) ubx.remove();
+        } else if (ULT === null) loadUltah();
         if (ADM)
           ab.append(
             h("span", {}, ["MODE ADMIN"]),
+            eb("Kalender ultah", function () {
+              openUltah();
+            }),
             eb("Unduh PDF portofolio", function () {
               buildPDF();
             }),
@@ -4358,6 +4563,27 @@
           );
           o.observe(el);
         });
+        (function () {
+          var links = [].slice.call(document.querySelectorAll("#nav ul a"));
+          if (!("IntersectionObserver" in window) || !links.length) return;
+          var so = new IntersectionObserver(
+            function (es) {
+              es.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                links.forEach(function (a) {
+                  if (a.getAttribute("href") === "#" + e.target.id)
+                    a.setAttribute("aria-current", "true");
+                  else a.removeAttribute("aria-current");
+                });
+              });
+            },
+            { rootMargin: "-45% 0px -50% 0px" },
+          );
+          links.forEach(function (a) {
+            var t = document.getElementById(a.getAttribute("href").slice(1));
+            if (t) so.observe(t);
+          });
+        })();
         if ("IntersectionObserver" in window) {
           var io = new IntersectionObserver(
             function (es) {
@@ -4549,8 +4775,10 @@
       }
       function prevErr(e) {
         var c = e && e.status;
-        if (c === 401) return "Sesi login habis. Login admin lagi, lalu coba ulang.";
-        if (c === 404) return "File api/preview.js belum ter-deploy. Deploy ulang dulu.";
+        if (c === 401)
+          return "Sesi login habis. Login admin lagi, lalu coba ulang.";
+        if (c === 404)
+          return "File api/preview.js belum ter-deploy. Deploy ulang dulu.";
         if (c >= 500 || !c)
           return "Server terlalu lama atau gagal membalas (TikTok sering memblokir server). Upload cover manual di kolom Cover. Untuk preview putar, pakai link video lengkap (tiktok.com/@nama/video/angka).";
         return (e && e.message) || "Gagal";
@@ -4940,6 +5168,338 @@
           null,
           "Ambil preview & tambah",
         );
+      }
+      var ULT = null,
+        ULM = null,
+        ULN = [
+          "Januari",
+          "Februari",
+          "Maret",
+          "April",
+          "Mei",
+          "Juni",
+          "Juli",
+          "Agustus",
+          "September",
+          "Oktober",
+          "November",
+          "Desember",
+        ];
+      function ulLeap(y) {
+        return y % 4 === 0 && (y % 100 !== 0 || y % 400 === 0);
+      }
+      function ulPad(n) {
+        return (n < 10 ? "0" : "") + n;
+      }
+      function ulDays(x, now) {
+        var t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        function at(yr) {
+          var d = x.d;
+          if (x.m === 2 && d === 29 && !ulLeap(yr)) d = 28;
+          return new Date(yr, x.m - 1, d);
+        }
+        var n = at(t.getFullYear());
+        if (n < t) n = at(t.getFullYear() + 1);
+        return {
+          days: Math.round((n - t) / 864e5),
+          age: x.y ? n.getFullYear() - x.y : null,
+        };
+      }
+      function ulParse(t) {
+        var m = String(t || "")
+          .trim()
+          .match(/^(\d{1,2})[-\/.](\d{1,2})(?:[-\/.](\d{4}))?$/);
+        if (!m) return null;
+        var d = +m[1],
+          mo = +m[2],
+          y = m[3] ? +m[3] : null;
+        if (
+          !(
+            mo >= 1 &&
+            mo <= 12 &&
+            d >= 1 &&
+            d <= [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][mo - 1]
+          )
+        )
+          return null;
+        if (y && (y < 1900 || y > new Date().getFullYear())) return null;
+        return { d: d, m: mo, y: y };
+      }
+      function loadUltah(cb) {
+        return api("/api/ultah")
+          .then(function (r) {
+            ULT = Array.isArray(r.items) ? r.items : [];
+            ultahBanner();
+            if (cb) cb();
+          })
+          .catch(function () {});
+      }
+      function ulSave(list) {
+        return api("/api/ultah", {
+          method: "PUT",
+          headers: J,
+          body: JSON.stringify({ items: list }),
+        }).then(function (r) {
+          ULT = r.items;
+          ultahBanner();
+        });
+      }
+      function ultahBanner() {
+        var old = document.getElementById("ub");
+        if (old) old.remove();
+        if (!ADM || !Array.isArray(ULT)) return;
+        var now = new Date(),
+          key = now.toDateString(),
+          L = ULT.map(function (x) {
+            return { x: x, r: ulDays(x, now) };
+          }).filter(function (o) {
+            return o.r.days <= 1;
+          });
+        if (!L.length) return;
+        var dis = "";
+        try {
+          dis = localStorage.getItem("ulx");
+        } catch (e) {}
+        if (dis === key) return;
+        var txt = L.map(function (o) {
+          return (
+            o.x.nama +
+            (o.r.days === 0 ? " (HARI INI!)" : " (besok)") +
+            (o.r.age ? " - ke-" + o.r.age : "")
+          );
+        }).join(", ");
+        var b = el("div"),
+          a = el("button", "", "Lihat"),
+          x = el("button", "", "Tutup");
+        b.id = "ub";
+        b.setAttribute("role", "status");
+        a.type = x.type = "button";
+        a.onclick = function () {
+          openUltah();
+        };
+        x.onclick = function () {
+          try {
+            localStorage.setItem("ulx", key);
+          } catch (e) {}
+          b.remove();
+        };
+        b.append(el("span", "", "\uD83C\uDF82 Ulang tahun: " + txt), a, x);
+        document.body.prepend(b);
+        try {
+          if (
+            "Notification" in window &&
+            Notification.permission === "granted" &&
+            localStorage.getItem("ulxn") !== key
+          ) {
+            localStorage.setItem("ulxn", key);
+            new Notification("Pengingat ulang tahun", { body: txt });
+          }
+        } catch (e) {}
+      }
+      function ulForm(it) {
+        var src = it
+          ? {
+              nama: it.nama,
+              tgl: ulPad(it.d) + "-" + ulPad(it.m) + (it.y ? "-" + it.y : ""),
+              catatan: it.catatan || "",
+            }
+          : {};
+        EDIT.open(
+          it ? "Edit ulang tahun" : "Tambah ulang tahun",
+          [
+            ["nama", "Nama teman"],
+            ["tgl", "Tanggal lahir (contoh: 17-08 atau 17-08-2004)"],
+            ["catatan", "Catatan atau ide hadiah (opsional)", "ta"],
+          ],
+          src,
+          function (v) {
+            var p = ulParse(v.tgl),
+              n = String(v.nama || "").trim();
+            if (!n) return Promise.reject(new Error("Nama wajib diisi"));
+            if (!p)
+              return Promise.reject(
+                new Error("Tanggal tidak valid. Contoh: 17-08 atau 17-08-2004"),
+              );
+            var row = {
+              id: it ? it.id : Math.random().toString(36).slice(2, 10),
+              nama: n,
+              d: p.d,
+              m: p.m,
+              y: p.y,
+              catatan: String(v.catatan || "").trim(),
+            };
+            var list = it
+              ? ULT.map(function (z) {
+                  return z.id === it.id ? row : z;
+                })
+              : ULT.concat([row]);
+            return ulSave(list).then(drawUl);
+          },
+          null,
+          "Simpan",
+        );
+      }
+      function drawUl() {
+        var dg = document.getElementById("dlg"),
+          now = new Date(),
+          box = el("div", "edb ul"),
+          cl = el("button", "mx", "X");
+        cl.type = "button";
+        cl.onclick = function () {
+          dg.close();
+        };
+        box.append(
+          el("h3", "", "Kalender ulang tahun"),
+          el(
+            "p",
+            "hint",
+            "Privat: hanya tampil saat kamu login. Pengunjung tidak bisa melihatnya.",
+          ),
+        );
+        var cur = ULM || new Date(now.getFullYear(), now.getMonth(), 1);
+        ULM = cur;
+        var hd = el("div", "ulh"),
+          pv = el("button", "eb", "<"),
+          nx = el("button", "eb", ">");
+        pv.type = nx.type = "button";
+        pv.onclick = function () {
+          ULM = new Date(cur.getFullYear(), cur.getMonth() - 1, 1);
+          drawUl();
+        };
+        nx.onclick = function () {
+          ULM = new Date(cur.getFullYear(), cur.getMonth() + 1, 1);
+          drawUl();
+        };
+        hd.append(
+          pv,
+          el("b", "", ULN[cur.getMonth()] + " " + cur.getFullYear()),
+          nx,
+        );
+        var g = el("div", "ulg"),
+          Y = cur.getFullYear(),
+          M = cur.getMonth(),
+          dim = new Date(Y, M + 1, 0).getDate();
+        ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"].forEach(function (w) {
+          g.append(el("span", "dw", w));
+        });
+        for (var k = 0; k < (new Date(Y, M, 1).getDay() + 6) % 7; k++)
+          g.append(el("span", "", ""));
+        for (var day = 1; day <= dim; day++) {
+          var names = ULT.filter(function (z) {
+              return (
+                z.m === M + 1 &&
+                (z.d === day ||
+                  (z.d === 29 && M === 1 && day === 28 && !ulLeap(Y)))
+              );
+            }).map(function (z) {
+              return z.nama;
+            }),
+            c = el("span", names.length ? "bd" : "", "" + day);
+          if (names.length) c.title = names.join(", ");
+          if (
+            Y === now.getFullYear() &&
+            M === now.getMonth() &&
+            day === now.getDate()
+          )
+            c.classList.add("td");
+          g.append(c);
+        }
+        box.append(hd, g);
+        var rows = ULT.map(function (z) {
+          return { z: z, r: ulDays(z, now) };
+        }).sort(function (a, b) {
+          return a.r.days - b.r.days;
+        });
+        if (!rows.length)
+          box.append(el("p", "", "Belum ada. Klik + Tambah teman."));
+        rows.forEach(function (o) {
+          var z = o.z,
+            r = o.r,
+            row = el("div", "ulr"),
+            info = el("div", "uli"),
+            ed = el("button", "eb", "Edit"),
+            del = el("button", "eb", "Hapus");
+          ed.type = del.type = "button";
+          ed.onclick = function () {
+            ulForm(z);
+          };
+          del.onclick = function () {
+            if (!confirm("Hapus " + z.nama + "?")) return;
+            ulSave(
+              ULT.filter(function (q) {
+                return q.id !== z.id;
+              }),
+            )
+              .then(drawUl)
+              .catch(function (e) {
+                alert(e.message);
+              });
+          };
+          info.append(
+            el("b", "", z.nama),
+            el(
+              "small",
+              "",
+              z.d + " " + ULN[z.m - 1] + (r.age ? " - ke-" + r.age : ""),
+            ),
+          );
+          if (z.catatan) info.append(el("small", "", z.catatan));
+          row.append(
+            el(
+              "span",
+              "ulb" + (r.days <= 1 ? " now" : ""),
+              r.days === 0
+                ? "HARI INI!"
+                : r.days === 1
+                  ? "BESOK"
+                  : r.days + " hari",
+            ),
+            info,
+            ed,
+            del,
+          );
+          box.append(row);
+        });
+        var ac = el("div", "ulx"),
+          add = el("button", "bt", "+ Tambah teman");
+        add.type = "button";
+        add.onclick = function () {
+          ulForm(null);
+        };
+        ac.append(add);
+        if ("Notification" in window && Notification.permission !== "granted") {
+          var nb = el("button", "eb", "Aktifkan notifikasi browser");
+          nb.type = "button";
+          nb.onclick = function () {
+            Notification.requestPermission().then(function () {
+              ultahBanner();
+              drawUl();
+            });
+          };
+          ac.append(nb);
+        }
+        box.append(
+          ac,
+          el(
+            "p",
+            "hint",
+            "Notifikasi muncul saat kamu membuka website ini sebagai admin. Untuk pengingat ke HP (Telegram) sehari sebelumnya, atur TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, dan CRON_SECRET di Vercel.",
+          ),
+        );
+        dg.innerHTML = "";
+        dg.append(cl, box);
+      }
+      function openUltah() {
+        var dg = document.getElementById("dlg");
+        if (ULT === null) {
+          dg.innerHTML = "";
+          dg.append(el("div", "edb", "Memuat..."));
+          if (!dg.open) dg.showModal();
+          loadUltah(drawUl);
+          return;
+        }
+        drawUl();
+        if (!dg.open) dg.showModal();
       }
       function render() {
         start(DT);
