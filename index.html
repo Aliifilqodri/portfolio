@@ -2462,6 +2462,17 @@ header.open .lgm{display:block;grid-column:1/-1;padding-top:12px}
 .ul .uld .ulf input.yr{flex:0 1 120px}
 .ul .uld .ulf .bt{margin:0;padding:4px 16px}
 .ul .uld .hint{margin:6px 0 0}
+.ul .ult,.ul .ulk{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}
+.ul .ult .eb[aria-pressed="true"],.ul .ulk .eb[aria-pressed="true"]{background:var(--ink);color:var(--ye)}
+.ul .ulg .ev{box-shadow:inset 0 -5px 0 var(--bl)}
+.ul .tdr{display:flex;gap:10px;align-items:center;border:3px solid var(--ln);background:var(--cd);padding:6px 10px;margin-bottom:8px}
+.ul .tdr input[type=checkbox]{width:22px;height:22px;margin:0;flex:none;cursor:pointer}
+.ul .tdr .tt{flex:1;min-width:0}
+.ul .tdr.dn .tt{text-decoration:line-through;opacity:.6}
+.ul .tdr small{opacity:.75;white-space:nowrap}
+.ul .tdr small.late{color:var(--rd);opacity:1;font-weight:700}
+.ul h4.tds{font:400 20px var(--d);letter-spacing:1px;margin:16px 0 8px}
+.ul .ulf input[type=date],.ul .ulf input[type=time]{flex:0 1 150px}
 </style>
   </head>
   <body>
@@ -4323,7 +4334,7 @@ header.open .lgm{display:block;grid-column:1/-1;padding-top:12px}
         if (ADM)
           ab.append(
             h("span", {}, ["MODE ADMIN"]),
-            eb("Kalender ultah", function () {
+            eb("Kalender & To-do", function () {
               openUltah();
             }),
             eb("Unduh PDF portofolio", function () {
@@ -5002,10 +5013,22 @@ header.open .lgm{display:block;grid-column:1/-1;padding-top:12px}
         if (y && (y < 1900 || y > new Date().getFullYear())) return null;
         return { d: d, m: mo, y: y };
       }
+      var PLN = null, ULTAB = "kal", ULK = "ultah";
+      function plKey(dt) { return dt.getFullYear() + "-" + ulPad(dt.getMonth() + 1) + "-" + ulPad(dt.getDate()); }
+      function plDone(t, key) { return t.tgl ? !!t.done : t.done === key; }
+      function plDue(key) { return (PLN ? PLN.todos : []).filter(function (t) { return !plDone(t, key) && (!t.tgl || t.tgl <= key); }); }
+      function rid() { return Math.random().toString(36).slice(2, 10); }
+      function plSave() {
+        return api("/api/planner", { method: "PUT", headers: J, body: JSON.stringify(PLN) }).then(function (r) {
+          PLN = { todos: r.todos, events: r.events };
+          ultahBanner();
+        });
+      }
       function loadUltah(cb) {
-        return api("/api/ultah")
+        return Promise.all([api("/api/ultah"), api("/api/planner").catch(function () { return { todos: [], events: [] }; })])
           .then(function (r) {
-            ULT = Array.isArray(r.items) ? r.items : [];
+            ULT = Array.isArray(r[0].items) ? r[0].items : [];
+            PLN = { todos: Array.isArray(r[1].todos) ? r[1].todos : [], events: Array.isArray(r[1].events) ? r[1].events : [] };
             ultahBanner();
             if (cb) cb();
           })
@@ -5021,24 +5044,30 @@ header.open .lgm{display:block;grid-column:1/-1;padding-top:12px}
         var old = document.getElementById("ub");
         if (old) old.remove();
         if (!ADM || !Array.isArray(ULT)) return;
-        var now = new Date(), key = now.toDateString(), L = ULT.map(function (x) { return { x: x, r: ulDays(x, now) }; }).filter(function (o) { return o.r.days <= 1; });
-        if (!L.length) return;
+        var now = new Date(), dkey = now.toDateString(), key = plKey(now), parts = [], tab = "todo";
+        var L = ULT.map(function (x) { return { x: x, r: ulDays(x, now) }; }).filter(function (o) { return o.r.days <= 1; });
+        if (L.length) { tab = "kal"; parts.push("\uD83C\uDF82 " + L.map(function (o) { return o.x.nama + (o.r.days === 0 ? " (HARI INI!)" : " (besok)") + (o.r.age ? " - ke-" + o.r.age : ""); }).join(", ")); }
+        var evs = PLN ? PLN.events.filter(function (e) { return e.tgl === key; }) : [];
+        if (evs.length) { tab = "kal"; parts.push("\uD83D\uDCC5 " + evs.map(function (e) { return (e.jam ? e.jam + " " : "") + e.judul; }).join(", ")); }
+        var td = plDue(key).length;
+        if (td) parts.push("\u2705 " + td + " to-do hari ini");
+        if (!parts.length) return;
         var dis = "";
         try { dis = localStorage.getItem("ulx"); } catch (e) {}
-        if (dis === key) return;
-        var txt = L.map(function (o) { return o.x.nama + (o.r.days === 0 ? " (HARI INI!)" : " (besok)") + (o.r.age ? " - ke-" + o.r.age : ""); }).join(", ");
+        if (dis === dkey) return;
+        var txt = parts.join("  |  ");
         var b = el("div"), a = el("button", "", "Lihat"), x = el("button", "", "Tutup");
         b.id = "ub";
         b.setAttribute("role", "status");
         a.type = x.type = "button";
-        a.onclick = function () { openUltah(); };
-        x.onclick = function () { try { localStorage.setItem("ulx", key); } catch (e) {} b.remove(); };
-        b.append(el("span", "", "\uD83C\uDF82 Ulang tahun: " + txt), a, x);
+        a.onclick = function () { ULTAB = tab; openUltah(); };
+        x.onclick = function () { try { localStorage.setItem("ulx", dkey); } catch (e) {} b.remove(); };
+        b.append(el("span", "", txt), a, x);
         document.body.prepend(b);
         try {
-          if ("Notification" in window && Notification.permission === "granted" && localStorage.getItem("ulxn") !== key) {
-            localStorage.setItem("ulxn", key);
-            new Notification("Pengingat ulang tahun", { body: txt });
+          if ("Notification" in window && Notification.permission === "granted" && localStorage.getItem("ulxn") !== dkey) {
+            localStorage.setItem("ulxn", dkey);
+            new Notification("Pengingat hari ini", { body: txt });
           }
         } catch (e) {}
       }
@@ -5061,102 +5090,192 @@ header.open .lgm{display:block;grid-column:1/-1;padding-top:12px}
         );
       }
       var ULS = null;
+      function ulRow(info, btns, cls) { var r = el("div", "ulr"); r.append(info); btns.forEach(function (b) { r.append(b); }); if (cls) r.classList.add(cls); return r; }
+      function ulBtn(t, fn) { var b = el("button", "eb", t); b.type = "button"; b.onclick = fn; return b; }
+      function ulFail(e) { alert(e.message || "Gagal"); loadUltah(drawUl); }
       function drawUl() {
-        var dg = document.getElementById("dlg"), now = new Date(), box = el("div", "edb ul"), cl = el("button", "mx", "X");
+        var dg = document.getElementById("dlg"), box = el("div", "edb ul"), cl = el("button", "mx", "X"), tabs = el("div", "ult");
         cl.type = "button";
         cl.onclick = function () { dg.close(); };
-        box.append(el("h3", "", "Kalender ulang tahun"), el("p", "hint", "Privat: hanya tampil saat kamu login. Klik tanggal di kalender untuk menambah."));
-        var cur = ULM || new Date(now.getFullYear(), now.getMonth(), 1);
+        [["kal", "Kalender"], ["todo", "To-do"]].forEach(function (t) {
+          var b = ulBtn(t[1], function () { ULTAB = t[0]; drawUl(); });
+          b.setAttribute("aria-pressed", ULTAB === t[0] ? "true" : "false");
+          tabs.append(b);
+        });
+        box.append(el("h3", "", "Kalender & To-do"), el("p", "hint", ULTAB === "kal" ? "Privat: hanya tampil saat kamu login. Klik tanggal di kalender untuk menambah ulang tahun atau event." : "Privat: hanya tampil saat kamu login. Ringkasan harian ini juga dikirim ke Telegram tiap pagi."), tabs);
+        var fo = ULTAB === "todo" ? ulTodo(box) : ulKal(box);
+        if ("Notification" in window && Notification.permission !== "granted") {
+          var ac = el("div", "ulx");
+          ac.append(ulBtn("Aktifkan notifikasi browser", function () { Notification.requestPermission().then(function () { ultahBanner(); drawUl(); }); }));
+          box.append(ac);
+        }
+        box.append(el("p", "hint", "Untuk pengingat ke HP (Telegram) tiap pagi, atur TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, dan CRON_SECRET di Vercel."));
+        dg.innerHTML = "";
+        dg.append(cl, box);
+        if (fo) setTimeout(function () {
+          var p = dg.querySelector(".uld");
+          if (p && p.scrollIntoView) p.scrollIntoView({ block: "nearest" });
+          fo.focus();
+        }, 0);
+      }
+      function ulKal(box) {
+        var now = new Date(), cur = ULM || new Date(now.getFullYear(), now.getMonth(), 1), tk = plKey(now), fo = null;
         ULM = cur;
-        var hd = el("div", "ulh"), pv = el("button", "eb", "<"), nx = el("button", "eb", ">");
-        pv.type = nx.type = "button";
-        pv.onclick = function () { ULM = new Date(cur.getFullYear(), cur.getMonth() - 1, 1); drawUl(); };
-        nx.onclick = function () { ULM = new Date(cur.getFullYear(), cur.getMonth() + 1, 1); drawUl(); };
-        hd.append(pv, el("b", "", ULN[cur.getMonth()] + " " + cur.getFullYear()), nx);
-        var g = el("div", "ulg"), Y = cur.getFullYear(), M = cur.getMonth(), dim = new Date(Y, M + 1, 0).getDate();
+        var hd = el("div", "ulh"), Y = cur.getFullYear(), M = cur.getMonth(), dim = new Date(Y, M + 1, 0).getDate();
+        hd.append(ulBtn("<", function () { ULM = new Date(Y, M - 1, 1); drawUl(); }), el("b", "", ULN[M] + " " + Y), ulBtn(">", function () { ULM = new Date(Y, M + 1, 1); drawUl(); }));
+        var g = el("div", "ulg");
         ["Sen","Sel","Rab","Kam","Jum","Sab","Min"].forEach(function (w) { g.append(el("span", "dw", w)); });
         for (var k = 0; k < (new Date(Y, M, 1).getDay() + 6) % 7; k++) g.append(el("span", "", ""));
         var mk = function (day) {
-          var names = ULT.filter(function (z) { return z.m === M + 1 && (z.d === day || (z.d === 29 && M === 1 && day === 28 && !ulLeap(Y))); }).map(function (z) { return z.nama; }), c = el("button", names.length ? "bd" : "", "" + day);
+          var key = Y + "-" + ulPad(M + 1) + "-" + ulPad(day);
+          var bn = ULT.filter(function (z) { return z.m === M + 1 && (z.d === day || (z.d === 29 && M === 1 && day === 28 && !ulLeap(Y))); }).map(function (z) { return z.nama; });
+          var en = PLN.events.filter(function (e) { return e.tgl === key; }).map(function (e) { return e.judul; });
+          var c = el("button", (bn.length ? "bd " : "") + (en.length ? "ev" : ""), "" + day);
           c.type = "button";
-          c.title = names.length ? names.join(", ") : "Tambah ulang tahun tanggal " + day + " " + ULN[M];
-          if (Y === now.getFullYear() && M === now.getMonth() && day === now.getDate()) c.classList.add("td");
-          if (ULS && ULS.m === M + 1 && ULS.d === day) c.classList.add("sel");
-          c.onclick = function () { ULS = { m: M + 1, d: day }; drawUl(); };
+          c.title = [bn.length ? "\uD83C\uDF82 " + bn.join(", ") : "", en.length ? "\uD83D\uDCC5 " + en.join(", ") : ""].filter(Boolean).join(" | ") || "Tambah di tanggal " + day + " " + ULN[M];
+          if (key === tk) c.classList.add("td");
+          if (ULS && ULS.y === Y && ULS.m === M + 1 && ULS.d === day) c.classList.add("sel");
+          c.onclick = function () { ULS = { y: Y, m: M + 1, d: day }; drawUl(); };
           g.append(c);
         };
         for (var day = 1; day <= dim; day++) mk(day);
         box.append(hd, g);
-        var focusNama = null;
         if (ULS) {
-          var pn = el("div", "uld"), same = ULT.filter(function (z) { return z.m === ULS.m && z.d === ULS.d; });
-          pn.append(el("h4", "", ULS.d + " " + ULN[ULS.m - 1]));
-          same.forEach(function (z) {
-            var row = el("div", "ulr"), info = el("div", "uli"), ed = el("button", "eb", "Edit"), del = el("button", "eb", "Hapus");
-            ed.type = del.type = "button";
-            ed.onclick = function () { ulForm(z); };
-            del.onclick = function () {
-              if (!confirm("Hapus " + z.nama + "?")) return;
-              ulSave(ULT.filter(function (q) { return q.id !== z.id; })).then(drawUl).catch(function (e) { alert(e.message); });
-            };
-            info.append(el("b", "", z.nama));
-            if (z.catatan) info.append(el("small", "", z.catatan));
-            row.append(info, ed, del);
-            pn.append(row);
+          var sk = ULS.y + "-" + ulPad(ULS.m) + "-" + ulPad(ULS.d), pn = el("div", "uld"), kk = el("div", "ulk");
+          pn.append(el("h4", "", ULS.d + " " + ULN[ULS.m - 1] + " " + ULS.y));
+          [["ultah", "Ulang tahun"], ["event", "Event"]].forEach(function (t) {
+            var b = ulBtn(t[1], function () { ULK = t[0]; drawUl(); });
+            b.setAttribute("aria-pressed", ULK === t[0] ? "true" : "false");
+            kk.append(b);
           });
-          var f = el("div", "ulf"), nm = el("input"), kt = el("input"), yr = el("input", "yr"), add = el("button", "bt", "+ Tambah"), st = el("p", "hint");
-          nm.type = kt.type = "text";
-          yr.type = "number";
-          nm.placeholder = "Nama";
-          kt.placeholder = "Keterangan (siapa dia, ide hadiah)";
-          yr.placeholder = "Tahun lahir";
-          nm.maxLength = 80;
-          kt.maxLength = 300;
+          pn.append(kk);
+          ULT.filter(function (z) { return z.m === ULS.m && z.d === ULS.d; }).forEach(function (z) {
+            var info = el("div", "uli");
+            info.append(el("b", "", "\uD83C\uDF82 " + z.nama));
+            if (z.catatan) info.append(el("small", "", z.catatan));
+            pn.append(ulRow(info, [ulBtn("Edit", function () { ulForm(z); }), ulBtn("Hapus", function () {
+              if (!confirm("Hapus " + z.nama + "?")) return;
+              ulSave(ULT.filter(function (q) { return q.id !== z.id; })).then(drawUl).catch(ulFail);
+            })]));
+          });
+          PLN.events.filter(function (e) { return e.tgl === sk; }).forEach(function (e) {
+            var info = el("div", "uli");
+            info.append(el("b", "", "\uD83D\uDCC5 " + (e.jam ? e.jam + " " : "") + e.judul));
+            if (e.catatan) info.append(el("small", "", e.catatan));
+            pn.append(ulRow(info, [ulBtn("Hapus", function () {
+              if (!confirm("Hapus event " + e.judul + "?")) return;
+              PLN.events = PLN.events.filter(function (q) { return q.id !== e.id; });
+              plSave().then(drawUl).catch(ulFail);
+            })]));
+          });
+          var f = el("div", "ulf"), a = el("input"), b2 = el("input"), c3 = el("input"), add = el("button", "bt", "+ Tambah"), st = el("p", "hint");
+          a.type = b2.type = "text";
           add.type = "button";
+          if (ULK === "ultah") {
+            c3.type = "number"; c3.className = "yr";
+            a.placeholder = "Nama"; b2.placeholder = "Keterangan (siapa dia, ide hadiah)"; c3.placeholder = "Tahun lahir";
+            a.maxLength = 80; b2.maxLength = 300;
+          } else {
+            c3.type = "time"; c3.title = "Jam (opsional)";
+            a.placeholder = "Judul event"; b2.placeholder = "Catatan (opsional)";
+            a.maxLength = 100; b2.maxLength = 300;
+          }
           var go = function () {
-            var n = nm.value.trim(), y = yr.value.trim() ? +yr.value : null;
-            if (!n) { st.textContent = "Isi nama dulu."; nm.focus(); return; }
-            if (y && (y < 1900 || y > now.getFullYear())) { st.textContent = "Tahun lahir tidak valid (kosongkan kalau tidak tahu)."; return; }
+            var n = a.value.trim();
+            if (!n) { st.textContent = ULK === "ultah" ? "Isi nama dulu." : "Isi judul event dulu."; a.focus(); return; }
             add.disabled = true;
-            ulSave(ULT.concat([{ id: Math.random().toString(36).slice(2, 10), nama: n, d: ULS.d, m: ULS.m, y: y, catatan: kt.value.trim() }])).then(drawUl).catch(function (e) { st.textContent = e.message; add.disabled = false; });
+            var done = function (e) { st.textContent = e.message || "Gagal"; add.disabled = false; };
+            if (ULK === "ultah") {
+              var y = c3.value.trim() ? +c3.value : null;
+              if (y && (y < 1900 || y > now.getFullYear())) { st.textContent = "Tahun lahir tidak valid (kosongkan kalau tidak tahu)."; add.disabled = false; return; }
+              ulSave(ULT.concat([{ id: rid(), nama: n, d: ULS.d, m: ULS.m, y: y, catatan: b2.value.trim() }])).then(drawUl).catch(done);
+            } else {
+              PLN.events.push({ id: rid(), judul: n, tgl: sk, jam: c3.value || "", catatan: b2.value.trim() });
+              plSave().then(drawUl).catch(function (e) { PLN.events.pop(); done(e); });
+            }
           };
           add.onclick = go;
-          [nm, kt, yr].forEach(function (x) { x.onkeydown = function (e) { if (e.key === "Enter") { e.preventDefault(); go(); } }; });
-          f.append(nm, kt, yr, add);
+          [a, b2, c3].forEach(function (x) { x.onkeydown = function (e) { if (e.key === "Enter") { e.preventDefault(); go(); } }; });
+          f.append(a, b2, c3, add);
           pn.append(f, st);
           box.append(pn);
-          focusNama = nm;
+          fo = a;
         }
-        var rows = ULT.map(function (z) { return { z: z, r: ulDays(z, now) }; }).sort(function (a, b) { return a.r.days - b.r.days; });
+        var up = PLN.events.filter(function (e) { return e.tgl >= tk; }).sort(function (x, y) { return (x.tgl + (x.jam || "99")) < (y.tgl + (y.jam || "99")) ? -1 : 1; }).slice(0, 10);
+        if (up.length) {
+          box.append(el("h4", "tds", "Event mendatang"));
+          up.forEach(function (e) {
+            var dd = Math.round((new Date(e.tgl + "T00:00:00") - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5), info = el("div", "uli"), pr = e.tgl.split("-");
+            info.append(el("b", "", e.judul), el("small", "", +pr[2] + " " + ULN[+pr[1] - 1] + (e.jam ? " - " + e.jam : "")));
+            if (e.catatan) info.append(el("small", "", e.catatan));
+            var row = ulRow(info, [ulBtn("Hapus", function () {
+              if (!confirm("Hapus event " + e.judul + "?")) return;
+              PLN.events = PLN.events.filter(function (q) { return q.id !== e.id; });
+              plSave().then(drawUl).catch(ulFail);
+            })]);
+            row.prepend(el("span", "ulb" + (dd <= 1 ? " now" : ""), dd === 0 ? "HARI INI!" : dd === 1 ? "BESOK" : dd + " hari"));
+            box.append(row);
+          });
+        }
+        var rows = ULT.map(function (z) { return { z: z, r: ulDays(z, now) }; }).sort(function (x, y) { return x.r.days - y.r.days; });
+        box.append(el("h4", "tds", "Ulang tahun terdekat"));
         if (!rows.length) box.append(el("p", "", "Belum ada. Klik salah satu tanggal di kalender."));
         rows.forEach(function (o) {
-          var z = o.z, r = o.r, row = el("div", "ulr"), info = el("div", "uli"), ed = el("button", "eb", "Edit"), del = el("button", "eb", "Hapus");
-          ed.type = del.type = "button";
-          ed.onclick = function () { ulForm(z); };
-          del.onclick = function () {
-            if (!confirm("Hapus " + z.nama + "?")) return;
-            ulSave(ULT.filter(function (q) { return q.id !== z.id; })).then(drawUl).catch(function (e) { alert(e.message); });
-          };
+          var z = o.z, r = o.r, info = el("div", "uli");
           info.append(el("b", "", z.nama), el("small", "", z.d + " " + ULN[z.m - 1] + (r.age ? " - ke-" + r.age : "")));
           if (z.catatan) info.append(el("small", "", z.catatan));
-          row.append(el("span", "ulb" + (r.days <= 1 ? " now" : ""), r.days === 0 ? "HARI INI!" : r.days === 1 ? "BESOK" : r.days + " hari"), info, ed, del);
+          var row = ulRow(info, [ulBtn("Edit", function () { ulForm(z); }), ulBtn("Hapus", function () {
+            if (!confirm("Hapus " + z.nama + "?")) return;
+            ulSave(ULT.filter(function (q) { return q.id !== z.id; })).then(drawUl).catch(ulFail);
+          })]);
+          row.prepend(el("span", "ulb" + (r.days <= 1 ? " now" : ""), r.days === 0 ? "HARI INI!" : r.days === 1 ? "BESOK" : r.days + " hari"));
           box.append(row);
         });
-        if ("Notification" in window && Notification.permission !== "granted") {
-          var ac = el("div", "ulx"), nb = el("button", "eb", "Aktifkan notifikasi browser");
-          nb.type = "button";
-          nb.onclick = function () { Notification.requestPermission().then(function () { ultahBanner(); drawUl(); }); };
-          ac.append(nb);
-          box.append(ac);
-        }
-        box.append(el("p", "hint", "Notifikasi muncul saat kamu membuka website ini sebagai admin. Untuk pengingat ke HP (Telegram) sehari sebelumnya, atur TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, dan CRON_SECRET di Vercel."));
-        dg.innerHTML = "";
-        dg.append(cl, box);
-        if (focusNama) setTimeout(function () {
-          var p = dg.querySelector(".uld");
-          if (p && p.scrollIntoView) p.scrollIntoView({ block: "nearest" });
-          focusNama.focus();
-        }, 0);
+        return fo;
+      }
+      function ulTodo(box) {
+        var key = plKey(new Date()), T = PLN.todos;
+        var f = el("div", "ulf"), tx = el("input"), dt = el("input"), add = el("button", "bt", "+ Tambah"), st = el("p", "hint", "Kosongkan tanggal = to-do harian (muncul setiap hari, dan hilang dari daftar kalau sudah dicentang hari itu).");
+        tx.type = "text"; tx.placeholder = "To-do baru (mis. olahraga, kerjakan tugas)"; tx.maxLength = 120;
+        dt.type = "date"; dt.title = "Tanggal (opsional)";
+        add.type = "button";
+        var go = function () {
+          var t = tx.value.trim();
+          if (!t) { st.textContent = "Isi to-do dulu."; tx.focus(); return; }
+          add.disabled = true;
+          T.push({ id: rid(), t: t, tgl: dt.value || "", done: "" });
+          plSave().then(drawUl).catch(function (e) { T.pop(); st.textContent = e.message || "Gagal"; add.disabled = false; });
+        };
+        add.onclick = go;
+        [tx, dt].forEach(function (x) { x.onkeydown = function (e) { if (e.key === "Enter") { e.preventDefault(); go(); } }; });
+        f.append(tx, dt, add);
+        box.append(f, st);
+        var row = function (t) {
+          var d = plDone(t, key), r = el("div", "tdr" + (d ? " dn" : "")), cb = el("input"), tt = el("span", "tt", t.t), pr = t.tgl ? t.tgl.split("-") : null;
+          cb.type = "checkbox"; cb.checked = d;
+          cb.setAttribute("aria-label", t.t);
+          cb.onchange = function () {
+            var prev = t.done;
+            t.done = d ? "" : key;
+            plSave().then(drawUl).catch(function (e) { t.done = prev; ulFail(e); });
+          };
+          r.append(cb, tt, el("small", t.tgl && t.tgl < key && !d ? "late" : "", t.tgl ? (t.tgl < key && !d ? "terlambat - " : "") + +pr[2] + " " + ULN[+pr[1] - 1].slice(0, 3) : "harian"), ulBtn("Hapus", function () {
+            PLN.todos = PLN.todos.filter(function (q) { return q.id !== t.id; });
+            plSave().then(drawUl).catch(ulFail);
+          }));
+          return r;
+        };
+        var sec = function (title, list) { if (!list.length) return; box.append(el("h4", "tds", title)); list.forEach(function (t) { box.append(row(t)); }); };
+        sec("Hari ini", T.filter(function (t) { return !plDone(t, key) && (!t.tgl || t.tgl <= key); }));
+        sec("Mendatang", T.filter(function (t) { return t.tgl > key && !t.done; }).sort(function (x, y) { return x.tgl < y.tgl ? -1 : 1; }));
+        sec("Selesai hari ini", T.filter(function (t) { return t.done === key; }));
+        if (!T.length) box.append(el("p", "", "Belum ada to-do. Tambahkan di atas."));
+        var old = T.filter(function (t) { return t.tgl && t.done && t.done < key; });
+        if (old.length) box.append(ulBtn("Bersihkan " + old.length + " to-do lama yang sudah selesai", function () {
+          PLN.todos = PLN.todos.filter(function (t) { return !(t.tgl && t.done && t.done < key); });
+          plSave().then(drawUl).catch(ulFail);
+        }));
+        return tx;
       }
       function openUltah() {
         var dg = document.getElementById("dlg");
